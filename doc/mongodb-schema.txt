@@ -1,0 +1,32 @@
+# collection users
+_id		ObjectId
+MicrosoftId	string			unique		// Microsoft Entra Id
+Name {
+ First		string
+ Last		string
+}
+Role		"admin"|"user"	// Role uživatele
+
+
+# collection posts
+_id		ObjectId
+CreatorId	ObjectId -> users._id			// Reference to users collection
+Title		string					// Title of the post
+CreatedAt	Datetime		TTL index	// Time of creation with TTL to enable auto deletion
+Subjects	string[]				// Array of subject shorthands
+State		"like new"|"good"|"worn"		// State of the book
+Price {							// Prices of the book, in case the price is not a range, the min
+ Min		integer					// and max values will hold the same value
+ Max		integer
+}
+Photos		string[]				// Filesystem paths to the photos of the book
+
+
+# collection subjects
+_id		ObjectId				// This collection is NOT for referencing, but for storage
+Subject		string			unique		// Shorthand of the subject
+
+
+# collection blacklist
+_id		ObjectId
+MicrosoftId	string			unique		// Blacklisted Microsoft Entra Id
