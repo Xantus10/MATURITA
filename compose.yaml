@@ -1,0 +1,41 @@
+services:
+  mongo:
+    build: ./db
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    networks:
+      - mat-network
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "8080:8080"
+    networks:
+      - mat-network
+    depends_on:
+      - mongo
+    command: ["npm", "run", "start"]
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - mat-network
+    command: ["npm", "run", "start"]
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    networks:
+      - mat-network
+    depends_on:
+      - frontend
+      - backend
+    restart: always
+
+networks:
+  node-network:
+    driver: bridge

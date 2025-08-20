@@ -1,0 +1,96 @@
+### Zadání
+
+Vytvořte webovou aplikaci, sloužící studentům pro prodej použitých učebnic.
+
+
+## Hlavní funkcionality
+Student po přihlášení může vytvořit příspěvek o prodeji své učebnice
+Student po přihlášení může zobrazit příspěvky a filtrovat/řadit je
+
+
+## Podrobné zadání
+Přihlášení do aplikace bude řešeno pomocí SSO (Single Sign On), prostřednictvím Office 365 účtu s využitím technologie OAuth 2.0
+Příspěvek bude obsahovat název, datum vytvoření, 3 fotky učebnice, dále informace o předmětu/ech, pro které je učebnice určena, o ročníku/cích, ve kterých student učebnici potřebuje, stav učebnice a finálně cenu. Cena bude stanovena buď pevně nebo bude reprezentována jako rozmezí od-do
+Student si příspěvky může prohlížet, může je řadit "Od nejnovějšího" (default) nebo "Od nejlevnějšího"
+Student může též příspěvky filtrovat dle předmětu, ročníku, stavu nebo rozmezí ceny od-do (Pro příspěvky, kde je cena vyjádřena rozmezím s bude spodní hranice porovnávat s max cenou a vrchní hranice porovnávat s min cenou)
+Student, který příspěvek vytvořil by měl mít možnost ho smazat (např. z důvodu úspěšného prodeje), jinak by se měly příspěvky mazat po 1 měsíci
+Finálně by zde měl být admin, tento bude mít své stránky, na které bude mít přístup jen on. Admin může mazat jakýkoli příspěvek i mazat všechny příspěvky jakéhokoliv uživatele. Dále má také možnost smazat uživatelský účet a zařadit ho na blacklist. Takový uživatel pak nikdy nedostane přístup na platformu, samozřejmě lze uživatele také vymazat z blacklistu.
+Nakonec má admin možnost přidávat, či odebírat předměty.
+
+
+### Řešení
+
+
+## Využité technologie - tech stack
+
+# MongoDB
+Jakožto NoSQL databáze nám MongoDB poskytuje jisté funkcionality, které by jinak byly obtížněji implementovatelné (ať už datové typy array a object nebo funkcionality jako TTL index). Kromě toho se vyhneme dlouhým a náročným JOINům s využitím MongoDB principu "embed before reference", tzn. kde je to možné, vyhněme se referencím. Návrh tento přístup odráží.
+
+# Express.js
+Jednoduchý framework pro vytváření web backend API.
+
+# React.js
+Nejpopulárnější frontend framework pro vytváření proměnlivých UI.
+
+# Node.js
+Javascriptový runtime, který budeme používat pro spouštění samotných frontend a backend serverů.
+
+# nginx
+Reverse proxy, za kterou schováme naše frontend a backend servery.
+
+# Docker
+Nástroj pro kontejnerizaci aplikací, s jeho pomocí naše aplikace poběží v jakémkoli environmentu.
+
+# Mantine
+Knihovna pro react, která usnadňuje vývoj UI.
+
+# Typescript
+Jazyk založený na javascriptu, který přidává typování. Budeme jej používat jak na frontendu, tak na backendu.
+
+# Git
+Populární vezrovací nástroj
+
+## Databázový návrh
+
+V naší databázi potřebujeme nějak lokálně uchovávat uživatele, přestože používáme Office 365 SSO
+# collection users
+_id		ObjectId
+MicrosoftId	string			unique		// Microsoft Entra Id
+Name {
+ First		string
+ Last		string
+}
+Role		"admin"|"user"	// Role uživatele
+
+V naší databázi potřebujeme uchovávat informace o příspěvcích
+# collection posts
+_id		ObjectId
+CreatorId	ObjectId -> users._id			// Reference to users collection
+Title		string					// Title of the post
+CreatedAt	Datetime		TTL index	// Time of creation with TTL to enable auto deletion
+Subjects	string[]				// Array of subject shorthands
+State		"like new"|"good"|"worn"		// State of the book
+Price {							// Prices of the book, in case the price is not a range, the min
+ Min		integer					// and max values will hold the same value
+ Max		integer
+}
+Photos		string[]				// Filesystem paths to the photos of the book
+
+Dále budou v naší databázi všechny předměty (ne z důvodu referenční integrity, ale z potřeby ukládání informace)
+# collection subjects
+_id		ObjectId
+Subject		string			unique		// Shorthand of the subject
+
+Pro potřeby autorizace zde bude informace o SessionId, toto děláme v jiné kolekci z důvodu bezpečnosti
+# collection sessions
+_id		ObjectId
+SessionId	string			index		// Session id, which will be provided via a cookie
+UserId		ObjectId -> users._id	unique		// Reference to users collection
+
+Pro potřeby blacklistu zde budeme mít následující kolekci
+# collection blacklist
+_id		ObjectId
+MicrosoftId	string			unique		// Blacklistnuté Microsoft Entra Id
+
+
+## Backend
