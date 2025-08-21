@@ -1,0 +1,24 @@
+@import './media.css';
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 8px;
+}
+
+.divider > div {
+  min-height: 80vh;
+  padding: 8px;
+}
+
+.filters {
+  flex: 3;
+}
+
+.main {
+  flex: 12;
+}
+
+.new {
+  flex: 1;
+}

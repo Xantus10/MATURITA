@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import LoginPage from './Pages/LoginPage';
+import HomePage from './Pages/HomePage';
 import { post } from './Util/http';
 
 async function LogUserIn(idtoken: string) {
@@ -35,7 +36,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route />
+        <Route path='/' element={<HomePage />} />
       </Routes>
     </>
   )
