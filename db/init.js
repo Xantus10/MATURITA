@@ -15,6 +15,7 @@ for (let x in COLLECTIONS) {
 
 // Create indexes
 db.users.createIndex({MicrosoftId: 1}, {unique: true});
+db.users.createIndex({LastLogin: 1}, {expireAfterSeconds: 38880000});
 db.posts.createIndex({CreatedAt: 1}, {expireAfterSeconds: 2592000});
 db.subjects.createIndex({Subject: 1}, {unique: true});
 db.sessions.createIndex({SessionId: 1});

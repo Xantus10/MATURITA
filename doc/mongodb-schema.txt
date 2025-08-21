@@ -5,7 +5,8 @@ Name {
  First		string
  Last		string
 }
-Role		"admin"|"user"	// Role uživatele
+Role		"admin"|"user"				// User role
+LastLogin	Datetime		TTL index	// Last login time with TTL to enable auto deletion
 
 
 # collection posts
