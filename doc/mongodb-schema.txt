@@ -13,7 +13,8 @@ LastLogin	Datetime		TTL index	// Last login time with TTL to enable auto deletio
 _id		ObjectId
 CreatorId	ObjectId -> users._id			// Reference to users collection
 Title		string					// Title of the post
-CreatedAt	Datetime		TTL index	// Time of creation with TTL to enable auto deletion
+CreatedAt	Datetime				// Time of creation
+RemoveAt	Datetime		TTL index	// Time to remove with TTL to enable auto deletion
 Subjects	string[]				// Array of subject shorthands
 State		"like new"|"good"|"worn"		// State of the book
 Price {							// Prices of the book, in case the price is not a range, the min
