@@ -13,7 +13,8 @@ After logging in, student can view, order and filter the posts
 - The post will contain a title, date of creation, 3 photos of the book, information about the subject/s the book is used for, the year/s in which the student needs the book, the book's condition and finally a price. The price will either be a single value or a range from-to (min-max)
 - The student can browse the posts, as well as order them using "Most recent" or "The cheapest"
 - The student can also filter the posts based on subject, year, condition, and price range (For posts that use a price range: The lower end will be compared with max price and the higher end with their min price)
-- The student can delete their own posts (e.g. because they already sold the book), the posts should be automatically deleted after one month
+- The student can delete their own posts (e.g. because they already sold the book), the posts should be automatically deleted after one month (default) or user supplied range (can be limited)
+- Users should be able to delete their own account, auto deletion should also be enabled for accounts, that have not logged in for the past 15 months
 - The system should feature an admin, admin will have their own view, where they can delete any post as well as delete all posts by a given user. He can also delete the whole user profile and blacklist it. Blacklisted user will not be permitted back on the platform. The admin can also remove people from the blacklist
 - Finally the admin has the option to add/remove any subjects
 
@@ -46,6 +47,9 @@ A library for react to simplify the UI creation
 
 ### Typescript
 A language based on javascript, it adds type safety in development. We will be using it on both frontend and backend
+
+### PostCSS
+A CSS transformation tool, allows us to write more readable CSS and adds features such as modules, imports or nesting
 
 ### Git
 A popular version control system
