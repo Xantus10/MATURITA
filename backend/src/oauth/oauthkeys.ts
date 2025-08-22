@@ -20,7 +20,8 @@ interface MSResponse {
 
 interface IdTokenPayload extends JwtPayload {
   oid: string;
-  name: string;
+  family_name: string;
+  given_name: string;
 };
 
 
@@ -54,15 +55,15 @@ class OAuth_Agent {
 
   public async validateIdToken(idToken: string) {
     let decoded = jsonwebtoken.decode(idToken, {complete: true});
-    if (decoded === null) return '';
+    if (decoded === null) return {oid: '', family_name: '', given_name: ''};
     let kid = decoded?.header.kid as string;
     let k = await this.getKey(kid);
-    if (k === undefined) return '';
+    if (k === undefined) return {oid: '', family_name: '', given_name: ''};
     try {
       let ver = jsonwebtoken.verify(idToken, k, {issuer: env.MICROSOFT_ISSUER_URL, clockTimestamp: Math.floor(new Date().getTime() / 1000), audience: env.MICROSOFT_APP_ID});
-      return {microsoftid: (ver as IdTokenPayload).oid, name: (ver as IdTokenPayload).name};
+      return (ver as IdTokenPayload);
     } catch {
-      return '';
+      return {oid: '', family_name: '', given_name: ''};
     }
   }
 };
