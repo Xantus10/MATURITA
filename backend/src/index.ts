@@ -33,7 +33,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {Session.sessionPar
 * Add routes here
 */
 
+import authrouter from './routes/auth.js';
 
+app.use('/auth', authrouter);
 
 
 app.listen(env.PORT, () => {

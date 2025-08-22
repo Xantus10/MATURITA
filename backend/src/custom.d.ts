@@ -6,7 +6,10 @@ declare global {
       session: {
         state: 'none' | 'valid' | 'invalid';
         id: string | undefined;
-        data: SessionData | undefined
+        data: SessionData | undefined;
+      },
+      csrf: {
+        valid: boolean;
       }
     }
   }

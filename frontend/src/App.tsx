@@ -5,9 +5,11 @@ import Cookies from 'js-cookie'
 import LoginPage from './Pages/LoginPage';
 import HomePage from './Pages/HomePage';
 import { post } from './Util/http';
+import { setCsrfToken } from './Util/csrf';
 
 async function LogUserIn(idtoken: string) {
   let res = await post('/idtoken', {idtoken: idtoken});
+  setCsrfToken(res);
   console.log(res?.status); // Use notifications to switch through codes
 }
 

@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
+import { randomBytes } from "node:crypto";
 
 export interface SessionDataArg {
   microsoftId: string;
@@ -54,7 +55,7 @@ class Session_Agent {
   }
   
   public sessionCreate(data: SessionDataArg): string {
-    let ssid = uuidv4();
+    let ssid = uuidv4() + '.' + randomBytes(32).toString('base64');
     let ndata: SessionData = {...data, createdAt: Math.floor(new Date().getTime() / 1000)};
     this.sessions[ssid] = ndata;
     return ssid;
@@ -62,10 +63,10 @@ class Session_Agent {
 };
 
 export function loggedin(req: Request, res: Response, next: NextFunction) {
-  if (req.session.state !== 'valid') {
+  if (req.session.state !== 'valid' || !req.csrf.valid) {
     res.clearCookie(Session.COOKIE_NAME);
     res.clearCookie(Session.CONTROL_COOKIE_NAME);
-    return res.redirect('/');
+    return res.redirect('/'); // I dont think it works :(
   }
   next();
 }
