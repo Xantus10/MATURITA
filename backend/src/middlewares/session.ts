@@ -67,7 +67,7 @@ export function loggedin(req: Request, res: Response, next: NextFunction) {
   if (req.session.state !== 'valid' || !req.csrf.valid) {
     res.clearCookie(Session.COOKIE_NAME);
     res.clearCookie(Session.CONTROL_COOKIE_NAME);
-    return res.redirect('/'); // I dont think it works :(
+    return res.status(401).send({msg: 'Not logged in!'});
   }
   next();
 }
