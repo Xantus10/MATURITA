@@ -11,6 +11,5 @@ export interface UserIF {
 };
 
 export interface UserModelIF extends Model<UserIF> {
-  getExists(microsoftId: string): Promise<boolean>;
   updateLastLogin(microsoftId: string): void;
 };

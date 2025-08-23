@@ -11,10 +11,6 @@ export const userSchema = new Schema<UserIF, Model<UserIF>, UserModelIF>({
   LastLogin: {type: Date, default: Date.now, expires: 86400 * 30 * 15}
 });
 
-userSchema.static('getExists', async function (microsoftId: string) {
-  return (await this.exists({ MicrosoftId: microsoftId })) !== null;
-});
-
 userSchema.static('updateLastLogin', function (microsoftId: string) {
   this.findOneAndUpdate({ MicrosoftId: microsoftId }, { $set: { LastLogin: new Date() } });
 })

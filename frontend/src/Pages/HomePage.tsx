@@ -1,4 +1,4 @@
-import { Center, Text, Title, Button, Stack, Group } from '@mantine/core'
+import { Center, /*Text, Title, Button, */Stack, Group } from '@mantine/core'
 import classes from '../styles/homepage.module.css'
 
 import LocalizedStrings from 'react-localization'

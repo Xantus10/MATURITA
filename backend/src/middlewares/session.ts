@@ -1,14 +1,15 @@
 import type { NextFunction, Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { randomBytes } from "node:crypto";
+import type { Types } from "mongoose";
 
 export interface SessionDataArg {
-  microsoftId: string;
+  objId: Types.ObjectId;
   role: 'user' | 'admin';
 };
 
 interface SessionData {
-  microsoftId: string;
+  objId: Types.ObjectId;
   role: 'user' | 'admin';
   createdAt: number;
 };
