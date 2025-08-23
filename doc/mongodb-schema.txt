@@ -17,6 +17,7 @@ CreatedAt	Datetime				// Time of creation
 RemoveAt	Datetime		TTL index	// Time to remove with TTL to enable auto deletion
 Subjects	string[]				// Array of subject shorthands
 State		"like new"|"good"|"worn"		// State of the book
+Years		number[]				// Numbers of the years the book is used in
 Price {							// Prices of the book, in case the price is not a range, the min
  Min		integer					// and max values will hold the same value
  Max		integer
