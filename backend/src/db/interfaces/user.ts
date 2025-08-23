@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export interface UserIF {
   MicrosoftId: string;
@@ -11,5 +11,5 @@ export interface UserIF {
 };
 
 export interface UserModelIF extends Model<UserIF> {
-  updateLastLogin(microsoftId: string): void;
+  updateLastLogin(id: Types.ObjectId): void;
 };

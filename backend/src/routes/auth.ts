@@ -24,6 +24,7 @@ authrouter.post('/idtoken', async (req: Request, res: Response) => {
   } else {
     objId = exists._id;
     role = exists.Role;
+    User.updateLastLogin(objId);
   }
   let ssid = Session.sessionCreate({objId: objId, role: role});
   let csrf = generateCsrf(ssid);

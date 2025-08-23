@@ -1,4 +1,4 @@
-import { Schema, model, Model } from "mongoose";
+import { Schema, model, Model, Types } from "mongoose";
 import type { UserIF, UserModelIF } from "../interfaces/user.ts";
 
 export const userSchema = new Schema<UserIF, Model<UserIF>, UserModelIF>({
@@ -11,8 +11,8 @@ export const userSchema = new Schema<UserIF, Model<UserIF>, UserModelIF>({
   LastLogin: {type: Date, default: Date.now, expires: 86400 * 30 * 15}
 });
 
-userSchema.static('updateLastLogin', function (microsoftId: string) {
-  this.findOneAndUpdate({ MicrosoftId: microsoftId }, { $set: { LastLogin: new Date() } });
+userSchema.static('updateLastLogin', function (id: Types.ObjectId) {
+  this.findByIdAndUpdate(id, { $set: { LastLogin: new Date() } });
 })
 
 const User = model<UserIF, UserModelIF>('User', userSchema);
