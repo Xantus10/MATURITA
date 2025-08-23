@@ -1,6 +1,6 @@
 const DB_NAME = 'Maturita';
 
-const COLLECTIONS = ['users', 'posts', 'subjects', 'sessions', 'blacklist'];
+const COLLECTIONS = ['users', 'posts', 'subjects', 'blacklist'];
 
 
 const db = new Mongo().getDB(DB_NAME);
@@ -18,7 +18,5 @@ db.users.createIndex({MicrosoftId: 1}, {unique: true});
 db.users.createIndex({LastLogin: 1}, {expireAfterSeconds: 38880000});
 db.posts.createIndex({RemoveAt: 1}, {expireAfterSeconds: 1});
 db.subjects.createIndex({Subject: 1}, {unique: true});
-db.sessions.createIndex({SessionId: 1});
-db.sessions.createIndex({MicrosoftId: 1}, {unique: true});
 db.blacklist.createIndex({MicrosoftId: 1}, {unique: true});
 
