@@ -1,18 +1,23 @@
-import { Schema, model } from "mongoose";
-import type userIF from "../interfaces/user.ts";
+import { Schema, model, Model } from "mongoose";
+import type { UserIF, UserModelIF } from "../interfaces/user.ts";
 
-export const userSchema = new Schema<userIF>({
-  /*username: {type: String, required: true, unique: true, trim: true, minlength: 3, maxlength: 20},
-  email: {type: String, required: true, unique: true, match: /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/},
-  password: {type: String, required: true, select: false},
-  privilegeLevel: {type: Number, required: true, default: 0},
-  deactivated: {type: Boolean, required: true, default: false},
-  passwordRecovery: {
-    code: {type: String, default: ''},
-    expires: {type: Date, default: Date.now},
-    select: false
-  }*/
+export const userSchema = new Schema<UserIF, Model<UserIF>, UserModelIF>({
+  MicrosoftId: {type: String, required: true, unique: true},
+  Name: {
+    First: {type: String, required: true},
+    Last: {type: String, required: true}
+  },
+  Role: {type: String, enum: ['user', 'admin'], default: 'user'},
+  LastLogin: {type: Date, default: Date.now, expires: 86400 * 30 * 15}
 });
 
-const User = model<userIF>('User', userSchema);
+userSchema.static('getExists', async function (microsoftId: string) {
+  return (await this.exists({ MicrosoftId: microsoftId })) !== null;
+});
+
+userSchema.static('updateLastLogin', function (microsoftId: string) {
+  this.findOneAndUpdate({ MicrosoftId: microsoftId }, { $set: { LastLogin: new Date() } });
+})
+
+const User = model<UserIF, UserModelIF>('User', userSchema);
 export default User;
