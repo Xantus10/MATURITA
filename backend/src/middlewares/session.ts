@@ -8,7 +8,7 @@ export interface SessionDataArg {
   role: 'user' | 'admin';
 };
 
-interface SessionData {
+export interface SessionData {
   objId: Types.ObjectId;
   role: 'user' | 'admin';
   createdAt: number;
