@@ -21,6 +21,7 @@
           - *priceMax: number		// Upper end of price range
         - Response
           - 200: OK
+          - 400: A required field is missing
           - 401: Invalid credentials
 
    POST - Make a new post
@@ -36,6 +37,7 @@
           - 201: OK (post created)
           - 400: A required field is missing
           - 401: Invalid credentials
+          - 403: Unauthorized		// Admin cannot create posts (Separation of privilege)
 
  DELETE - Delete a post (user only his own, admin anyones)
         - Params
@@ -43,5 +45,16 @@
         - Response
           - 200: OK (post deleted)
           - 401: Invalid credentials
-          - 403: Unauthorized 
+          - 403: Unauthorized
+          - 404: The post does not exist
+
+  /extend
+   POST - Extend a posts lifetime
+        - Params
+          - postId: string		// String representation of posts._id
+          - days: number		// Number of days to add to the posts lifespan
+        - Response
+          - 200: OK (post deleted)
+          - 401: Invalid credentials
+          - 403: Unauthorized		// Admin cannot extend posts (Separation of privilege)
           - 404: The post does not exist
