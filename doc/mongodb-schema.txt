@@ -33,3 +33,4 @@ Subject		string			unique		// Shorthand of the subject
 # collection blacklist
 _id		ObjectId
 MicrosoftId	string			unique		// Blacklisted Microsoft Entra Id
+CreatedAt	Datetime				// When was user blacklisted
