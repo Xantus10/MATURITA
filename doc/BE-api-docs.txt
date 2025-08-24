@@ -13,10 +13,10 @@
     GET - Retrieve a list of 10 posts
         - Params
           - begin: number		// Skip first x posts
-          - *orderBy: 'date' | 'price'	// Posts ordered by most recent or lowest price
-          - *filterSubjects: string[]	// All subjects tags of shown posts (logical OR)
-          - *filterYears: number[]	// All year tags of shown posts (logical OR)
-          - *filterState: string[]	// All state tags of shown posts (logical OR)
+          - orderBy: 'date' | 'price'	// Posts ordered by most recent or lowest price
+          - filterSubjects: string[]	// All subjects tags of shown posts (logical OR) (When no filter, specify ALL)
+          - filterYears: number[]	// All year tags of shown posts (logical OR) (When no filter, specify ALL)
+          - filterState: string[]	// All state tags of shown posts (logical OR) (When no filter, specify ALL)
           - *priceMin: number		// Lower end of price range
           - *priceMax: number		// Upper end of price range
         - Response

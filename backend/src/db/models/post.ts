@@ -1,6 +1,9 @@
 import { Schema, model, Model, Types } from "mongoose";
 import type { PostIF, PostModelIF } from "../interfaces/post.js";
 
+export const MIN_RANGE = 0;
+export const MAX_RANGE = 1000;
+
 export const postSchema = new Schema<PostIF, Model<PostIF>, PostModelIF>({
   CreatorId: {type: Schema.Types.ObjectId, ref: 'User', required: true},
   Title: {type: String, required: true},
@@ -10,8 +13,8 @@ export const postSchema = new Schema<PostIF, Model<PostIF>, PostModelIF>({
   State: {type: String, enum: ['Like new', 'Good', 'Worn'], required: true},
   Years: {type: [Number], validate: (v: number[]) => {return v.length > 0}},
   Price: {
-    Min: {type: Number, required: true},
-    Max: {type: Number, required: true}
+    Min: {type: Number, required: true, min: MIN_RANGE, max: MAX_RANGE},
+    Max: {type: Number, required: true, min: MIN_RANGE, max: MAX_RANGE}
   },
   //Photos: {type: [String]} Later
 });
