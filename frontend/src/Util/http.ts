@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_BE_URL;
+const BASE_URL = import.meta.env.VITE_BE_URL + '/api';
 import { csrfHeaders } from "./csrf";
 
 function constructURL(path: string, args: object = {}) {
@@ -14,7 +14,7 @@ function constructURL(path: string, args: object = {}) {
   return url.toString();
 }
 
-export async function get(path: string, args: {[key: string]: string} = {}) {
+export async function get(path: string, args: {[key: string]: any} = {}) {
   let url = constructURL(path, args);
   try {
     let res = await fetch(url, {method: 'GET', headers: {'Accept': 'application/json', ...csrfHeaders()}});
@@ -24,7 +24,7 @@ export async function get(path: string, args: {[key: string]: string} = {}) {
   }
 }
 
-export async function post(path: string, args: {[key: string]: string} = {}) {
+export async function post(path: string, args: {[key: string]: any} = {}) {
   let url = constructURL(path);
   try {
     let res = await fetch(url, {method: 'POST', headers: {'Accept': 'application/json', 'Content-Type': 'application/json', ...csrfHeaders()}, body: JSON.stringify(args)});

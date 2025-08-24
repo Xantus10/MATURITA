@@ -8,7 +8,7 @@ import { post } from './Util/http';
 import { setCsrfToken } from './Util/csrf';
 
 async function LogUserIn(idtoken: string) {
-  let res = await post('/api/auth/idtoken', {idtoken: idtoken});
+  let res = await post('/auth/idtoken', {idtoken: idtoken});
   setCsrfToken(res);
   console.log(res?.status); // Use notifications to switch through codes
 }
