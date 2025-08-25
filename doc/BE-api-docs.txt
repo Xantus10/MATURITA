@@ -58,3 +58,31 @@
           - 401: Invalid credentials
           - 403: Unauthorized		// Admin cannot extend posts (Separation of privilege)
           - 404: The post does not exist
+
+  /user
+    GET - Get posts of the logged in user
+        - Params
+          - *userId: string		// Id of the user (will use the logged in user if unspecified)
+        - Response
+          - 200: OK
+          - 401: Invalid credentials
+          - 403: Unauthorized		// If userId is specified, the user must be admin
+          - 404: The user does not exist
+
+
+/users routes
+  /
+    GET - Get list of users
+        - Params
+          - *first: string		// The beginning of the first name
+          - *last: string		// The beginning of the last name
+        - Response
+          - 200: OK
+          - 401: Invalid credentials
+          - 403: Unauthorized		// The user must be admin
+
+  /:id
+    GET - Get info about the specified user
+        - Response
+          - 200: OK
+          - 401: Invalid credentials
