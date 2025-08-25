@@ -1,10 +1,12 @@
-import { Center, Text, Title, Button, Stack, Group, Drawer, TextInput, NumberInput, NativeSelect, MultiSelect, Checkbox } from '@mantine/core'
+import { Text, Title, Button, Stack, Group, Drawer, TextInput, NumberInput, NativeSelect, MultiSelect, Checkbox, Menu } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
 import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import { MdOutlineAccountCircle, MdLogout, MdOutlineSettings, MdOutlineLocalPostOffice } from 'react-icons/md';
 import LocalizedStrings from 'react-localization'
 
+import PostDisplay from '../Components/PostDisplay';
 import { get, post } from '../Util/http';
 
 import classes from '../styles/homepage.module.css'
@@ -27,6 +29,9 @@ let strings = new LocalizedStrings({
     form_title_years: 'Ročník/y',
     form_title_price: 'Cena',
     checkbox: 'Použít rozsah místo pevné ceny',
+    orderDate: 'Nejnovější',
+    orderPrice: 'Nejlevnější',
+    title1: 'Vítejte na burze učebnic'
   },
   en: {
     form_err_title: 'Enter title',
@@ -42,9 +47,11 @@ let strings = new LocalizedStrings({
     form_title_years: 'Year/s',
     form_title_price: 'Price',
     checkbox: 'Use price range instead of price',
+    orderDate: 'Most recent',
+    orderPrice: 'The cheapest',
+    title1: 'Welcome on the market for books'
   }
 })
-strings;
 
 
 export default function HomePage() {
@@ -62,6 +69,9 @@ export default function HomePage() {
   const STATES = ['Like new', 'Good', 'Worn'];
 
   const [subjects, setSubjects] = useState(['CJK', 'ANJ', 'PSI']); // WILL NEED TO CHANGE ONCE Subjects are implemented on BE
+  const [posts, setPosts] = useState([{id: '123456789', title: 'Selling', creatorId: '123456789', createdAt: new Date(), removeAt: new Date(Date.now() + 86400 * 1000), subjects: ['CJK', 'ESV'], state: 'Like new', years: [2, 3], price: { min: 100, max: 100 }}, {id: '123456789', title: 'Selling a book', creatorId: '123456789', createdAt: new Date(), removeAt: new Date(Date.now() + 86400 * 1000), subjects: ['CJK'], state: 'Worn', years: [2], price: { min: 100, max: 200 }}]);
+
+  const [orderBy, setOrderBy] = useState('date')
 
   const postForm = useForm({
     mode: 'uncontrolled',
@@ -88,31 +98,53 @@ export default function HomePage() {
   return (
     <>
       <Stack className={classes.container}>
-        <Group h={'10vh'} bg={'blue'}>Header</Group>
-        <Group className={classes.divider} preventGrowOverflow={false}>
-          <Stack className={classes.filters} bg={'green'}>Filters</Stack>
-          <Stack className={classes.main} bg={'red'}>
-            <Group>Order</Group>
+        <Group mih={'10vh'} bg={'gray.9'} p="md" justify="space-between">
+          <Title order={1}>{strings.title1}</Title>
+          <Menu position="bottom-end">
+            <Menu.Target>
+              <Button w="110px" h="40px"><MdOutlineAccountCircle size="2rem" /></Button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item>
+                <Button leftSection={<MdOutlineSettings />}>Account settings</Button>
+              </Menu.Item>
+              <Menu.Item>
+                <Button leftSection={<MdOutlineLocalPostOffice />}>My posts</Button>
+              </Menu.Item>
+              <Menu.Item>
+                <Button color='red.7' leftSection={<MdLogout />}>Log out</Button>
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </Group>
+        <Group className={classes.divider} preventGrowOverflow={false} align='start'>
+          <Stack className={classes.filters} bg={'gray.8'}>
+            <Text>{strings.form_title_state}</Text>
+            <Text>{strings.form_title_subjects}</Text>
+            <Text>{strings.form_title_years}</Text>
+          </Stack>
+          <Stack className={classes.main} bg={'gray.8'}>
+            <Group>
+              <NativeSelect data={[{label: strings.orderDate, value: 'date'}, {label: strings.orderPrice, value: 'price'}]} value={orderBy} onChange={(e) => setOrderBy(e.currentTarget.value)} />
+            </Group>
             <Stack>
-              POSTS
+              {posts.map((p) => <PostDisplay {...p} />)}
             </Stack>
           </Stack>
-          <Center className={classes.new} bg={'cyan'}>
-            <Button onClick={addbtncontroller.open}><FaPlus /></Button>
-            <Drawer opened={addbtn} onClose={addbtncontroller.close} title={"Create post"} position='right' offset={8} radius="md">
+          <Stack className={classes.new} justify="end" align='center'>
+            <Button onClick={addbtncontroller.open} radius="50%" h="50px" w="50px"><FaPlus /></Button>
+            <Drawer opened={addbtn} onClose={addbtncontroller.close} title={"Create post"} position='right' offset={18} radius="md">
               <TextInput label={strings.form_title_title} key={postForm.key('title')} {...postForm.getInputProps('title')} />
               <NumberInput label={strings.form_title_remove} key={postForm.key('remove')} min={1} max={90} {...postForm.getInputProps('remove')} />
               <MultiSelect label={strings.form_title_subjects} data={subjects} key={postForm.key('subjects')} {...postForm.getInputProps('subjects')} />
               <NativeSelect label={strings.form_title_state} data={STATES} key={postForm.key('state')} {...postForm.getInputProps('state')} />
               <MultiSelect label={strings.form_title_years} data={['1', '2', '3', '4']} key={postForm.key('years')} {...postForm.getInputProps('years')} />
-              <Group>
-                <NumberInput label={`${(priceRange) ? 'Min. ' : ''}${strings.form_title_price}`} key={postForm.key('priceMin')} {...postForm.getInputProps('priceMin')} />
-                <Checkbox label={strings.checkbox} checked={priceRange} onChange={(e) => {setPriceRange(e.currentTarget.checked)}} />
-                <NumberInput label={`Max. ${strings.form_title_price}`} key={postForm.key('priceMax')} {...postForm.getInputProps('priceMax')} disabled={!priceRange} />
-              </Group>
-              <Button onClick={createPost}>Post!</Button>
+              <NumberInput label={`${(priceRange) ? 'Min. ' : ''}${strings.form_title_price}`} min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMin')} {...postForm.getInputProps('priceMin')} />
+              <Checkbox m="md" label={strings.checkbox} checked={priceRange} onChange={(e) => {setPriceRange(e.currentTarget.checked)}} />
+              <NumberInput label={`Max. ${strings.form_title_price}`} min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMax')} {...postForm.getInputProps('priceMax')} disabled={!priceRange} display={(!priceRange) ? "none" : "initial"} />
+              <Button m="md" onClick={createPost}>Post!</Button>
             </Drawer>
-          </Center>
+          </Stack>
         </Group>
       </Stack>
     </>

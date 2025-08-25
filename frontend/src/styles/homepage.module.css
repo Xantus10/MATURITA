@@ -13,10 +13,12 @@
 
 .filters {
   flex: 3;
+  min-width: 150px;
 }
 
 .main {
   flex: 12;
+  min-width: 300px;
 }
 
 .new {
