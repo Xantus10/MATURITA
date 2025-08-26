@@ -1,4 +1,4 @@
-import { Title, Text, Modal, Group, Stack, Paper, Code, Grid } from "@mantine/core";
+import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 
@@ -6,67 +6,68 @@ import LocalizedStrings from "react-localization";
 
 let strings = new LocalizedStrings({
   cz: {
-    state: 'Stav',
-    subjects: 'Předměty',
-    years: 'Ročníky',
+    State: 'Stav',
+    Subjects: 'Předměty',
+    Years: 'Ročníky',
     created: 'Vytvořeno',
     until: 'Platí do'
   },
   en: {
-    state: 'State',
-    subjects: 'Subjects',
-    years: 'Years',
+    State: 'State',
+    Subjects: 'Subjects',
+    Years: 'Years',
     created: 'Created',
     until: 'Valid until'
   }
 });
 
-export interface PostData {
-  id: string;
-  title: string;
-  creatorId: string;
-  createdAt: Date;removeAt: Date;
-  subjects: string[];
-  state: string;
-  years: number[];
-  price: {
-    min: number;
-    max: number;
+export interface PostData { /////////////////////////////////////// I think the names are lost steven (we returnin the raw response from mongodb)
+  _id: string;
+  Title: string;
+  CreatorId: string;
+  CreatedAt: Date;
+  RemoveAt: Date;
+  Subjects: string[];
+  State: string;
+  Years: number[];
+  Price: {
+    Min: number;
+    Max: number;
   };
 };
 
-function PostDisplay({id, title, creatorId, createdAt, removeAt, subjects, state, years, price}: PostData) {
+function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price}: PostData) {
   const [modalDisc, modalDiscController] = useDisclosure(false);
 
   const [creator, setCreator] = useState({first: 'Fname', last: 'Lname'});
-  id;creatorId;setCreator;
+  _id;CreatorId;setCreator;
 
   return (
     <>
     <Paper onClick={modalDiscController.open} p="md">
       <Group gap='xl' >
-        <Title order={2}>{title}</Title>
-        <Code>{state}</Code>
-        <Text>{(price.min === price.max) ? price.min : `${price.min} - ${price.max}`} Kč</Text>
+        <ManTitle order={2}>{Title}</ManTitle>
+        <Code>{State}</Code>
+        <Text>{(Price.Min === Price.Max) ? Price.Min : `${Price.Min} - ${Price.Max}`} Kč</Text>
       </Group>
     </Paper>
     
     <Modal opened={modalDisc} onClose={modalDiscController.close}>
       <Stack>
         <Group justify="space-between">
-          <Title>{title}</Title>
-          <Text>{(price.min === price.max) ? price.min : `${price.min} - ${price.max}`} Kč</Text>
+          <ManTitle order={2}>{Title}</ManTitle>
+          <Text>{(Price.Min === Price.Max) ? Price.Min : `${Price.Min} - ${Price.Max}`} Kč</Text>
         </Group>
         <Grid>
-          <Grid.Col span={6}>{strings.state}</Grid.Col>
-          <Grid.Col span={6}><Code>{state}</Code></Grid.Col>
-          <Grid.Col span={6}>{strings.subjects}</Grid.Col>
-          <Grid.Col span={6}>{subjects.map((sub) => {return <><Code>{sub}</Code>&nbsp;</>})}</Grid.Col>
-          <Grid.Col span={6}>{strings.years}</Grid.Col>
-          <Grid.Col span={6}>{years.map((sub) => {return <><Code>{sub}.</Code>&nbsp;</>})}</Grid.Col>
+          <Grid.Col span={6}>{strings.State}</Grid.Col>
+          <Grid.Col span={6}><Code>{State}</Code></Grid.Col>
+          <Grid.Col span={6}>{strings.Subjects}</Grid.Col>
+          <Grid.Col span={6}>{Subjects.map((sub) => {return <><Code>{sub}</Code>&nbsp;</>})}</Grid.Col>
+          <Grid.Col span={6}>{strings.Years}</Grid.Col>
+          <Grid.Col span={6}>{Years.map((sub) => {return <><Code>{sub}.</Code>&nbsp;</>})}</Grid.Col>
         </Grid>
-        <Text size="xs">{strings.created}: {createdAt.toLocaleString()}</Text>
-        <Text size="xs">{strings.until}: {removeAt.toLocaleString()}</Text>
+        <Text size="xs">{strings.created}: {CreatedAt.toLocaleString()}</Text>
+        <Text size="xs">{strings.until}: {RemoveAt.toLocaleString()}</Text>
         <Text ml="auto">{creator.first} {creator.last}</Text>
       </Stack>
     </Modal>

@@ -76,6 +76,7 @@ export default function HomePage() {
 
   const [subjects, setSubjects] = useState(['CJK', 'ANJ', 'PSI']); // WILL NEED TO CHANGE ONCE Subjects are implemented on BE
   const [posts, setPosts] = useState<PostData[]>([]);
+  console.log(posts);
 
   setSubjects;
 
