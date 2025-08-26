@@ -20,6 +20,14 @@ function App() {
   let loggedIn = (Cookies.get('ROLE') !== undefined && isCsrf());
   let msloggedIn = (accounts.length !== 0);
 
+  let routes = (
+        <>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+          </Routes>
+        </>
+        );
+
   if (!loggedIn) {
     if (!msloggedIn) {
       return (
@@ -31,17 +39,21 @@ function App() {
       let loggedIn = (Cookies.get('ROLE') !== undefined);
       if (!loggedIn) {
         console.error('User was not logged in after login'); // After notifications - questionable usability
+        return (
+          <>
+            NOTLOGGEDIN
+          </>
+        );
       }
+      return (
+        routes
+      );
     })
   }
 
   return (
-    <>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-      </Routes>
-    </>
-  )
+    routes
+  );
 }
 
 export default App
