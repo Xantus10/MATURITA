@@ -28,7 +28,7 @@ authrouter.post('/idtoken', async (req: Request, res: Response) => {
   }
   let ssid = Session.sessionCreate({objId: objId, role: role});
   let csrf = generateCsrf(ssid);
-  return res.header(CSRF_SET_HEADER_NAME, csrf).cookie(Session.COOKIE_NAME, ssid, Session.COOKIE_OPTS).cookie(Session.CONTROL_COOKIE_NAME, true).status(200).send({msg: "Done!"});
+  return res.header(CSRF_SET_HEADER_NAME, csrf).cookie(Session.COOKIE_NAME, ssid, Session.COOKIE_OPTS).cookie(Session.CONTROL_COOKIE_NAME, role).status(200).send({msg: "Done!"});
 });
 
 
