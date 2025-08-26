@@ -7,6 +7,10 @@ export function setCsrfToken(res: Response | undefined) {
   }
 }
 
+export function isCsrf() {
+  return sessionStorage.getItem('CSRF_TOKEN') !== null;
+}
+
 export function csrfHeaders() {
   let token = sessionStorage.getItem('CSRF_TOKEN');
   if (token) {

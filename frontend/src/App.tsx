@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 import LoginPage from './Pages/LoginPage';
 import HomePage from './Pages/HomePage';
 import { post } from './Util/http';
-import { setCsrfToken } from './Util/csrf';
+import { isCsrf, setCsrfToken } from './Util/csrf';
 
 async function LogUserIn(idtoken: string) {
   let res = await post('/auth/idtoken', {idtoken: idtoken});
@@ -17,7 +17,7 @@ async function LogUserIn(idtoken: string) {
 function App() {
   const {accounts} = useMsal();
 
-  let loggedIn = (Cookies.get('ROLE') !== undefined);
+  let loggedIn = (Cookies.get('ROLE') !== undefined && isCsrf());
   let msloggedIn = (accounts.length !== 0);
 
   if (!loggedIn) {
