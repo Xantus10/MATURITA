@@ -1,12 +1,12 @@
 import { Text, Title, Button, Stack, Group, Drawer, TextInput, NumberInput, NativeSelect, MultiSelect, Checkbox, Menu } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { MdOutlineAccountCircle, MdLogout, MdOutlineSettings, MdOutlineLocalPostOffice } from 'react-icons/md';
 import LocalizedStrings from 'react-localization'
 
-import PostDisplay from '../Components/PostDisplay';
+import PostDisplay, { type PostData } from '../Components/PostDisplay';
 import { get, post } from '../Util/http';
 
 import classes from '../styles/homepage.module.css'
@@ -55,6 +55,12 @@ let strings = new LocalizedStrings({
 
 
 export default function HomePage() {
+  async function getPosts(begin: number) {
+    let res = await get('/posts', {begin: begin, orderBy: orderBy, filterState: STATES, filterYears: [1, 2, 3, 4], filterSubjects: subjects});
+    if (!res) return;
+    if (res.status !== 200) return;
+    setPosts(posts.concat((await res.json()).posts));
+  }
   
   async function createPost() {
     let values = postForm.getValues()
@@ -69,9 +75,15 @@ export default function HomePage() {
   const STATES = ['Like new', 'Good', 'Worn'];
 
   const [subjects, setSubjects] = useState(['CJK', 'ANJ', 'PSI']); // WILL NEED TO CHANGE ONCE Subjects are implemented on BE
-  const [posts, setPosts] = useState([{id: '123456789', title: 'Selling', creatorId: '123456789', createdAt: new Date(), removeAt: new Date(Date.now() + 86400 * 1000), subjects: ['CJK', 'ESV'], state: 'Like new', years: [2, 3], price: { min: 100, max: 100 }}, {id: '123456789', title: 'Selling a book', creatorId: '123456789', createdAt: new Date(), removeAt: new Date(Date.now() + 86400 * 1000), subjects: ['CJK'], state: 'Worn', years: [2], price: { min: 100, max: 200 }}]);
+  const [posts, setPosts] = useState<PostData[]>([]);
 
-  const [orderBy, setOrderBy] = useState('date')
+  setSubjects;
+
+  const [orderBy, setOrderBy] = useState('date');
+
+  useEffect(() => {
+    getPosts(0);
+  }, []);
 
   const postForm = useForm({
     mode: 'uncontrolled',

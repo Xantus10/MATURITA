@@ -21,11 +21,25 @@ let strings = new LocalizedStrings({
   }
 });
 
+export interface PostData {
+  id: string;
+  title: string;
+  creatorId: string;
+  createdAt: Date;removeAt: Date;
+  subjects: string[];
+  state: string;
+  years: number[];
+  price: {
+    min: number;
+    max: number;
+  };
+};
 
-function PostDisplay({id, title, creatorId, createdAt, removeAt, subjects, state, years, price}: {id: string, title: string, creatorId: string, createdAt: Date, removeAt: Date, subjects: string[], state: string, years: number[], price: {min: number, max: number}}) {
+function PostDisplay({id, title, creatorId, createdAt, removeAt, subjects, state, years, price}: PostData) {
   const [modalDisc, modalDiscController] = useDisclosure(false);
 
-  const [creator, setCreator] = useState({first: 'Fname', last: 'Lname'})
+  const [creator, setCreator] = useState({first: 'Fname', last: 'Lname'});
+  id;creatorId;setCreator;
 
   return (
     <>
