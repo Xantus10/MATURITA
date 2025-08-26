@@ -64,7 +64,7 @@ export default function HomePage() {
   
   async function createPost() {
     let values = postForm.getValues()
-    if (values.priceMax < values.priceMin) values.priceMax = values.priceMin;
+    if (values.priceMax < values.priceMin || !priceRange) values.priceMax = values.priceMin;
     let res = await post('/posts', values);
     console.log(res?.status);
   }
@@ -91,7 +91,7 @@ export default function HomePage() {
       title: '',
       remove: 14,
       subjects: [],
-      state: '',
+      state: 'Like new',
       years: [],
       priceMin: 0,
       priceMax: 0
