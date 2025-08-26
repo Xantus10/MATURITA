@@ -47,7 +47,7 @@ postsrouter.post('/', async (req: Request, res: Response) => {
   }
   let min = parseInt(priceMin);
   let max = (priceMax) ? parseInt(priceMax) : min;
-  let yearsArr = years.map(parseInt);
+  let yearsArr = years.map((val: string) => parseInt(val));
   await Post.create({ CreatorId: req.session.data?.objId, Title: title, RemoveAt: parseInt(remove), Subjects: subjects, State: state, Years: yearsArr, Price: { Min: min, Max: max } });
   return res.status(201).send({msg: "Post created"});
 });
