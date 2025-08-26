@@ -25,8 +25,11 @@ await connect();
 */
 
 import { Session } from './middlewares/session.js';
+import { csrfMiddleware } from './middlewares/csrf.js';
 
 app.use((req: Request, res: Response, next: NextFunction) => {Session.sessionParser(req, res, next)});
+
+app.use(csrfMiddleware);
 
 
 /*
@@ -34,9 +37,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {Session.sessionPar
 */
 
 import authrouter from './routes/auth.js';
+import postsrouter from './routes/posts.js';
 
 app.use('/auth', authrouter);
-
+app.use('/posts', postsrouter);
 
 app.listen(env.PORT, () => {
   console.log(`Server is running at localhost:${env.PORT}`);
