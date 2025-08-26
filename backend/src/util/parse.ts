@@ -3,7 +3,7 @@ export function strQueryToArray<T = string>(strQueryArg: string, parseFunction?:
   let arr = strQueryArg.split(',')
 
   if (parseFunction) {
-    return arr.map(parseFunction);
+    return arr.map((val) => parseFunction(val));
   }
 
   return arr as T[];
