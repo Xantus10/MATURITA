@@ -1,6 +1,7 @@
 import { useMsal } from '@azure/msal-react'
 import { Routes, Route } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { useState, useEffect } from 'react';
 
 import LoginPage from './Pages/LoginPage';
 import HomePage from './Pages/HomePage';
@@ -15,10 +16,20 @@ async function LogUserIn(idtoken: string) {
 
 
 function App() {
+  const getLoginState = () => {return Cookies.get('ROLE') !== undefined && isCsrf()};
+
   const {accounts} = useMsal();
 
-  let loggedIn = (Cookies.get('ROLE') !== undefined && isCsrf());
-  let msloggedIn = (accounts.length !== 0);
+  const [loggedIn, setLoggedIn] = useState<boolean>(getLoginState());
+  const msloggedIn = accounts.length !== 0
+
+  useEffect(() => {
+    if (!loggedIn && msloggedIn) {
+      LogUserIn(accounts[0].idToken as string).then(() => {
+        setLoggedIn(getLoginState())
+      });
+    }
+  }, [loggedIn, msloggedIn])
 
   let routes = (
         <>
@@ -26,34 +37,17 @@ function App() {
             <Route path='/' element={<HomePage />} />
           </Routes>
         </>
-        );
+  );
 
-  if (!loggedIn) {
-    if (!msloggedIn) {
-      return (
-        <LoginPage />
-      );
-    }
-    
-    LogUserIn(accounts[0].idToken as string).then(() => {
-      let loggedIn = (Cookies.get('ROLE') !== undefined);
-      if (!loggedIn) {
-        console.error('User was not logged in after login'); // After notifications - questionable usability
-        return (
-          <>
-            NOTLOGGEDIN
-          </>
-        );
-      }
-      return (
-        routes
-      );
-    })
+  if (!msloggedIn) {
+    return (<LoginPage />);
   }
 
-  return (
-    routes
-  );
+  if (!loggedIn) {
+    return (<>INVALID MICROSOFT LOGIN</>);
+  }
+
+  return (routes);
 }
 
 export default App
