@@ -1,6 +1,7 @@
 import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { UserCache, type UserData } from "../Util/cache";
 
 import LocalizedStrings from "react-localization";
 
@@ -21,7 +22,7 @@ let strings = new LocalizedStrings({
   }
 });
 
-export interface PostData { /////////////////////////////////////// I think the names are lost steven (we returnin the raw response from mongodb)
+export interface PostData {
   _id: string;
   Title: string;
   CreatorId: string;
@@ -39,8 +40,16 @@ export interface PostData { /////////////////////////////////////// I think the 
 function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price}: PostData) {
   const [modalDisc, modalDiscController] = useDisclosure(false);
 
-  const [creator, setCreator] = useState({first: 'Fname', last: 'Lname'});
-  _id;CreatorId;setCreator;
+  const [creator, setCreator] = useState<UserData>({name: {first: '', last: ''}});
+  _id;
+
+  useEffect(() => {
+    UserCache.getUserData(CreatorId).then((val) => {
+      if (val) {
+        setCreator(val);
+      }
+    });
+  }, [])
 
   return (
     <>
@@ -68,7 +77,7 @@ function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, Stat
         </Grid>
         <Text size="xs">{strings.created}: {CreatedAt.toLocaleString()}</Text>
         <Text size="xs">{strings.until}: {RemoveAt.toLocaleString()}</Text>
-        <Text ml="auto">{creator.first} {creator.last}</Text>
+        <Text ml="auto">{creator.name.first} {creator.name.last}</Text>
       </Stack>
     </Modal>
     </>

@@ -84,7 +84,7 @@ export default function HomePage() {
 
   useEffect(() => {
     getPosts(0);
-  }, []);
+  }, [orderBy]);
 
   const postForm = useForm({
     mode: 'uncontrolled',
