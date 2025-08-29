@@ -7,6 +7,7 @@ import { MdOutlineAccountCircle, MdLogout, MdOutlineSettings, MdOutlineLocalPost
 import { useTranslation } from 'react-i18next';
 
 import PostDisplay, { type PostData } from '../Components/PostDisplay';
+import LangSwitch from '../Components/LangSwitch';
 import { get, postFormV } from '../Util/http';
 
 import classes from '../styles/homepage.module.css'
@@ -78,6 +79,7 @@ export default function HomePage() {
       <Stack className={classes.container}>
         <Group mih={'10vh'} bg={'gray.9'} p="md" justify="space-between">
           <Title order={1}>{t('title1')}</Title>
+          <LangSwitch />
           <Menu position="bottom-end">
             <Menu.Target>
               <Button w="110px" h="40px"><MdOutlineAccountCircle size="2rem" /></Button>

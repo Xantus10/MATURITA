@@ -4,6 +4,7 @@ import { Center, Text, Title, Button, Stack } from '@mantine/core'
 import classes from '../styles/loginpage.module.css'
 
 import { useTranslation } from 'react-i18next';
+import LangSwitch from '../Components/LangSwitch';
 
 export default function LoginPage() {
   const { t } = useTranslation('loginpage');
@@ -11,6 +12,7 @@ export default function LoginPage() {
   
   return (
     <>
+      <LangSwitch />
       <Center className={classes.container} bg={'dark.8'}>
         <Stack>
           <Title order={2}>{t('welcome')}</Title>
