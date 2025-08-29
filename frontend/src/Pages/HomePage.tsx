@@ -1,4 +1,4 @@
-import { Text, Title, Button, Stack, Group, Drawer, TextInput, NumberInput, NativeSelect, MultiSelect, Checkbox, Menu } from '@mantine/core'
+import { Text, Title, Button, Stack, Group, Drawer, TextInput, NumberInput, NativeSelect, MultiSelect, FileInput, Checkbox, Menu } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
 import { useState, useEffect } from 'react';
@@ -7,7 +7,7 @@ import { MdOutlineAccountCircle, MdLogout, MdOutlineSettings, MdOutlineLocalPost
 import LocalizedStrings from 'react-localization'
 
 import PostDisplay, { type PostData } from '../Components/PostDisplay';
-import { get, post } from '../Util/http';
+import { get, postFormV } from '../Util/http';
 
 import classes from '../styles/homepage.module.css'
 
@@ -22,12 +22,15 @@ let strings = new LocalizedStrings({
     form_err_state: 'Vložte platný stav',
     form_err_years: 'Alespoň 1 ročník',
     form_err_price: `Cena musí být v rozsahu ${PRICE_MIN}..${PRICE_MAX}`,
+    form_err_photos: 'Vložte maximálně 3 fotky',
     form_title_title: 'Titulek',
     form_title_remove: 'Doba trvání',
     form_title_subjects: 'Předmět/y',
     form_title_state: 'Stav učebnice',
     form_title_years: 'Ročník/y',
     form_title_price: 'Cena',
+    form_title_photos: 'Fotky',
+    form_desc_photos: 'Nejsou nutné, ale doporučujeme je, max. 3',
     checkbox: 'Použít rozsah místo pevné ceny',
     orderDate: 'Nejnovější',
     orderPrice: 'Nejlevnější',
@@ -40,12 +43,15 @@ let strings = new LocalizedStrings({
     form_err_state: 'Enter a valid state!',
     form_err_years: 'Enter at least 1 year',
     form_err_price: `Price must be in range ${PRICE_MIN}..${PRICE_MAX}`,
+    form_err_photos: 'Submit max 3 photos',
     form_title_title: 'Title',
     form_title_remove: 'Duration',
     form_title_subjects: 'Subject/s',
     form_title_state: 'Book condition',
     form_title_years: 'Year/s',
     form_title_price: 'Price',
+    form_title_photos: 'Photos',
+    form_desc_photos: 'Not necessary, but encouraged, max. 3',
     checkbox: 'Use price range instead of price',
     orderDate: 'Most recent',
     orderPrice: 'The cheapest',
@@ -65,7 +71,7 @@ export default function HomePage() {
   async function createPost() {
     let values = postForm.getValues()
     if (values.priceMax < values.priceMin || !priceRange) values.priceMax = values.priceMin;
-    let res = await post('/posts', values);
+    let res = await postFormV('/posts', values);
     console.log(res?.status);
   }
 
@@ -95,7 +101,8 @@ export default function HomePage() {
       state: 'Like new',
       years: [],
       priceMin: 0,
-      priceMax: 0
+      priceMax: 0,
+      pictures: []
     },
     validate: {
       title: (v) => ( (v.length > 0) ? null : strings.form_err_title ),
@@ -104,7 +111,8 @@ export default function HomePage() {
       state: (v) => ( (v in STATES) ? null : strings.form_err_state ),
       years: (v) => ( (v.length > 0) ? null : strings.form_err_years ),
       priceMin: (v) => ( (v >= PRICE_MIN && v <= PRICE_MAX) ? null : strings.form_err_price ),
-      priceMax: (v) => ( (v >= PRICE_MIN && v <= PRICE_MAX) ? null : strings.form_err_price )
+      priceMax: (v) => ( (v >= PRICE_MIN && v <= PRICE_MAX) ? null : strings.form_err_price ),
+      pictures: (v) => ( (v.length < 4) ? null : strings.form_err_photos ),
     }
   });
 
@@ -155,6 +163,7 @@ export default function HomePage() {
               <NumberInput label={`${(priceRange) ? 'Min. ' : ''}${strings.form_title_price}`} min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMin')} {...postForm.getInputProps('priceMin')} />
               <Checkbox m="md" label={strings.checkbox} checked={priceRange} onChange={(e) => {setPriceRange(e.currentTarget.checked)}} />
               <NumberInput label={`Max. ${strings.form_title_price}`} min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMax')} {...postForm.getInputProps('priceMax')} disabled={!priceRange} display={(!priceRange) ? "none" : "initial"} />
+              <FileInput label={strings.form_title_photos} description={strings.form_desc_photos} key={postForm.key('pictures')} {...postForm.getInputProps('pictures')} />
               <Button m="md" onClick={createPost}>Post!</Button>
             </Drawer>
           </Stack>
