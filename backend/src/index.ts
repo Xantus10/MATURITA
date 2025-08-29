@@ -1,12 +1,15 @@
 import express, { type NextFunction, type Request, type Response } from 'express';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
+import path from 'node:path';
 
 import env from './config/envconfig.js';
 
 const app = express();
 
 app.use(express.json());
+
+app.use('/images', express.static(path.join(__dirname, '../images')));
 
 app.use(cookieParser());
 

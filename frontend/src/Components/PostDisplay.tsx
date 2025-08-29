@@ -1,4 +1,4 @@
-import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid } from "@mantine/core";
+import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid, Image } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { UserCache, type UserData } from "../Util/cache";
@@ -35,9 +35,10 @@ export interface PostData {
     Min: number;
     Max: number;
   };
+  Photos: string[];
 };
 
-function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price}: PostData) {
+function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos}: PostData) {
   const [modalDisc, modalDiscController] = useDisclosure(false);
 
   const [creator, setCreator] = useState<UserData>({name: {first: '', last: ''}});
@@ -75,6 +76,9 @@ function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, Stat
           <Grid.Col span={6}>{strings.Years}</Grid.Col>
           <Grid.Col span={6}>{Years.map((sub) => {return <><Code>{sub}.</Code>&nbsp;</>})}</Grid.Col>
         </Grid>
+        <Group>
+          {Photos.map((uri: string) => {return (<Image src={`/api/images/${uri}`} />);})}
+        </Group>
         <Text size="xs">{strings.created}: {CreatedAt.toLocaleString()}</Text>
         <Text size="xs">{strings.until}: {RemoveAt.toLocaleString()}</Text>
         <Text ml="auto">{creator.name.first} {creator.name.last}</Text>
