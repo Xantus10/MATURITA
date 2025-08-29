@@ -16,7 +16,7 @@ export const postSchema = new Schema<PostIF, Model<PostIF>, PostModelIF>({
     Min: {type: Number, required: true, min: MIN_RANGE, max: MAX_RANGE},
     Max: {type: Number, required: true, min: MIN_RANGE, max: MAX_RANGE}
   },
-  //Photos: {type: [String]} Later
+  Photos: {type: [String], required: true}
 });
 
 postSchema.static('extendRemoveAt', function (id: Types.ObjectId, days: number) {

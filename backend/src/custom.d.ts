@@ -1,4 +1,5 @@
 import type { SessionData } from "./middlewares/session.ts";
+import multer from "multer";
 
 declare global {
   namespace Express {
@@ -10,7 +11,9 @@ declare global {
       },
       csrf: {
         valid: boolean;
-      }
+      },
+      file?: Express.Multer.File;
+      files?: Express.Multer.File[];
     }
   }
 }

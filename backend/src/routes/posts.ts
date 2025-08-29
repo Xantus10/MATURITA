@@ -3,6 +3,10 @@ import { loggedin } from "../middlewares/session.js";
 import { Types } from "mongoose";
 import Post, { MIN_RANGE, MAX_RANGE } from "../db/models/post.js";
 import { strQueryToArray } from "../util/parse.js";
+import multer from "multer";
+import { v4 as uuidv4 } from "uuid";
+import path from "node:path";
+import fs from "node:fs";
 
 const postsrouter = Router();
 
@@ -37,7 +41,35 @@ postsrouter.get('/', async (req: Request, res: Response) => {
   return res.status(200).send({posts: posts});
 });
 
-postsrouter.post('/', async (req: Request, res: Response) => {
+
+const photosDir = path.join(__dirname, '../../images');
+
+if (!fs.existsSync(photosDir)) {
+  fs.mkdirSync(photosDir, {recursive: true});
+}
+
+const multerMiddleware = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, callback) => {
+      callback(null, photosDir);
+    },
+    filename: (req, file, callback) => {
+      callback(null, uuidv4() + path.extname(file.originalname));
+    }
+  }),
+
+  fileFilter: (req, file, callback) => {
+    if (file.mimetype.startsWith('image/')) {
+      callback(null, true);
+    } else {
+      callback(null, false);
+    }
+  },
+
+  limits: { fileSize: 5 * 1024 * 1024 }
+});
+
+postsrouter.post('/', multerMiddleware.array('photos', 3), async (req: Request, res: Response) => {
   if (req.session.data?.role !== 'user') {
     return res.status(403).send({msg: "Unauthorized (not user)!"});
   }
@@ -48,7 +80,8 @@ postsrouter.post('/', async (req: Request, res: Response) => {
   let min = parseInt(priceMin);
   let max = (priceMax) ? parseInt(priceMax) : min;
   let yearsArr = years.map((val: string) => parseInt(val));
-  await Post.create({ CreatorId: req.session.data?.objId, Title: title, RemoveAt: parseInt(remove), Subjects: subjects, State: state, Years: yearsArr, Price: { Min: min, Max: max } });
+  let photos = (req.files) ? (req.files as Express.Multer.File[]).map(file => file.filename) : [];
+  await Post.create({ CreatorId: req.session.data?.objId, Title: title, RemoveAt: parseInt(remove), Subjects: subjects, State: state, Years: yearsArr, Price: { Min: min, Max: max }, Photos: photos });
   return res.status(201).send({msg: "Post created"});
 });
 
