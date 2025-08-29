@@ -2,25 +2,8 @@ import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid, Image 
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { UserCache, type UserData } from "../Util/cache";
+import { useTranslation } from "react-i18next";
 
-import LocalizedStrings from "react-localization";
-
-let strings = new LocalizedStrings({
-  cz: {
-    State: 'Stav',
-    Subjects: 'Předměty',
-    Years: 'Ročníky',
-    created: 'Vytvořeno',
-    until: 'Platí do'
-  },
-  en: {
-    State: 'State',
-    Subjects: 'Subjects',
-    Years: 'Years',
-    created: 'Created',
-    until: 'Valid until'
-  }
-});
 
 export interface PostData {
   _id: string;
@@ -43,6 +26,8 @@ function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, Stat
 
   const [creator, setCreator] = useState<UserData>({name: {first: '', last: ''}});
   _id;
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     UserCache.getUserData(CreatorId).then((val) => {
@@ -69,18 +54,18 @@ function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, Stat
           <Text>{(Price.Min === Price.Max) ? Price.Min : `${Price.Min} - ${Price.Max}`} Kč</Text>
         </Group>
         <Grid>
-          <Grid.Col span={6}>{strings.State}</Grid.Col>
+          <Grid.Col span={6}>{t('postdisplay.State')}</Grid.Col>
           <Grid.Col span={6}><Code>{State}</Code></Grid.Col>
-          <Grid.Col span={6}>{strings.Subjects}</Grid.Col>
+          <Grid.Col span={6}>{t('postdisplay.Subjects')}</Grid.Col>
           <Grid.Col span={6}>{Subjects.map((sub) => {return <><Code>{sub}</Code>&nbsp;</>})}</Grid.Col>
-          <Grid.Col span={6}>{strings.Years}</Grid.Col>
+          <Grid.Col span={6}>{t('postdisplay.Years')}</Grid.Col>
           <Grid.Col span={6}>{Years.map((sub) => {return <><Code>{sub}.</Code>&nbsp;</>})}</Grid.Col>
         </Grid>
         <Group>
           {Photos.map((uri: string) => {return (<Image src={`/api/images/${uri}`} />);})}
         </Group>
-        <Text size="xs">{strings.created}: {CreatedAt.toLocaleString()}</Text>
-        <Text size="xs">{strings.until}: {RemoveAt.toLocaleString()}</Text>
+        <Text size="xs">{t('postdisplay.created')}: {CreatedAt.toLocaleString()}</Text>
+        <Text size="xs">{t('postdisplay.until')}: {RemoveAt.toLocaleString()}</Text>
         <Text ml="auto">{creator.name.first} {creator.name.last}</Text>
       </Stack>
     </Modal>

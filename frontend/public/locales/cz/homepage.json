@@ -1,0 +1,29 @@
+{
+  "form": {
+    "title": {
+      "title": "Titulek",
+      "remove": "Doba trvání",
+      "subjects": "Předmět/y",
+      "state": "Stav učebnice",
+      "years": "Ročník/y",
+      "price": "Cena",
+      "photos": "Fotky"
+    },
+    "err": {
+      "title": "Vložte titulek",
+      "remove": "Doba trvání musí být alespoň 1 den",
+      "subjects": "Alespoň 1 předmět",
+      "state": "Vložte platný stav",
+      "years": "Alespoň 1 ročník",
+      "price": "Cena musí být v rozsahu {{PRICE_MIN}}..{{PRICE_MAX}}",
+      "photos": "Vložte maximálně 3 fotky"
+    },
+    "desc": {
+      "photos": "Nejsou nutné, ale doporučujeme je, max. 3"
+    }
+  },
+  "checkbox": "Použít rozsah místo pevné ceny",
+  "orderDate": "Nejnovější",
+  "orderPrice": "Nejlevnější",
+  "title1": "Vítejte na burze učebnic"
+}

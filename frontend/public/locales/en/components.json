@@ -1,0 +1,9 @@
+{
+  "postdisplay": {
+    "State": "State",
+    "Subjects": "Subjects",
+    "Years": "Years",
+    "created": "Created",
+    "until": "Valid until"
+  }
+}

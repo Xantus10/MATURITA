@@ -1,0 +1,29 @@
+{
+  "form": {
+    "title": {
+      "title": "Title",
+      "remove": "Duration",
+      "subjects": "Subject/s",
+      "state": "Book condition",
+      "years": "Year/s",
+      "price": "Price",
+      "photos": "Photos"
+    },
+    "err": {
+      "title": "Enter title",
+      "remove": "Duration must be at least 1 day",
+      "subjects": "Enter at least 1 subject",
+      "state": "Enter a valid state!",
+      "years": "Enter at least 1 year",
+      "price": "Price must be in range {{PRICE_MIN}}..{{PRICE_MAX}}",
+      "photos": "Submit max 3 photos"
+    },
+    "desc": {
+      "photos": "Not necessary, but encouraged, max. 3"
+    }
+  },
+  "checkbox": "Use price range instead of price",
+  "orderDate": "Most recent",
+  "orderPrice": "The cheapest",
+  "title1": "Welcome on the market for books"
+}

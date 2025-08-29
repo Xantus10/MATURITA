@@ -17,6 +17,8 @@ import './main.css'
 
 import App from './App.tsx'
 
+import './i18n.ts';
+
 // Custom global styles overrides
 const themeOverride = createTheme({
   fontFamily: 'system-ui, Avenir, Helvetica, Arial, sans-serif',
