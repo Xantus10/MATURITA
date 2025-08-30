@@ -85,5 +85,6 @@
     GET - Get info about the specified user
         - Response
           - 200: OK
+          - 400: Id is in incorrect format
           - 401: Invalid credentials
           - 404: The user does not exist
