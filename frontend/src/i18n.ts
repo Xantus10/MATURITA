@@ -14,7 +14,7 @@ i18n.use(HttpBackend)
       defaultNS: 'components',
 
       backend: {
-        loadPath: '/locales/{{lng}}/translation.json'
+        loadPath: '/locales/{{lng}}/{{ns}}.json'
       }
     })
 
