@@ -17,11 +17,11 @@ const PRICE_MAX = 1000;
 
 
 export default function HomePage() {
-  async function getPosts(begin: number) {
+  async function getPosts(begin: number, overwrite: boolean) {
     let res = await get('/posts', {begin: begin, orderBy: orderBy, filterState: STATES, filterYears: [1, 2, 3, 4], filterSubjects: subjects});
     if (!res) return;
     if (res.status !== 200) return;
-    setPosts(posts.concat((await res.json()).posts));
+    setPosts((overwrite) ? ((await res.json()).posts) : (posts.concat((await res.json()).posts)));
   }
   
   async function createPost() {
@@ -47,7 +47,7 @@ export default function HomePage() {
   const [orderBy, setOrderBy] = useState('date');
 
   useEffect(() => {
-    getPosts(0);
+    getPosts(0, true);
   }, [orderBy]);
 
   const postForm = useForm({
