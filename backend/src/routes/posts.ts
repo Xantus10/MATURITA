@@ -42,7 +42,7 @@ postsrouter.get('/', async (req: Request, res: Response) => {
 });
 
 
-const photosDir = path.join(__dirname, '../../images');
+const photosDir = path.join(import.meta.dirname, '../../images');
 
 if (!fs.existsSync(photosDir)) {
   fs.mkdirSync(photosDir, {recursive: true});
