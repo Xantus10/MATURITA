@@ -12,14 +12,16 @@ export default function LoginPage() {
   
   return (
     <>
+    <Stack className={classes.container}>
       <LangSwitch />
-      <Center className={classes.container} bg={'dark.8'}>
-        <Stack>
-          <Title order={2}>{t('welcome')}</Title>
-          <Text>{t('log_in')}</Text>
-          <Button onClick={() => {instance.loginRedirect();}} w='200px'>Log in</Button>
-        </Stack>
+      <Center bg={'dark.8'} p={"md"} h={"100%"} flex={1}>
+          <Stack>
+            <Title order={2}>{t('welcome')}</Title>
+            <Text>{t('log_in')}</Text>
+            <Button onClick={() => {instance.loginRedirect();}} w='200px'>Log in</Button>
+          </Stack>
       </Center>
+    </Stack>
     </>
   );
 }
