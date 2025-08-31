@@ -69,7 +69,7 @@ const multerMiddleware = multer({
   limits: { fileSize: 5 * 1024 * 1024 }
 });
 
-postsrouter.post('/', multerMiddleware.array('photos', 3), async (req: Request, res: Response) => {
+postsrouter.post('/', multerMiddleware.array('pictures', 3), async (req: Request, res: Response) => {
   if (req.session.data?.role !== 'user') {
     return res.status(403).send({msg: "Unauthorized (not user)!"});
   }
@@ -79,7 +79,8 @@ postsrouter.post('/', multerMiddleware.array('photos', 3), async (req: Request, 
   }
   let min = parseInt(priceMin);
   let max = (priceMax) ? parseInt(priceMax) : min;
-  let yearsArr = years.map((val: string) => parseInt(val));
+  let subsArr = strQueryToArray(subjects as string);
+  let yearsArr = strQueryToArray(years as string, parseInt);
   let photos = (req.files) ? (req.files as Express.Multer.File[]).map(file => file.filename) : [];
   await Post.create({ CreatorId: req.session.data?.objId, Title: title, RemoveAt: parseInt(remove), Subjects: subjects, State: state, Years: yearsArr, Price: { Min: min, Max: max }, Photos: photos });
   return res.status(201).send({msg: "Post created"});
