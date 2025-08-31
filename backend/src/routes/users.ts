@@ -7,7 +7,7 @@ const usersrouter = Router();
 
 usersrouter.use(loggedin);
 
-usersrouter.get('/', async (req: Request, res: Response) => {
+usersrouter.get('/list', async (req: Request, res: Response) => {
   
 });
 
@@ -17,7 +17,7 @@ usersrouter.get('/:id', async (req: Request, res: Response) => {
   if (!(/[0-9a-fA-F]{24}/.test(id))) return res.status(400).send({msg: 'The id is not valid mongodb id'});
   let doc = await User.findById(new Types.ObjectId(id), { Name: 1 });
   if (!doc) return res.status(404).send({msg: 'The user does not exist'});
-  return doc;
+  return res.status(200).send(doc);
 });
 
 

@@ -71,7 +71,7 @@
 
 
 /users routes
-  /
+  /list
     GET - Get list of users
         - Params
           - *first: string		// The beginning of the first name
