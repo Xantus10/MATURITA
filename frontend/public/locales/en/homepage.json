@@ -16,7 +16,8 @@
       "state": "Enter a valid state!",
       "years": "Enter at least 1 year",
       "price": "Price must be in range {{PRICE_MIN}}..{{PRICE_MAX}}",
-      "photos": "Submit max 3 photos"
+      "photos": "Submit max 3 photos",
+      "states": "Enter at least 1 state"
     },
     "desc": {
       "photos": "Not necessary, but encouraged, max. 3"

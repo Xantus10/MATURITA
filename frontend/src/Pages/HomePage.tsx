@@ -1,4 +1,4 @@
-import { Text, Title, Button, Stack, Group, Drawer, TextInput, NumberInput, NativeSelect, MultiSelect, FileInput, Checkbox, Menu } from '@mantine/core'
+import { Title, Button, Stack, Group, Drawer, TextInput, NumberInput, NativeSelect, MultiSelect, FileInput, Checkbox, Menu } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
 import { useState, useEffect } from 'react';
@@ -18,14 +18,16 @@ const PRICE_MAX = 1000;
 
 export default function HomePage() {
   async function getPosts(begin: number, overwrite: boolean) {
-    let res = await get('/posts', {begin: begin, orderBy: orderBy, filterState: STATES, filterYears: [1, 2, 3, 4], filterSubjects: subjects});
+    let values = filterForm.getValues();
+    if (values.priceMax < values.priceMin) values.priceMax = values.priceMin;
+    let res = await get('/posts', {begin: begin, orderBy: orderBy, filterState: values.state, filterYears: values.years, filterSubjects: values.subjects, priceMin: values.priceMin, priceMax: values.priceMax});
     if (!res) return;
     if (res.status !== 200) return;
     setPosts((overwrite) ? ((await res.json()).posts) : (posts.concat((await res.json()).posts)));
   }
   
   async function createPost() {
-    let values = postForm.getValues()
+    let values = postForm.getValues();
     if (values.priceMax < values.priceMin || !priceRange) values.priceMax = values.priceMin;
     let res = await postFormV('/posts', values);
     console.log(res?.status);
@@ -74,6 +76,24 @@ export default function HomePage() {
     }
   });
 
+  const filterForm = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      subjects: subjects,
+      state: STATES,
+      years: ['1', '2', '3', '4'],
+      priceMin: PRICE_MIN,
+      priceMax: PRICE_MAX
+    },
+    validate: {
+      subjects: (v) => ( (v.length > 0) ? null : t('form.err.subjects') ),
+      state: (v) => ( (v.length > 0) ? null : t('form.err.states') ),
+      years: (v) => ( (v.length > 0) ? null : t('form.err.years') ),
+      priceMin: (v) => ( (v >= PRICE_MIN && v <= PRICE_MAX) ? null : t('form.err.price', { PRICE_MIN: PRICE_MIN, PRICE_MAX: PRICE_MAX }) ),
+      priceMax: (v) => ( (v >= PRICE_MIN && v <= PRICE_MAX) ? null : t('form.err.price', { PRICE_MIN: PRICE_MIN, PRICE_MAX: PRICE_MAX }) ),
+    }
+  });
+
   return (
     <>
       <Stack className={classes.container}>
@@ -86,22 +106,25 @@ export default function HomePage() {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item>
-                <Button leftSection={<MdOutlineSettings />}>Account settings</Button>
+                <Button fullWidth leftSection={<MdOutlineSettings />}>Account settings</Button>
               </Menu.Item>
               <Menu.Item>
-                <Button leftSection={<MdOutlineLocalPostOffice />}>My posts</Button>
+                <Button fullWidth leftSection={<MdOutlineLocalPostOffice />}>My posts</Button>
               </Menu.Item>
               <Menu.Item>
-                <Button color='red.7' leftSection={<MdLogout />}>Log out</Button>
+                <Button fullWidth color='red.7' leftSection={<MdLogout />}>Log out</Button>
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </Group>
         <Group className={classes.divider} preventGrowOverflow={false} align='start'>
           <Stack className={classes.filters} bg={'gray.8'}>
-            <Text>{t('form.title.state')}</Text>
-            <Text>{t('form.title.subjects')}</Text>
-            <Text>{t('form.title.years')}</Text>
+            <MultiSelect label={t('form.title.subjects')} data={subjects} key={filterForm.key('subjects')} {...filterForm.getInputProps('subjects')} />
+            <MultiSelect label={t('form.title.state')} data={STATES} key={filterForm.key('state')} {...filterForm.getInputProps('state')} />
+            <MultiSelect label={t('form.title.years')} data={['1', '2', '3', '4']} key={filterForm.key('years')} {...filterForm.getInputProps('years')} />
+            <NumberInput label={`Min. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={filterForm.key('priceMin')} {...filterForm.getInputProps('priceMin')} />
+            <NumberInput label={`Max. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={filterForm.key('priceMax')} {...filterForm.getInputProps('priceMax')} />
+            <Button m="md" onClick={() => {getPosts(0, true)}}>Filter posts</Button>
           </Stack>
           <Stack className={classes.main} bg={'gray.8'}>
             <Group>

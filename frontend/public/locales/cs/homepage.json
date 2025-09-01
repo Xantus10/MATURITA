@@ -16,7 +16,8 @@
       "state": "Vložte platný stav",
       "years": "Alespoň 1 ročník",
       "price": "Cena musí být v rozsahu {{PRICE_MIN}}..{{PRICE_MAX}}",
-      "photos": "Vložte maximálně 3 fotky"
+      "photos": "Vložte maximálně 3 fotky",
+      "states": "Alespoň 1 stav"
     },
     "desc": {
       "photos": "Nejsou nutné, ale doporučujeme je, max. 3"
