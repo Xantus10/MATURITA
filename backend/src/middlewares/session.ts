@@ -2,15 +2,16 @@ import type { NextFunction, Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { randomBytes } from "node:crypto";
 import type { Types } from "mongoose";
+import type { UserIF } from "../db/interfaces/user.js";
 
 export interface SessionDataArg {
   objId: Types.ObjectId;
-  role: 'user' | 'admin';
+  role: UserIF['Role'];
 };
 
 export interface SessionData {
   objId: Types.ObjectId;
-  role: 'user' | 'admin';
+  role: UserIF['Role'];
   createdAt: number;
 };
 
@@ -70,6 +71,15 @@ export function loggedin(req: Request, res: Response, next: NextFunction) {
     return res.status(401).send({msg: 'Not logged in!'});
   }
   next();
+}
+
+export function checkRole(role:  UserIF['Role']) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (req.session.data?.role !== role) {
+      return res.status(403).send({msg: `You need to be ${role} to perform this operation!`});
+    }
+    next();
+  }
 }
 
 export const Session = new Session_Agent();
