@@ -63,7 +63,7 @@ function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, Stat
           <Grid.Col span={6}>{Years.map((sub) => {return <><Code>{sub}.</Code>&nbsp;</>})}</Grid.Col>
         </Grid>
         <Group>
-          {Photos.map((uri: string) => {return (<ClickableImage mah={"200px"} src={`/ClickableImages/${uri}`} />);})}
+          {Photos.map((uri: string) => {return (<ClickableImage mah={"200px"} fit="contain" src={`/images/${uri}`} />);})}
         </Group>
         <Text size="xs">{t('postdisplay.created')}: {CreatedAt.toLocaleString()}</Text>
         <Text size="xs">{t('postdisplay.until')}: {RemoveAt.toLocaleString()}</Text>
