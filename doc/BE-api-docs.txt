@@ -44,6 +44,7 @@
           - postId: string		// String representation of posts._id
         - Response
           - 200: OK (post deleted)
+          - 400: A required field is missing
           - 401: Invalid credentials
           - 403: Unauthorized
           - 404: The post does not exist
@@ -55,19 +56,19 @@
           - days: number		// Number of days to add to the posts lifespan
         - Response
           - 200: OK (post deleted)
+          - 400: A required field is missing
           - 401: Invalid credentials
           - 403: Unauthorized		// Admin cannot extend posts (Separation of privilege)
           - 404: The post does not exist
 
   /user
-    GET - Get posts of the logged in user
+    GET - Get posts of a user
         - Params
           - *userId: string		// Id of the user (will use the logged in user if unspecified)
         - Response
           - 200: OK
           - 401: Invalid credentials
           - 403: Unauthorized		// If userId is specified, the user must be admin
-          - 404: The user does not exist
 
 
 /users routes
