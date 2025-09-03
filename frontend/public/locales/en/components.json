@@ -1,9 +1,13 @@
 {
+  "no": "No",
+  "yes": "Yes",
   "postdisplay": {
     "State": "State",
     "Subjects": "Subjects",
     "Years": "Years",
     "created": "Created",
-    "until": "Valid until"
+    "until": "Valid until",
+    "deleteReassure": "Remove post?",
+    "addDays": "Number of days to extend"
   }
 }

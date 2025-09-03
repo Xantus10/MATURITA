@@ -1,9 +1,13 @@
 {
+  "no": "Ne",
+  "yes": "Ano",
   "postdisplay": {
     "State": "Stav",
     "Subjects": "Předměty",
     "Years": "Ročníky",
     "created": "Vytvořeno",
-    "until": "Platí do"
+    "until": "Platí do",
+    "deleteReassure": "Opravdu chcete příspěvek odebrat?",
+    "addDays": "Počet přidaných dnů"
   }
 }
