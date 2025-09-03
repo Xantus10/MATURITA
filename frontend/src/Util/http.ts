@@ -33,6 +33,16 @@ export async function post(path: string, args: {[key: string]: any} = {}) {
   }
 }
 
+export async function deletef(path: string, args: {[key: string]: any} = {}) {
+  let url = constructURL(path);
+  try {
+    let res = await fetch(url, {method: 'DELETE', headers: {'Accept': 'application/json', 'Content-Type': 'application/json', ...csrfHeaders()}, body: JSON.stringify(args)});
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function postFormV(path: string, args: {[key: string]: any} = {}) {
   let url = constructURL(path);
   let form = new FormData();
