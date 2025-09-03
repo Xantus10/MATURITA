@@ -2,6 +2,7 @@ import { Title, Button, Stack, Group, Drawer, TextInput, NumberInput, NativeSele
 import { useDisclosure } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa';
 import { MdOutlineAccountCircle, MdLogout, MdOutlineSettings, MdOutlineLocalPostOffice } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
@@ -34,6 +35,7 @@ export default function HomePage() {
   }
 
   const { t } = useTranslation('homepage');
+  const navigate = useNavigate();
 
   const [addbtn, addbtncontroller] = useDisclosure(false);
   const [priceRange, setPriceRange] = useState(false);
@@ -108,7 +110,7 @@ export default function HomePage() {
               <Menu.Item>
                 <Button fullWidth leftSection={<MdOutlineSettings />}>Account settings</Button>
               </Menu.Item>
-              <Menu.Item>
+              <Menu.Item onClick={() => {navigate('/my-posts')}}>
                 <Button fullWidth leftSection={<MdOutlineLocalPostOffice />}>My posts</Button>
               </Menu.Item>
               <Menu.Item>

@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 
 import LoginPage from './Pages/LoginPage';
 import HomePage from './Pages/HomePage';
+import MyPostsPage from './Pages/MyPostsPage';
+
 import { post } from './Util/http';
 import { isCsrf, setCsrfToken } from './Util/csrf';
 
@@ -35,6 +37,7 @@ function App() {
         <>
           <Routes>
             <Route path='/' element={<HomePage />} />
+            <Route path='/my-posts' element={<MyPostsPage />} />
           </Routes>
         </>
   );

@@ -1,9 +1,13 @@
-import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid } from "@mantine/core";
+import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid, Menu, Button, NumberInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
+import { BsThreeDots } from "react-icons/bs";
+import { FaTrashAlt } from "react-icons/fa";
 import { UserCache, type UserData } from "../Util/cache";
 import ClickableImage from "./ClickableImage";
+import Popup from "./Popup";
 import { useTranslation } from "react-i18next";
+import { post, deletef } from "../Util/http";
 
 
 export interface PostData {
@@ -22,13 +26,67 @@ export interface PostData {
   Photos: string[];
 };
 
-function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos}: PostData) {
+export interface PostDisplayProps {
+  data: PostData;
+  view: 'normal' | 'edit' | 'admin';
+};
+
+function PostDisplay({data, view}: PostDisplayProps) {
+  const {_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos} = data;
   const [modalDisc, modalDiscController] = useDisclosure(false);
 
   const [creator, setCreator] = useState<UserData>({name: {first: '', last: ''}});
-  _id;
 
   const { t } = useTranslation();
+
+
+  let menu = (<></>);
+
+  if (view === 'edit') {
+    const [deleteDisc, deleteDiscController] = useDisclosure(false);
+    const [extendDisc, extendDiscController] = useDisclosure(false);
+    const [days, setDays] = useState(0);
+
+    async function ExtendPostLifespan(days: number) {
+      let res = await post('/posts/extend', {postId: _id, days: days});
+      if (res?.status === 200) {
+        console.log('deleted');
+      }
+    }
+
+    async function DeletePost() {
+      let res = await deletef('/posts', {postId: _id});
+      if (res?.status === 200) {
+        console.log('deleted');
+      }
+    }
+
+    menu = (
+      <>
+        <Menu>
+          <Menu.Target>
+            <BsThreeDots />
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item onClick={extendDiscController.open}>
+              <Button fullWidth>Extend lifespan</Button>
+            </Menu.Item>
+            <Menu.Item onClick={deleteDiscController.open}>
+              <Button fullWidth color="red" leftSection={<FaTrashAlt />}>Delete post</Button>
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+
+        <Popup line={t('postdisplay.deleteReassure')} open={deleteDisc} onNo={deleteDiscController.close} onYes={DeletePost} />
+        <Modal opened={extendDisc} onClose={extendDiscController.close}>
+          <NumberInput label={t('postdisplay.addDays')} max={30} min={1} value={days} onChange={(val) => {(typeof val === 'string') ? setDays(0) : setDays(val)}} />
+          <Button onClick={() => {ExtendPostLifespan(days)}}>OK</Button>
+        </Modal>
+      </>
+    );
+  } else if (view === 'admin') {
+    ; // Future implementation
+  }
 
   useEffect(() => {
     UserCache.getUserData(CreatorId).then((val) => {
@@ -41,10 +99,11 @@ function PostDisplay({_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, Stat
   return (
     <>
     <Paper onClick={modalDiscController.open} p="md">
-      <Group gap='xl' >
+      <Group gap='xl' justify="space-between" >
         <ManTitle order={2}>{Title}</ManTitle>
         <Code>{State}</Code>
         <Text>{(Price.Min === Price.Max) ? Price.Min : `${Price.Min} - ${Price.Max}`} Kč</Text>
+        {menu}
       </Group>
     </Paper>
     
