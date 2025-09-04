@@ -7,6 +7,12 @@
            - 200: Valid ID token
            - 401: ID token did not pass validation
 
+  /logout
+    POST - Log the user out
+         - Response
+           - 200: Signed out
+           - 401: Invalid credentials (You were never logged in xd)
+
 
 /posts routes
   /

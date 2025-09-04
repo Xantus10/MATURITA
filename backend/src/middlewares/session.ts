@@ -46,7 +46,7 @@ class Session_Agent {
     }
     if ((Math.floor(new Date().getTime() / 1000) - (this.sessions[ssid as string] as SessionData).createdAt) > this.COOKIE_OPTS.maxAge/1000) {
       req.session.state = 'invalid';
-      delete this.sessions[ssid as string]
+      delete this.sessions[ssid as string];
       next();
       return;
     }
@@ -61,6 +61,10 @@ class Session_Agent {
     let ndata: SessionData = {...data, createdAt: Math.floor(new Date().getTime() / 1000)};
     this.sessions[ssid] = ndata;
     return ssid;
+  }
+
+  public sessionRemove(ssid: string) {
+    delete this.sessions[ssid];
   }
 };
 
