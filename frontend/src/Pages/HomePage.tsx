@@ -133,7 +133,7 @@ export default function HomePage() {
               <NativeSelect data={[{label: t('orderDate'), value: 'date'}, {label: t('orderPrice'), value: 'price'}]} value={orderBy} onChange={(e) => setOrderBy(e.currentTarget.value)} />
             </Group>
             <Stack>
-              {posts.map((p) => <PostDisplay {...p} />)}
+              {posts.map((p) => <PostDisplay data={p} view='normal' />)}
             </Stack>
           </Stack>
           <Stack className={classes.new} justify="end" align='center'>
