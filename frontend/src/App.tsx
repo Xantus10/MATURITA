@@ -9,11 +9,12 @@ import MyPostsPage from './Pages/MyPostsPage';
 
 import { post } from './Util/http';
 import { isCsrf, setCsrfToken } from './Util/csrf';
+import { autoHttpResponseNotification } from './Util/notifications';
 
 async function LogUserIn(idtoken: string) {
   let res = await post('/auth/idtoken', {idtoken: idtoken});
   setCsrfToken(res);
-  console.log(res?.status); // Use notifications to switch through codes
+  if (res) autoHttpResponseNotification(res);
 }
 
 

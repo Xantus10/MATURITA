@@ -5,6 +5,7 @@ import PostDisplay, { type PostData } from "../Components/PostDisplay";
 import BackToHomeButton from "../Components/BackToHomeButton";
 import LangSwitch from "../Components/LangSwitch";
 import { get } from "../Util/http";
+import { autoHttpResponseNotification } from "../Util/notifications";
 
 import classes from '../styles/mypostspage.module.css'
 
@@ -12,9 +13,9 @@ import classes from '../styles/mypostspage.module.css'
 function MyPostsPage() {
   async function getUserPosts() {
     let res = await get('/posts/user');
-    if (res?.status === 200) {
-      setPosts((await res.json()));
-    }
+    if (res) autoHttpResponseNotification(res);
+    let js = await res?.json();
+    setPosts(js.posts);
   }
 
   const [posts, setPosts] = useState<PostData[]>([]);

@@ -8,6 +8,7 @@ import ClickableImage from "./ClickableImage";
 import Popup from "./Popup";
 import { useTranslation } from "react-i18next";
 import { post, deletef } from "../Util/http";
+import { autoHttpResponseNotification } from "../Util/notifications";
 
 
 export interface PostData {
@@ -49,16 +50,12 @@ function PostDisplay({data, view}: PostDisplayProps) {
 
     async function ExtendPostLifespan(days: number) {
       let res = await post('/posts/extend', {postId: _id, days: days});
-      if (res?.status === 200) {
-        console.log('deleted');
-      }
+      if (res) autoHttpResponseNotification(res, true);
     }
 
     async function DeletePost() {
       let res = await deletef('/posts', {postId: _id});
-      if (res?.status === 200) {
-        console.log('deleted');
-      }
+      if (res) autoHttpResponseNotification(res, true);
     }
 
     menu = (

@@ -4,13 +4,14 @@ import { useForm } from '@mantine/form'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa';
-import { MdOutlineAccountCircle, MdLogout, MdOutlineSettings, MdOutlineLocalPostOffice } from 'react-icons/md';
+import { MdOutlineAccountCircle, MdOutlineSettings, MdOutlineLocalPostOffice } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 
 import PostDisplay, { type PostData } from '../Components/PostDisplay';
 import Logout, { LogoutFunc } from '../Components/Logout';
 import LangSwitch from '../Components/LangSwitch';
 import { get, postFormV } from '../Util/http';
+import { autoHttpResponseNotification } from '../Util/notifications';
 
 import classes from '../styles/homepage.module.css'
 
@@ -23,16 +24,17 @@ export default function HomePage() {
     let values = filterForm.getValues();
     if (values.priceMax < values.priceMin) values.priceMax = values.priceMin;
     let res = await get('/posts', {begin: begin, orderBy: orderBy, filterState: values.state, filterYears: values.years, filterSubjects: values.subjects, priceMin: values.priceMin, priceMax: values.priceMax});
-    if (!res) return;
-    if (res.status !== 200) return;
-    setPosts((overwrite) ? ((await res.json()).posts) : (posts.concat((await res.json()).posts)));
+    if (res) {
+      autoHttpResponseNotification(res);
+      setPosts((overwrite) ? ((await res.json()).posts) : (posts.concat((await res.json()).posts)));
+    }
   }
   
   async function createPost() {
     let values = postForm.getValues();
     if (values.priceMax < values.priceMin || !priceRange) values.priceMax = values.priceMin;
     let res = await postFormV('/posts', values);
-    console.log(res?.status);
+    if (res) autoHttpResponseNotification(res);
   }
 
   const { t } = useTranslation('homepage');
