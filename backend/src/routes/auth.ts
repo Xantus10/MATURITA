@@ -33,6 +33,8 @@ authrouter.post('/idtoken', async (req: Request, res: Response) => {
 
 authrouter.post('/logout', async (req: Request, res: Response) => {
   if (req.session.id) Session.sessionRemove(req.session.id);
+  res.clearCookie(Session.COOKIE_NAME);
+  res.clearCookie(Session.CONTROL_COOKIE_NAME);
   return res.status(200).send({msg: "Logged out"});
 });
 
