@@ -44,7 +44,7 @@ createRoot(document.getElementById('root')!).render(
       <MantineProvider theme={themeOverride} defaultColorScheme='dark'>
         <BrowserRouter>
           <App />
-          <Notifications />
+          <Notifications position='bottom-right' />
         </BrowserRouter>
       </MantineProvider>
     </MsalProvider>
