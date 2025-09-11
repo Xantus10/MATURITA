@@ -8,6 +8,7 @@ import { MdOutlineAccountCircle, MdLogout, MdOutlineSettings, MdOutlineLocalPost
 import { useTranslation } from 'react-i18next';
 
 import PostDisplay, { type PostData } from '../Components/PostDisplay';
+import Logout, { LogoutFunc } from '../Components/Logout';
 import LangSwitch from '../Components/LangSwitch';
 import { get, postFormV } from '../Util/http';
 
@@ -113,8 +114,8 @@ export default function HomePage() {
               <Menu.Item onClick={() => {navigate('/my-posts')}}>
                 <Button fullWidth leftSection={<MdOutlineLocalPostOffice />}>My posts</Button>
               </Menu.Item>
-              <Menu.Item>
-                <Button fullWidth color='red.7' leftSection={<MdLogout />}>Log out</Button>
+              <Menu.Item onClick={LogoutFunc}>
+                <Logout onClick={()=>{}} />
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
