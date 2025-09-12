@@ -79,7 +79,7 @@ postsrouter.post('/', checkRole('user'), multerMiddleware.array('pictures', 3), 
   let subsArr = strQueryToArray(subjects as string);
   let yearsArr = strQueryToArray(years as string, parseInt);
   let photos = (req.files) ? (req.files as Express.Multer.File[]).map(file => file.filename) : [];
-  await Post.create({ CreatorId: req.session.data?.objId, Title: title, RemoveAt: parseInt(remove), Subjects: subjects, State: state, Years: yearsArr, Price: { Min: min, Max: max }, Photos: photos });
+  await Post.create({ CreatorId: req.session.data?.objId, Title: title, RemoveAt: parseInt(remove), Subjects: subsArr, State: state, Years: yearsArr, Price: { Min: min, Max: max }, Photos: photos });
   return res.status(201).send({msg: "Post created"});
 });
 
@@ -92,7 +92,7 @@ postsrouter.delete('/', async (req: Request, res: Response) => {
   if (!post) {
     return res.status(404).send({msg: "Post does not exist!"});
   }
-  if (!(req.session.data?.role === 'admin' || req.session.data?.objId === post.CreatorId)) {
+  if (!(req.session.data?.role === 'admin' || req.session.data?.objId.equals(post.CreatorId))) {
     return res.status(403).send({msg: "Unauthorized (not admin nor creator)!"});
   }
   await post.deleteOne();
@@ -115,7 +115,7 @@ postsrouter.post('/extend', checkRole('user'), async (req: Request, res: Respons
   if (!post) {
     return res.status(404).send({msg: "Post does not exist!"});
   }
-  if (post.CreatorId !== req.session.data?.objId) {
+  if (!(post.CreatorId.equals(req.session.data?.objId))) {
     return res.status(403).send({msg: "Unauthorized (not creator)!"});
   }
   Post.extendRemoveAt(postId, days);
