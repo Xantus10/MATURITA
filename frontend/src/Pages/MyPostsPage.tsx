@@ -32,7 +32,7 @@ function MyPostsPage() {
           <LangSwitch />
           <BackToHomeButton />
         </Group>
-        <Stack>
+        <Stack bg={'gray.8'} p={"md"}>
           {posts.map((p) => <PostDisplay data={p} view='edit' />)}
         </Stack>
       </Stack>
