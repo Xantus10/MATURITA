@@ -1,12 +1,12 @@
 import { Button } from "@mantine/core";
 import { MdLogout } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { post } from "../Util/http";
 
 export async function LogoutFunc() {
-  let res = await post('/auth/logout');
-  if (res?.status === 200) {
-    console.log('logged out');
-  }
+  await post('/auth/logout');
+  const navigate = useNavigate();
+  navigate('/');
 }
 
 
