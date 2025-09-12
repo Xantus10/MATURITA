@@ -62,7 +62,7 @@ function PostDisplay({data, view}: PostDisplayProps) {
       <>
         <Menu>
           <Menu.Target>
-            <BsThreeDots />
+            <BsThreeDots style={{cursor: 'pointer'}} />
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item onClick={extendDiscController.open}>
@@ -95,11 +95,13 @@ function PostDisplay({data, view}: PostDisplayProps) {
 
   return (
     <>
-    <Paper onClick={modalDiscController.open} p="md">
-      <Group gap='xl' justify="space-between" >
-        <ManTitle order={2}>{Title}</ManTitle>
-        <Code>{State}</Code>
-        <Text>{(Price.Min === Price.Max) ? Price.Min : `${Price.Min} - ${Price.Max}`} Kč</Text>
+    <Paper>
+      <Group gap='xl' justify="space-between" m={"lg"} >
+        <Group gap='xl' justify="space-between" onClick={modalDiscController.open} flex={5} >
+          <ManTitle order={2}>{Title}</ManTitle>
+          <Code>{State}</Code>
+          <Text>{(Price.Min === Price.Max) ? Price.Min : `${Price.Min} - ${Price.Max}`} Kč</Text>
+        </Group>
         {menu}
       </Group>
     </Paper>
