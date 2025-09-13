@@ -33,6 +33,6 @@ export async function autoHttpResponseNotification(res: Response, with200: boole
   }
   if (status === 200 && !with200) return;
   console.log(status);
-  let props: showNotificationProps = {title: msg, icon: (status in [200, 201]) ? 'OK' : 'ERR'};
+  let props: showNotificationProps = {title: msg, icon: ([200, 201].includes(status)) ? 'OK' : 'ERR'};
   showNotification(props);
 }
