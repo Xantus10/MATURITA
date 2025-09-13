@@ -11,8 +11,8 @@ export const userSchema = new Schema<UserIF, Model<UserIF>, UserModelIF>({
   LastLogin: {type: Date, default: Date.now, expires: 86400 * 30 * 15}
 });
 
-userSchema.static('updateLastLogin', function (id: Types.ObjectId) {
-  this.findByIdAndUpdate(id, { $set: { LastLogin: new Date() } });
+userSchema.static('updateLastLogin', async function (id: Types.ObjectId) {
+  await this.findByIdAndUpdate(id, { $set: { LastLogin: new Date() } });
 })
 
 const User = model<UserIF, UserModelIF>('User', userSchema);

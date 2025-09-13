@@ -118,7 +118,7 @@ postsrouter.post('/extend', checkRole('user'), async (req: Request, res: Respons
   if (!(post.CreatorId.equals(req.session.data?.objId))) {
     return res.status(403).send({msg: "Unauthorized (not creator)!"});
   }
-  Post.extendRemoveAt(postId, days);
+  Post.extendRemoveAt(postId, new Date(post.RemoveAt.getTime() + days*1000*86400));
   return res.status(200).send({msg: `Posts lifetime has been extended by ${days} days`});
 });
 
