@@ -1,4 +1,4 @@
-import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid, Menu, Button, NumberInput } from "@mantine/core";
+import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid, Menu, Button, NumberInput, Box } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
@@ -62,7 +62,9 @@ function PostDisplay({data, view}: PostDisplayProps) {
       <>
         <Menu>
           <Menu.Target>
-            <BsThreeDots style={{cursor: 'pointer'}} />
+            <Box p={"md"}>
+              <BsThreeDots style={{cursor: 'pointer'}} />
+            </Box>
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item onClick={extendDiscController.open}>
@@ -96,14 +98,16 @@ function PostDisplay({data, view}: PostDisplayProps) {
   return (
     <>
     <Paper>
-      <Group gap='xl' justify="space-between" m={"lg"} >
-        <Group gap='xl' justify="space-between" onClick={modalDiscController.open} flex={5} >
-          <ManTitle order={2}>{Title}</ManTitle>
-          <Code>{State}</Code>
-          <Text>{(Price.Min === Price.Max) ? Price.Min : `${Price.Min} - ${Price.Max}`} Kč</Text>
+        <Group gap='xl' justify="space-between" >
+          <Box onClick={modalDiscController.open} flex={5}>
+            <Group gap='xl' justify="space-between" p={"md"} >
+              <ManTitle order={2}>{Title}</ManTitle>
+              <Code>{State}</Code>
+              <Text>{(Price.Min === Price.Max) ? Price.Min : `${Price.Min} - ${Price.Max}`} Kč</Text>
+            </Group>
+          </Box>
+          {menu}
         </Group>
-        {menu}
-      </Group>
     </Paper>
     
     <Modal opened={modalDisc} onClose={modalDiscController.close}>
