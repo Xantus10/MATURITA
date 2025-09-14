@@ -18,7 +18,7 @@ usersrouter.get('/list', checkRole('admin'), async (req: Request, res: Response)
 
 usersrouter.get('/me', async (req: Request, res: Response) => {
   let id = new Types.ObjectId(req.session.data?.objId);
-  let doc = await User.findById(id, { Name: 1 });
+  let doc = await User.findById(id, { Name: 1, Role: 1 });
   return res.status(200).send(doc);
 });
 
