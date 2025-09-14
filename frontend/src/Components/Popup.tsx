@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 export interface PopupProps {
   line: string;
   open: boolean;
-  onNo: () => void;
-  onYes: () => void;
+  onNo: () => void | Promise<void>;
+  onYes: () => void | Promise<void>;
 };
 
 function Popup({line, open, onNo, onYes}: PopupProps) {
