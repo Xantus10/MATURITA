@@ -6,6 +6,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { UserCache, type UserData } from "../Util/cache";
 import ClickableImage from "./ClickableImage";
 import Popup from "./Popup";
+import PopupAsk from "./PopupAsk";
 import { useTranslation } from "react-i18next";
 import { post, deletef } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
@@ -77,10 +78,9 @@ function PostDisplay({data, view}: PostDisplayProps) {
         </Menu>
 
         <Popup line={t('postdisplay.deleteReassure')} open={deleteDisc} onNo={deleteDiscController.close} onYes={DeletePost} />
-        <Modal opened={extendDisc} onClose={extendDiscController.close}>
-          <NumberInput label={t('postdisplay.addDays')} max={30} min={1} value={days} onChange={(val) => {(typeof val === 'string') ? setDays(0) : setDays(val)}} />
-          <Button onClick={() => {ExtendPostLifespan(days)}}>OK</Button>
-        </Modal>
+        <PopupAsk<number> open={extendDisc} onNo={extendDiscController.close} onYes={ExtendPostLifespan}
+          input={{element: <NumberInput label={t('postdisplay.addDays')} max={30} min={1} value={days} onChange={(val) => {(typeof val === 'string') ? setDays(0) : setDays(val)}} />,
+                  value: days}} />
       </>
     );
   } else if (view === 'admin') {
