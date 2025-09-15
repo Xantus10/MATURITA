@@ -1,0 +1,9 @@
+@import './media.css';
+
+.container {
+  width: 80%;
+  min-width: 300px;
+  min-height: 100vh;
+  padding: 8px;
+  margin: auto;
+}
