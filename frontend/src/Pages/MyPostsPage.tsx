@@ -9,6 +9,7 @@ import { autoHttpResponseNotification } from "../Util/notifications";
 
 import classes from '../styles/mypostspage.module.css'
 
+import { useTranslation } from 'react-i18next';
 
 function MyPostsPage() {
   async function getUserPosts() {
@@ -17,6 +18,8 @@ function MyPostsPage() {
     let js = await res?.json();
     setPosts(js.posts);
   }
+
+  const { t } = useTranslation('userpages');
 
   const [posts, setPosts] = useState<PostData[]>([]);
 
@@ -28,7 +31,7 @@ function MyPostsPage() {
     <>
       <Stack className={classes.container}>
         <Group justify="space-between">
-          <Title order={2}>My posts</Title>
+          <Title order={2}>{t('userposts.title')}</Title>
           <LangSwitch />
           <BackToHomeButton />
         </Group>

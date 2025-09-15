@@ -1,0 +1,12 @@
+{
+  "userposts": {
+    "title": "My posts"
+  },
+  "useracc": {
+    "title": "My account",
+    "name": "Name",
+    "role": "Role",
+    "delete": "Delete account",
+    "deleteReassure": "Do you really want to delete your account?"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "userposts": {
+    "title": "Moje příspěvky"
+  },
+  "useracc": {
+    "title": "Můj účet",
+    "name": "Jméno",
+    "role": "Role",
+    "delete": "Smazat účet",
+    "deleteReassure": "Opravdu si přejete smazat váš účet?"
+  }
+}
