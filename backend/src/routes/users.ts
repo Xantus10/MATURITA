@@ -2,6 +2,7 @@ import { Router, type Request, type Response } from "express";
 import { loggedin, checkRole } from "../middlewares/session.js";
 import { Types } from "mongoose";
 import User from "../db/models/user.js";
+import Post from "../db/models/post.js";
 
 const usersrouter = Router();
 
@@ -24,6 +25,7 @@ usersrouter.get('/me', async (req: Request, res: Response) => {
 
 usersrouter.delete('/me', async (req: Request, res: Response) => {
   let id = new Types.ObjectId(req.session.data?.objId);
+  await Post.removeByCreatorId(id);
   await User.findByIdAndDelete(id);
   return res.status(200).send({msg: 'OK'});
 });
@@ -42,7 +44,9 @@ usersrouter.delete('/:id', checkRole('admin'), async (req: Request, res: Respons
   let id = req.params.id;
   if (!id) return res.status(404).send({msg: 'The user does not exist'});
   if (!(/[0-9a-fA-F]{24}/.test(id))) return res.status(400).send({msg: 'The id is not valid mongodb id'});
-  await User.findByIdAndDelete(id);
+  let oid = new Types.ObjectId(id);
+  await Post.removeByCreatorId(oid);
+  await User.findByIdAndDelete(oid);
   return res.status(200).send({msg: 'OK'});
 });
 

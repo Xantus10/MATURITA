@@ -17,4 +17,5 @@ export interface PostIF {
 
 export interface PostModelIF extends Model<PostIF> {
   extendRemoveAt(id: Types.ObjectId, newDate: Date): Promise<void>;
+  removeByCreatorId(id: Types.ObjectId): Promise<void>;
 };

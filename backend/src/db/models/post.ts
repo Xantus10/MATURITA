@@ -26,9 +26,12 @@ export const postSchema = new Schema<PostIF, Model<PostIF>, PostModelIF>({
 });
 
 postSchema.static('extendRemoveAt', async function (id: Types.ObjectId, newDate: Date) {
-  console.log(newDate.toISOString());
   await this.findByIdAndUpdate(id, { RemoveAt: newDate } );
 });
+
+postSchema.static('removeByCreatorId', async function (id: Types.ObjectId) {
+  await this.deleteMany( { CreatorId: id } );
+})
 
 const Post = model<PostIF, PostModelIF>('Post', postSchema);
 export default Post;
