@@ -8,6 +8,8 @@ import HomePage from './Pages/HomePage';
 import MyPostsPage from './Pages/MyPostsPage';
 import UserDisplayPage from './Pages/UserDisplayPage';
 
+import AHomePage from './Pages/Admin/AHomePage';
+
 import { post } from './Util/http';
 import { isCsrf, setCsrfToken } from './Util/csrf';
 import { autoHttpResponseNotification } from './Util/notifications';
@@ -35,14 +37,20 @@ function App() {
     }
   }, [loggedIn, msloggedIn])
 
-  let routes = (
-        <>
-          <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/my-posts' element={<MyPostsPage />} />
-            <Route path='/my-account' element={<UserDisplayPage />} />
-          </Routes>
-        </>
+  let routes = (Cookies.get('ROLE') === 'user') ? (
+    <>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/my-posts' element={<MyPostsPage />} />
+        <Route path='/my-account' element={<UserDisplayPage />} />
+      </Routes>
+    </>
+  ) : (
+    <>
+      <Routes>
+        <Route path='/' element={<AHomePage />} />
+      </Routes>
+    </>
   );
 
   if (!msloggedIn) {

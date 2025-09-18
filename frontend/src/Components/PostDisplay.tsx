@@ -84,7 +84,32 @@ function PostDisplay({data, view}: PostDisplayProps) {
       </>
     );
   } else if (view === 'admin') {
-    ; // Future implementation
+    const [deleteDisc, deleteDiscController] = useDisclosure(false);
+
+    async function DeletePost() {
+      let res = await deletef('/posts', {postId: _id});
+      if (res) autoHttpResponseNotification(res, true);
+    }
+
+    menu = (
+      <>
+        <Menu>
+          <Menu.Target>
+            <Box p={"md"}>
+              <BsThreeDots style={{cursor: 'pointer'}} />
+            </Box>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item onClick={deleteDiscController.open}>
+              <Button fullWidth color="red" leftSection={<FaTrashAlt />}>Delete post</Button>
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+
+        <Popup line={t('postdisplay.deleteReassure')} open={deleteDisc} onNo={deleteDiscController.close} onYes={DeletePost} />
+        
+      </>
+    );
   }
 
   useEffect(() => {
