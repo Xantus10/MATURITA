@@ -7,6 +7,12 @@ Name {
 }
 Role		"admin"|"user"				// User role
 LastLogin	Datetime		TTL index	// Last login time with TTL to enable auto deletion
+Bans[] {
+ CreatedAt	Datetime				// When was the user banned
+ Until		Datetime|undefined			// Until when is the ban valid
+ IssuedBy	ObjectId -> users._id			// Who issued the ban
+ Reason		string					// Reason for ban
+}
 
 
 # collection posts
@@ -34,3 +40,4 @@ Subject		string			unique		// Shorthand of the subject
 _id		ObjectId
 MicrosoftId	string			unique		// Blacklisted Microsoft Entra Id
 CreatedAt	Datetime				// When was user blacklisted
+Reason		string					// Reason for blacklist
