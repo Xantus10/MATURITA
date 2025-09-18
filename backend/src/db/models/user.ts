@@ -1,6 +1,7 @@
 import { Schema, model, Model, Types } from "mongoose";
 import type { UserIF, UserModelIF } from "../interfaces/user.ts";
 
+
 export const userSchema = new Schema<UserIF, Model<UserIF>, UserModelIF>({
   MicrosoftId: {type: String, required: true, unique: true},
   Name: {
@@ -8,7 +9,19 @@ export const userSchema = new Schema<UserIF, Model<UserIF>, UserModelIF>({
     Last: {type: String, required: true}
   },
   Role: {type: String, enum: ['user', 'admin'], default: 'user'},
-  LastLogin: {type: Date, default: Date.now, expires: 86400 * 30 * 15}
+  LastLogin: {type: Date, default: Date.now, expires: 86400 * 30 * 15},
+  Bans: [{
+    CreatedAt: {type: Date, default: Date.now},
+    Until: {type: Date, required: true, set: (days: number | Date) => {
+      if (typeof(days) === 'number') {
+        return new Date(Date.now() + 86400 * 1000 * days);
+      } else {
+        return days;
+      }
+    }},
+    IssuedBy: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+    Reason: {type: String, default: ""}
+  }]
 });
 
 userSchema.static('updateLastLogin', async function (id: Types.ObjectId) {
