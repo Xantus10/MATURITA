@@ -76,6 +76,15 @@
           - 401: Invalid credentials
           - 403: Unauthorized		// If userId is specified, the user must be admin
 
+ DELETE - Delete all posts of a user
+        - Params
+          - userId: string		// Id of the user
+        - Response
+          - 200: OK
+          - 400: A required field is missing
+          - 401: Invalid credentials
+          - 403: Unauthorized		// The user must be admin
+
 
 /users routes
   /list

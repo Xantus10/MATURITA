@@ -35,11 +35,17 @@ export interface UserDisplayProps {
 function PostDisplay({data}: UserDisplayProps) {
   const {_id, MicrosoftId, Name, Role, LastLogin, Bans} = data;
   const [deleteDisc, deleteDiscController] = useDisclosure(false);
+  const [deleteUPDisc, deleteUPDiscController] = useDisclosure(false);
 
   const { t } = useTranslation();
 
   async function DeleteUser() {
       let res = await deletef(`/users/${_id}`);
+      if (res) autoHttpResponseNotification(res, true);
+  }
+
+  async function DeleteUserPosts() {
+      let res = await deletef('/posts/user', {userId: _id});
       if (res) autoHttpResponseNotification(res, true);
   }
 
@@ -49,11 +55,13 @@ function PostDisplay({data}: UserDisplayProps) {
       <Group gap='xl' justify="space-between" p={"md"} >
         <ManTitle order={2}>{Name.First} {Name.Last}</ManTitle>
         <Code>{Role}</Code>
+        <Button onClick={deleteUPDiscController.open}>DELETE User posts</Button>
         <Button onClick={deleteDiscController.open}>DELETE</Button>
       </Group>
     </Paper>
 
     
+    <Popup line="Do you really want to delete use posts" open={deleteUPDisc} onNo={deleteUPDiscController.close} onYes={DeleteUserPosts} />
     <Popup line="Do you really want to delete" open={deleteDisc} onNo={deleteDiscController.close} onYes={DeleteUser} />
     </>
   );

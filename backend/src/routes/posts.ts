@@ -131,4 +131,11 @@ postsrouter.get('/user', async (req: Request, res: Response) => {
   return res.status(200).send({posts: posts});
 });
 
+postsrouter.delete('/user', checkRole('admin'), async (req: Request, res: Response) => {
+  if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
+  let userId = new Types.ObjectId(req.body.userId as string);
+  await Post.removeByCreatorId(userId);
+  return res.status(200).send({msg: "Posts deleted"});
+});
+
 export default postsrouter;
