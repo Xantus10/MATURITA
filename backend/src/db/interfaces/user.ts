@@ -20,4 +20,5 @@ export interface UserIF {
 
 export interface UserModelIF extends Model<UserIF> {
   updateLastLogin(id: Types.ObjectId): Promise<void>;
+  setRole(id: Types.ObjectId, role: UserIF['Role']): Promise<void>;
 };

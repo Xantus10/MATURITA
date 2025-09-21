@@ -47,8 +47,16 @@ usersrouter.delete('/:id', checkRole('admin'), async (req: Request, res: Respons
   let oid = new Types.ObjectId(id);
   await Post.removeByCreatorId(oid);
   await User.findByIdAndDelete(oid);
-  return res.status(200).send({msg: 'OK'});
+  return res.status(200).send({msg: 'User deleted'});
 });
 
+usersrouter.post('/role', checkRole('admin'), async (req: Request, res: Response) => {
+  if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
+  let userId = new Types.ObjectId(req.body.userId as string);
+  if (!req.body.role) return res.status(400).send({msg: "'role' is missing"});
+  let role = req.body.role;
+  await User.setRole(userId, role);
+  return res.status(200).send({msg: 'Role changed to'+role});
+});
 
 export default usersrouter;

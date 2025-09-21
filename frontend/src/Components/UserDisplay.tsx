@@ -1,6 +1,5 @@
-import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid, Menu, Button, NumberInput, Box } from "@mantine/core";
+import { Title as ManTitle, Group, Paper, Code, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import Popup from "./Popup";
 import PopupAsk from "./PopupAsk";
@@ -40,14 +39,21 @@ function PostDisplay({data}: UserDisplayProps) {
   const { t } = useTranslation();
 
   async function DeleteUser() {
-      let res = await deletef(`/users/${_id}`);
-      if (res) autoHttpResponseNotification(res, true);
+    let res = await deletef(`/users/${_id}`);
+    if (res) autoHttpResponseNotification(res, true);
   }
 
   async function DeleteUserPosts() {
-      let res = await deletef('/posts/user', {userId: _id});
-      if (res) autoHttpResponseNotification(res, true);
+    let res = await deletef('/posts/user', {userId: _id});
+    if (res) autoHttpResponseNotification(res, true);
   }
+
+  async function ChangeUserRole(role: 'admin' | 'user') {
+    let res = await post('/users/role', {userId: _id, role: role});
+    if (res) autoHttpResponseNotification(res, true);
+  }
+
+  const inverseRole = (Role==='admin') ? 'user' : 'admin';
 
   return (
     <>
@@ -55,13 +61,13 @@ function PostDisplay({data}: UserDisplayProps) {
       <Group gap='xl' justify="space-between" p={"md"} >
         <ManTitle order={2}>{Name.First} {Name.Last}</ManTitle>
         <Code>{Role}</Code>
-        <Button onClick={deleteUPDiscController.open}>DELETE User posts</Button>
-        <Button onClick={deleteDiscController.open}>DELETE</Button>
+        <Button onClick={deleteUPDiscController.open} leftSection={<FaTrashAlt />}>DELETE User posts</Button>
+        <Button onClick={deleteDiscController.open} leftSection={<FaTrashAlt />}>DELETE</Button>
+        <Button onClick={() => {ChangeUserRole(inverseRole)}}>Make {inverseRole}</Button>
       </Group>
     </Paper>
-
     
-    <Popup line="Do you really want to delete use posts" open={deleteUPDisc} onNo={deleteUPDiscController.close} onYes={DeleteUserPosts} />
+    <Popup line="Do you really want to delete user posts" open={deleteUPDisc} onNo={deleteUPDiscController.close} onYes={DeleteUserPosts} />
     <Popup line="Do you really want to delete" open={deleteDisc} onNo={deleteDiscController.close} onYes={DeleteUser} />
     </>
   );

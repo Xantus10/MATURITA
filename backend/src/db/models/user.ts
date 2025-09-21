@@ -26,7 +26,11 @@ export const userSchema = new Schema<UserIF, Model<UserIF>, UserModelIF>({
 
 userSchema.static('updateLastLogin', async function (id: Types.ObjectId) {
   await this.findByIdAndUpdate(id, { $set: { LastLogin: new Date() } });
-})
+});
+
+userSchema.static('setRole', async function (id: Types.ObjectId, role: UserIF['Role']) {
+  await this.findByIdAndUpdate(id, { $set: { Role: role } });
+});
 
 const User = model<UserIF, UserModelIF>('User', userSchema);
 export default User;

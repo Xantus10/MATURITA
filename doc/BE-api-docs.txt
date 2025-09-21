@@ -124,3 +124,14 @@
           - 401: Invalid credentials
           - 403: Unauthorized			// The user must be admin
           - 404: The user does not exist
+  
+  /Role
+   POST - Change a user's Role
+        - Params
+          - userId: string			// User's ID
+          - role: 'admin' | 'user'		// Role to change to
+        - Response
+          - 200: OK
+          - 400: Required param is missing
+          - 401: Invalid credentials
+          - 403: Unauthorized			// The user must be admin
