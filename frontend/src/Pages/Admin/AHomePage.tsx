@@ -72,8 +72,8 @@ export default function AHomePage() {
               <Button w="110px" h="40px">Admin options</Button>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item onClick={() => {}}>
-                <Button fullWidth>XXX</Button>
+              <Menu.Item onClick={() => {navigate('/users')}}>
+                <Button fullWidth>Users page</Button>
               </Menu.Item>
               <Menu.Item onClick={() => {}}>
                 <Button fullWidth>YYY</Button>

@@ -4,6 +4,7 @@ import components from "../public/locales/en/components.json"
 import homepage from "../public/locales/en/homepage.json"
 import loginpage from "../public/locales/en/loginpage.json"
 import userpages from "../public/locales/en/userpages.json"
+import admin from "../public/locales/en/admin.json"
 
 declare module "i18next" {
   interface CustomTypeOptions {
@@ -14,6 +15,7 @@ declare module "i18next" {
       homepage: typeof homepage;
       loginpage: typeof loginpage;
       userpages: typeof userpages;
+      admin: typeof admin;
     };
   }
 }

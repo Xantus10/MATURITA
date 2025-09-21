@@ -31,12 +31,12 @@ export interface UserDisplayProps {
   data: UserData;
 };
 
-function PostDisplay({data}: UserDisplayProps) {
-  const {_id, MicrosoftId, Name, Role, LastLogin, Bans} = data;
+function UserDisplay({data}: UserDisplayProps) {
+  const {_id, MicrosoftId, Name, Role, Bans} = data;
   const [deleteDisc, deleteDiscController] = useDisclosure(false);
   const [deleteUPDisc, deleteUPDiscController] = useDisclosure(false);
 
-  const { t } = useTranslation();
+  const { t } = useTranslation('admin');
 
   async function DeleteUser() {
     let res = await deletef(`/users/${_id}`);
@@ -61,16 +61,16 @@ function PostDisplay({data}: UserDisplayProps) {
       <Group gap='xl' justify="space-between" p={"md"} >
         <ManTitle order={2}>{Name.First} {Name.Last}</ManTitle>
         <Code>{Role}</Code>
-        <Button onClick={deleteUPDiscController.open} leftSection={<FaTrashAlt />}>DELETE User posts</Button>
-        <Button onClick={deleteDiscController.open} leftSection={<FaTrashAlt />}>DELETE</Button>
-        <Button onClick={() => {ChangeUserRole(inverseRole)}}>Make {inverseRole}</Button>
+        <Button onClick={deleteUPDiscController.open} leftSection={<FaTrashAlt />}>{t('userDisplay.deletePosts')}</Button>
+        <Button onClick={deleteDiscController.open} leftSection={<FaTrashAlt />}>{t('userDisplay.delete')}</Button>
+        <Button onClick={() => {ChangeUserRole(inverseRole)}}>{t('userDisplay.make')} {inverseRole}</Button>
       </Group>
     </Paper>
     
-    <Popup line="Do you really want to delete user posts" open={deleteUPDisc} onNo={deleteUPDiscController.close} onYes={DeleteUserPosts} />
-    <Popup line="Do you really want to delete" open={deleteDisc} onNo={deleteDiscController.close} onYes={DeleteUser} />
+    <Popup line={t('userDisplay.deletePostsReassure')} open={deleteUPDisc} onNo={deleteUPDiscController.close} onYes={DeleteUserPosts} />
+    <Popup line={t('userDisplay.deleteReassure')} open={deleteDisc} onNo={deleteDiscController.close} onYes={DeleteUser} />
     </>
   );
 }
 
-export default PostDisplay;
+export default UserDisplay;

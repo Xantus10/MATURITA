@@ -10,7 +10,7 @@ i18n.use(HttpBackend)
     .init({
       fallbackLng: 'en',
 
-      ns: ['homepage', 'loginpage', 'components'],
+      ns: ['homepage', 'loginpage', 'components', 'userpages', 'admin'],
       defaultNS: 'components',
 
       backend: {

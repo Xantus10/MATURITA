@@ -1,0 +1,9 @@
+{
+  "userDisplay": {
+    "delete": "Smazat",
+    "deletePosts": "Smazat všechny příspěvky",
+    "deleteReassure": "Opravdu chcete smazat uživatele",
+    "deletePostsReassure": "Opravdu chcete smazat všechny příspěvky od uživatele",
+    "make": "Změnit na"
+  }
+}
