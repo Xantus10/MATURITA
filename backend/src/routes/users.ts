@@ -30,6 +30,32 @@ usersrouter.delete('/me', async (req: Request, res: Response) => {
   return res.status(200).send({msg: 'OK'});
 });
 
+usersrouter.post('/role', checkRole('admin'), async (req: Request, res: Response) => {
+  if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
+  let userId = new Types.ObjectId(req.body.userId as string);
+  if (!req.body.role) return res.status(400).send({msg: "'role' is missing"});
+  let role = req.body.role;
+  await User.setRole(userId, role);
+  return res.status(200).send({msg: 'Role changed to'+role});
+});
+
+usersrouter.post('/ban', checkRole('admin'), async (req: Request, res: Response) => {
+  if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
+  let userId = new Types.ObjectId(req.body.userId as string);
+  if (!req.body.reason) return res.status(400).send({msg: "'reason' is missing"});
+  let reason = req.body.reason;
+  if (!req.body.days) return res.status(400).send({msg: "'days' is missing"});
+  let days = parseInt(req.body.days);
+  let objId = (req.session.data?.objId) ? req.session.data?.objId : new Types.ObjectId();
+  User.ban(userId, objId, days, reason);
+  return res.status(200).send({msg: `User has been banned for ${days} days`});
+});
+
+
+
+
+
+// NO ROUTES BEYOND THIS POINT!!!
 
 usersrouter.get('/:id', async (req: Request, res: Response) => {
   let id = req.params.id;
@@ -48,15 +74,6 @@ usersrouter.delete('/:id', checkRole('admin'), async (req: Request, res: Respons
   await Post.removeByCreatorId(oid);
   await User.findByIdAndDelete(oid);
   return res.status(200).send({msg: 'User deleted'});
-});
-
-usersrouter.post('/role', checkRole('admin'), async (req: Request, res: Response) => {
-  if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
-  let userId = new Types.ObjectId(req.body.userId as string);
-  if (!req.body.role) return res.status(400).send({msg: "'role' is missing"});
-  let role = req.body.role;
-  await User.setRole(userId, role);
-  return res.status(200).send({msg: 'Role changed to'+role});
 });
 
 export default usersrouter;

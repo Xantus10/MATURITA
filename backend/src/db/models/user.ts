@@ -32,5 +32,9 @@ userSchema.static('setRole', async function (id: Types.ObjectId, role: UserIF['R
   await this.findByIdAndUpdate(id, { $set: { Role: role } });
 });
 
+userSchema.static('ban', async function (id: Types.ObjectId, issuedBy: Types.ObjectId, days: number, reason: string) {
+  await this.findByIdAndUpdate(id, { $push: { Bans: { Until: days, IssuedBy: issuedBy, Reason: reason } } });
+})
+
 const User = model<UserIF, UserModelIF>('User', userSchema);
 export default User;

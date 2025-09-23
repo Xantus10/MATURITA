@@ -125,11 +125,42 @@
           - 403: Unauthorized			// The user must be admin
           - 404: The user does not exist
   
-  /Role
+  /role
    POST - Change a user's Role
         - Params
           - userId: string			// User's ID
           - role: 'admin' | 'user'		// Role to change to
+        - Response
+          - 200: OK
+          - 400: Required param is missing
+          - 401: Invalid credentials
+          - 403: Unauthorized			// The user must be admin
+
+  /ban
+   POST - Ban a user
+        - Params
+          - userId: string			// Id of the banned user
+          - days: number			// Days to ban the user for
+          - reason: string			// Reason for the ban
+        - Response
+          - 200: OK
+          - 400: Required param is missing
+          - 401: Invalid credentials
+          - 403: Unauthorized			// The user must be admin
+
+
+/blacklist routes
+  /
+    GET - Retrieve a list of all blacklist
+        - Response
+          - 200: OK
+          - 401: Invalid credentials
+          - 403: Unauthorized			// The user must be admin
+
+   POST - Add a microsoftId to blacklist
+        - Params
+          - microsoftId: string			// Mictosoft Id to blacklist
+          - reason: string			// Reason for the blacklist
         - Response
           - 200: OK
           - 400: Required param is missing
