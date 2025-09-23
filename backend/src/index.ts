@@ -42,10 +42,12 @@ app.use(csrfMiddleware);
 import authrouter from './routes/auth.js';
 import postsrouter from './routes/posts.js';
 import usersrouter from './routes/users.js';
+import blackrouter from './routes/blacklist.js';
 
 app.use('/auth', authrouter);
 app.use('/posts', postsrouter);
 app.use('/users', usersrouter);
+app.use('/blacklist', blackrouter);
 
 app.listen(env.PORT, () => {
   console.log(`Server is running at localhost:${env.PORT}`);
