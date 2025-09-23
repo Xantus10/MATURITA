@@ -5,5 +5,11 @@
     "deleteReassure": "Opravdu chcete smazat uživatele",
     "deletePostsReassure": "Opravdu chcete smazat všechny příspěvky od uživatele",
     "make": "Změnit na"
+  },
+  "userPage": {
+    "title": "Správa uživatelů",
+    "first": "Jméno",
+    "last": "Příjmení",
+    "display": "Počet výsledků"
   }
 }

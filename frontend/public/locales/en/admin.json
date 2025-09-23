@@ -5,5 +5,11 @@
     "deleteReassure": "Do you really want to delete the user",
     "deletePostsReassure": "Do you really want to remove all of user's posts",
     "make": "Make"
+  },
+  "userPage": {
+    "title": "Users management",
+    "first": "First name",
+    "last": "Last name",
+    "display": "Display results"
   }
 }

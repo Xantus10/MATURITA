@@ -9,6 +9,7 @@ import MyPostsPage from './Pages/MyPostsPage';
 import UserDisplayPage from './Pages/UserDisplayPage';
 
 import AHomePage from './Pages/Admin/AHomePage';
+import AUsersPage from './Pages/Admin/AUsersPage';
 
 import { post } from './Util/http';
 import { isCsrf, setCsrfToken } from './Util/csrf';
@@ -49,6 +50,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<AHomePage />} />
+        <Route path='/users' element={<AUsersPage />} />
       </Routes>
     </>
   );
