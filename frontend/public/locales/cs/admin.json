@@ -1,10 +1,15 @@
 {
   "userDisplay": {
     "delete": "Smazat",
+    "deleteAcc": "Smazat účet",
     "deletePosts": "Smazat všechny příspěvky",
     "deleteReassure": "Opravdu chcete smazat uživatele",
     "deletePostsReassure": "Opravdu chcete smazat všechny příspěvky od uživatele",
-    "make": "Změnit na"
+    "make": "Změnit na",
+    "ban": "Zakázat přístup",
+    "banDays": "Na kolik dní chcete uživateli zakázat přístup",
+    "banReason": "Důvod",
+    "blacklistNotice": "Pro permanentní zákaz uživatele ho přidejte na blacklist"
   },
   "userPage": {
     "title": "Správa uživatelů",
