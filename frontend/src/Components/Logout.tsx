@@ -1,20 +1,22 @@
 import { Button } from "@mantine/core";
+import { useMsal, type IMsalContext } from "@azure/msal-react";
 import { MdLogout } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 import { post } from "../Util/http";
 
-export async function LogoutFunc() {
+export async function LogoutFunc(msalInstance?: IMsalContext['instance']) {
   await post('/auth/logout');
-  const navigate = useNavigate();
-  navigate('/');
+  if (msalInstance) {
+    msalInstance.logoutPopup({mainWindowRedirectUri: "/"});
+  }
 }
 
 
-function Logout({ onClick = LogoutFunc }: {onClick?: () => void}) {
+function Logout({ onClick = 'handle' }: {onClick?: 'handle' | (() => void)}) {
+  const {instance} = useMsal();
 
   return (
     <>
-    <Button fullWidth color='red.7' onClick={onClick} leftSection={<MdLogout />}>Log out</Button>
+    <Button fullWidth color='red.7' onClick={(onClick === 'handle') ? (() => {LogoutFunc(instance)}) : (onClick)} leftSection={<MdLogout />}>Log out</Button>
     </>
   );
 }
