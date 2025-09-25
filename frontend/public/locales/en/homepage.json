@@ -26,5 +26,13 @@
   "checkbox": "Use price range instead of price",
   "orderDate": "Most recent",
   "orderPrice": "The cheapest",
-  "title1": "Welcome on the market for books"
+  "title1": "Welcome on the market for books",
+  "filter": "Filter posts",
+  "myacc": "My account",
+  "mypost": "My posts",
+  "admin": {
+    "title": "Welcome to the administration portal",
+    "manage": "Manage",
+    "users": "Users"
+  }
 }

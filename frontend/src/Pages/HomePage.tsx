@@ -8,7 +8,7 @@ import { MdOutlineAccountCircle, MdOutlineSettings, MdOutlineLocalPostOffice } f
 import { useTranslation } from 'react-i18next';
 
 import PostDisplay, { type PostData } from '../Components/PostDisplay';
-import Logout, { LogoutFunc } from '../Components/Logout';
+import Logout from '../Components/Logout';
 import LangSwitch from '../Components/LangSwitch';
 import { get, postFormV } from '../Util/http';
 import { autoHttpResponseNotification } from '../Util/notifications';
@@ -110,13 +110,13 @@ export default function HomePage() {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item onClick={() => {navigate('/my-account')}}>
-                <Button fullWidth leftSection={<MdOutlineSettings />}>Account settings</Button>
+                <Button fullWidth leftSection={<MdOutlineSettings />}>{t('myacc')}</Button>
               </Menu.Item>
               <Menu.Item onClick={() => {navigate('/my-posts')}}>
-                <Button fullWidth leftSection={<MdOutlineLocalPostOffice />}>My posts</Button>
+                <Button fullWidth leftSection={<MdOutlineLocalPostOffice />}>{t('mypost')}</Button>
               </Menu.Item>
-              <Menu.Item onClick={LogoutFunc}>
-                <Logout onClick={()=>{}} />
+              <Menu.Item>
+                <Logout />
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
@@ -128,7 +128,7 @@ export default function HomePage() {
             <MultiSelect label={t('form.title.years')} data={['1', '2', '3', '4']} key={filterForm.key('years')} {...filterForm.getInputProps('years')} />
             <NumberInput label={`Min. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={filterForm.key('priceMin')} {...filterForm.getInputProps('priceMin')} />
             <NumberInput label={`Max. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={filterForm.key('priceMax')} {...filterForm.getInputProps('priceMax')} />
-            <Button m="md" onClick={() => {getPosts(0, true)}}>Filter posts</Button>
+            <Button m="md" onClick={() => {getPosts(0, true)}}>{t('filter')}</Button>
           </Stack>
           <Stack className={classes.main} bg={'gray.8'}>
             <Group>

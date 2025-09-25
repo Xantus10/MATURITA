@@ -26,5 +26,13 @@
   "checkbox": "Použít rozsah místo pevné ceny",
   "orderDate": "Nejnovější",
   "orderPrice": "Nejlevnější",
-  "title1": "Vítejte na burze učebnic"
+  "title1": "Vítejte na burze učebnic",
+  "filter": "Filtrovat příspěvky",
+  "myacc": "Můj účet",
+  "mypost": "Moje příspěvky",
+  "admin": {
+    "title": "Vítejte na administračním portálu",
+    "manage": "Spravovat",
+    "users": "Uživatelé"
+  }
 }

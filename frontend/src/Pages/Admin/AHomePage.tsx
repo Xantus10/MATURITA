@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import PostDisplay, { type PostData } from '../../Components/PostDisplay';
-import Logout, { LogoutFunc } from '../../Components/Logout';
+import Logout from '../../Components/Logout';
 import LangSwitch from '../../Components/LangSwitch';
 import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
@@ -65,21 +65,21 @@ export default function AHomePage() {
     <>
       <Stack className={classes.container}>
         <Group mih={'10vh'} bg={'gray.9'} p="md" justify="space-between">
-          <Title order={1}>{t('title1')}</Title>
+          <Title order={1}>{t('admin.title')}</Title>
           <LangSwitch />
           <Menu position="bottom-end">
             <Menu.Target>
-              <Button w="110px" h="40px">Admin options</Button>
+              <Button w="110px" h="40px">{t('admin.manage')}</Button>
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item onClick={() => {navigate('/users')}}>
-                <Button fullWidth>Users page</Button>
+                <Button fullWidth>{t('admin.users')}</Button>
               </Menu.Item>
               <Menu.Item onClick={() => {}}>
                 <Button fullWidth>YYY</Button>
               </Menu.Item>
-              <Menu.Item onClick={LogoutFunc}>
-                <Logout onClick={()=>{}} />
+              <Menu.Item>
+                <Logout />
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
@@ -91,7 +91,7 @@ export default function AHomePage() {
             <MultiSelect label={t('form.title.years')} data={['1', '2', '3', '4']} key={filterForm.key('years')} {...filterForm.getInputProps('years')} />
             <NumberInput label={`Min. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={filterForm.key('priceMin')} {...filterForm.getInputProps('priceMin')} />
             <NumberInput label={`Max. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={filterForm.key('priceMax')} {...filterForm.getInputProps('priceMax')} />
-            <Button m="md" onClick={() => {getPosts(0, true)}}>Filter posts</Button>
+            <Button m="md" onClick={() => {getPosts(0, true)}}>{t('filter')}</Button>
           </Stack>
           <Stack className={classes.main} bg={'gray.8'}>
             <Group>
