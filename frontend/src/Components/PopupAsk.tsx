@@ -1,5 +1,5 @@
 import type React from "react";
-import { Modal, Title, Button, Group } from "@mantine/core";
+import { Modal, Title, Button, Group, Stack } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 
 
@@ -20,7 +20,11 @@ function PopupAsk<T=string>({line, open, onNo, onYes, input }: PopupAskProps<T>)
   return (
     <Modal opened={open} onClose={onNo} size={"sm"} centered>
       {(line) ? <Title order={4}>{line}</Title> : <></>}
-      {input.element}
+      
+      <Stack>
+        {input.element}
+      </Stack>
+      
       <Group justify="space-between">
         <Button onClick={onNo} color="red">{t('no')}</Button>
         <Button onClick={() => {onYes(input.value)}} color="green">{t('yes')}</Button>
