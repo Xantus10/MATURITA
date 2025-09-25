@@ -36,7 +36,7 @@ usersrouter.post('/role', checkRole('admin'), async (req: Request, res: Response
   if (!req.body.role) return res.status(400).send({msg: "'role' is missing"});
   let role = req.body.role;
   await User.setRole(userId, role);
-  return res.status(200).send({msg: 'Role changed to'+role});
+  return res.status(200).send({msg: 'Role changed to '+role});
 });
 
 usersrouter.post('/ban', checkRole('admin'), async (req: Request, res: Response) => {

@@ -57,7 +57,7 @@ function UserDisplayPage() {
           <Stack>
             <Text>{t('useracc.name')}: {userData.Name.First} {userData.Name.Last}</Text>
             <Text>{t('useracc.role')}: {userData.Role}</Text>
-            <Button bg={'red'} rightSection={<FaTrashAlt />} onClick={deleteDiscController.open}>{t('useracc.delete')}</Button>
+            <Button bg={'red'} rightSection={<FaTrashAlt />} onClick={deleteDiscController.open} size="md">{t('useracc.delete')}</Button>
           </Stack>
         </Paper>
       </Stack>
