@@ -166,3 +166,4 @@
           - 400: Required param is missing
           - 401: Invalid credentials
           - 403: Unauthorized			// The user must be admin
+          - 404: The user does not exist

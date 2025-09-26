@@ -9,7 +9,9 @@
     "ban": "Zakázat přístup",
     "banDays": "Na kolik dní chcete uživateli zakázat přístup",
     "banReason": "Důvod",
-    "blacklistNotice": "Pro permanentní zákaz uživatele ho přidejte na blacklist"
+    "blacklistNotice": "Pro permanentní zákaz uživatele ho přidejte na blacklist",
+    "blacklist": "Blacklist",
+    "blacklistReason": "Důvod pro blacklist"
   },
   "userPage": {
     "title": "Správa uživatelů",

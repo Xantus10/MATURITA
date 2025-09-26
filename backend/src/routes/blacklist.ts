@@ -1,6 +1,8 @@
 import { Router, type Request, type Response } from "express";
 import { checkRole, loggedin } from "../middlewares/session.js";
+import User from "../db/models/user.js";
 import Blacklist from "../db/models/blacklist.js";
+import Post from "../db/models/post.js";
 
 const blackrouter = Router();
 
@@ -17,7 +19,11 @@ blackrouter.post('/', async (req: Request, res: Response) => {
   let microsoftId = req.body.microsoftId;
   if (!req.body.reason) return res.status(400).send({msg: "'reason' is missing"});
   let reason = req.body.reason;
-  Blacklist.create({ MicrosoftId: microsoftId, Reason: reason });
+  let usr = await User.findOne({ MicrosoftId: microsoftId });
+  if (!usr) return res.status(404).send({msg: "User not found"});
+  await Post.removeByCreatorId(usr._id);
+  await User.findByIdAndDelete(usr._id);
+  await Blacklist.create({ MicrosoftId: microsoftId, Reason: reason });
   return res.status(200).send({msg: `Microsoft id ${microsoftId} blacklisted`});
 });
 

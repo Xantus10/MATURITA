@@ -1,6 +1,6 @@
 import { Title as ManTitle, Group, Paper, Code, Button, Menu, Tooltip, TextInput, NumberInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { FaTrashAlt, FaBan } from "react-icons/fa";
+import { FaTrashAlt, FaBan, FaExclamationTriangle } from "react-icons/fa";
 import { MdOutlineAccountCircle, MdOutlineLocalPostOffice } from 'react-icons/md';
 import Popup from "./Popup";
 import PopupAsk from "./PopupAsk";
@@ -38,6 +38,7 @@ function UserDisplay({data}: UserDisplayProps) {
   const [deleteDisc, deleteDiscController] = useDisclosure(false);
   const [deleteUPDisc, deleteUPDiscController] = useDisclosure(false);
   const [banDisc, banDiscController] = useDisclosure(false);
+  const [blackDisc, blackDiscController] = useDisclosure(false);
 
   const { t } = useTranslation('admin');
 
@@ -62,9 +63,16 @@ function UserDisplay({data}: UserDisplayProps) {
   }
 
   const [banArg, setBanArg] = useState<BanUserArg>({days: 0, reason: ''});
+  const [blackReason, setBlackReason] = useState("");
 
   async function BanUser({days, reason}: BanUserArg) {
-    days
+    let res = await post('/users/ban', {userId: _id, days: days, reason: reason});
+    if (res) autoHttpResponseNotification(res, true);
+  }
+
+  async function BlacklistUser(reason: string) {
+    let res = await post('/blacklist', {microsoftId: MicrosoftId, reason: reason});
+    if (res) autoHttpResponseNotification(res, true);
   }
 
   const inverseRole = (Role==='admin') ? 'user' : 'admin';
@@ -92,6 +100,10 @@ function UserDisplay({data}: UserDisplayProps) {
             {t('userDisplay.ban')}
           </Button>
         </Tooltip>
+
+        <Button onClick={blackDiscController.open} leftSection={<FaExclamationTriangle />} bg={"red.9"}>
+          {t('userDisplay.blacklist')}
+        </Button>
         
         <Button onClick={() => {ChangeUserRole(inverseRole)}}>{t('userDisplay.make')} {inverseRole}</Button>
       </Group>
@@ -105,6 +117,7 @@ function UserDisplay({data}: UserDisplayProps) {
         <TextInput title={t('userDisplay.banReason')} value={banArg.reason} onChange={(e) => {setBanArg({...banArg, reason: e.currentTarget.value})}} />
       </>)
     , value: banArg}} />
+    <PopupAsk line={t('userDisplay.blacklist')} open={blackDisc} onNo={blackDiscController.close} onYes={BlacklistUser} input={{element: (<TextInput title={t('userDisplay.blacklistReason')} value={blackReason} onChange={(e) => {setBlackReason(e.currentTarget.value)}} />), value: blackReason}} />
     </>
   );
 }

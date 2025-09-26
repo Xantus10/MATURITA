@@ -9,7 +9,9 @@
     "ban": "Ban",
     "banDays": "How many days should the user stay banned for",
     "banReason": "Reason for ban",
-    "blacklistNotice": "For permanent user removal, blacklist them"
+    "blacklistNotice": "For permanent user removal, blacklist them",
+    "blacklist": "Blacklist",
+    "blacklistReason": "Reason for blacklist"
   },
   "userPage": {
     "title": "Users management",
