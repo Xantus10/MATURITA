@@ -7,6 +7,7 @@
     "deletePostsReassure": "Opravdu chcete smazat všechny příspěvky od uživatele",
     "make": "Změnit na",
     "ban": "Zakázat přístup",
+    "banned": "Zakázán",
     "banDays": "Na kolik dní chcete uživateli zakázat přístup",
     "banReason": "Důvod",
     "blacklistNotice": "Pro permanentní zákaz uživatele ho přidejte na blacklist",

@@ -1,5 +1,6 @@
 import { Title as ManTitle, Group, Paper, Code, Button, Menu, Tooltip, TextInput, NumberInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useState } from "react";
 import { FaTrashAlt, FaBan, FaExclamationTriangle } from "react-icons/fa";
 import { MdOutlineAccountCircle, MdOutlineLocalPostOffice } from 'react-icons/md';
 import Popup from "./Popup";
@@ -7,15 +8,8 @@ import PopupAsk from "./PopupAsk";
 import { useTranslation } from "react-i18next";
 import { post, deletef } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
-import { useState } from "react";
+import { isBanned, type BanData } from "./BanDisplay";
 
-
-export interface BanData {
-  CreatedAt: Date;
-  Until: Date;
-  IssuedBy: string;
-  Reason: string;
-}
 
 export interface UserData {
   _id: string;
@@ -76,12 +70,13 @@ function UserDisplay({data}: UserDisplayProps) {
   }
 
   const inverseRole = (Role==='admin') ? 'user' : 'admin';
+  const userBanned = isBanned(Bans);
 
   return (
     <>
-    <Paper>
+    <Paper bd={(userBanned) ? 'solid 1px var(--mantine-color-red-7)' : ''}>
       <Group gap='xl' justify="space-between" p={"md"} >
-        <ManTitle order={2}>{Name.First} {Name.Last}</ManTitle>
+        <ManTitle order={2}>{Name.First} {Name.Last} {(userBanned) ? `(${t('userDisplay.banned')})` : ''}</ManTitle>
         <Code>{Role}</Code>
         <Menu>
           <Menu.Target>
