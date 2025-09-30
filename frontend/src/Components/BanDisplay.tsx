@@ -28,3 +28,13 @@ export function labelBans(bans: BanData[]) : LabeledBanData[] {
   return lbans;
 }
 
+export function BanDisplay({CreatedAt, Until, IssuedBy, Reason, Valid}: LabeledBanData) {
+
+  return (
+    <>
+    
+    </>
+  );
+}
+
+export default BanDisplay;

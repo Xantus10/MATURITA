@@ -7,6 +7,7 @@
     "deletePostsReassure": "Do you really want to remove all of user's posts",
     "make": "Make",
     "ban": "Ban",
+    "banhistory": "Ban history",
     "banned": "Banned",
     "banDays": "How many days should the user stay banned for",
     "banReason": "Reason for ban",

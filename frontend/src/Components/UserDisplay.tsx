@@ -1,14 +1,14 @@
-import { Title as ManTitle, Group, Paper, Code, Button, Menu, Tooltip, TextInput, NumberInput } from "@mantine/core";
+import { Title as ManTitle, Group, Paper, Code, Button, Menu, Tooltip, TextInput, NumberInput, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { FaTrashAlt, FaBan, FaExclamationTriangle } from "react-icons/fa";
-import { MdOutlineAccountCircle, MdOutlineLocalPostOffice } from 'react-icons/md';
+import { MdOutlineAccountCircle, MdOutlineLocalPostOffice, MdHistory } from 'react-icons/md';
 import Popup from "./Popup";
 import PopupAsk from "./PopupAsk";
 import { useTranslation } from "react-i18next";
 import { post, deletef } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
-import { isBanned, type BanData } from "./BanDisplay";
+import BanDisplay, { isBanned, labelBans, type BanData } from "./BanDisplay";
 
 
 export interface UserData {
@@ -33,6 +33,7 @@ function UserDisplay({data}: UserDisplayProps) {
   const [deleteUPDisc, deleteUPDiscController] = useDisclosure(false);
   const [banDisc, banDiscController] = useDisclosure(false);
   const [blackDisc, blackDiscController] = useDisclosure(false);
+  const [banHistory, banHistoryController] = useDisclosure(false);
 
   const { t } = useTranslation('admin');
 
@@ -71,6 +72,7 @@ function UserDisplay({data}: UserDisplayProps) {
 
   const inverseRole = (Role==='admin') ? 'user' : 'admin';
   const userBanned = isBanned(Bans);
+  const LabeledBans = labelBans(Bans);
 
   return (
     <>
@@ -90,11 +92,26 @@ function UserDisplay({data}: UserDisplayProps) {
           </Menu.Item>
         </Menu>
 
-        <Tooltip label={t('userDisplay.blacklistNotice')}>
-          <Button onClick={banDiscController.open} leftSection={<FaBan />} bg={"red.9"} >
-            {t('userDisplay.ban')}
-          </Button>
-        </Tooltip>
+        <Menu>
+          <Menu.Target>
+            <Button leftSection={<FaBan />} bg={"red.9"} >
+              {t('userDisplay.ban')}
+            </Button>
+          </Menu.Target>
+          <Menu.Item onClick={banDiscController.open}>
+            <Tooltip label={t('userDisplay.blacklistNotice')}>
+              <Button leftSection={<FaBan />} bg={"red.9"} >
+                {t('userDisplay.ban')}
+              </Button>
+            </Tooltip>
+          </Menu.Item>
+          <Menu.Item onClick={banHistoryController.open}>
+            <Button leftSection={<MdHistory />} >
+              {t('userDisplay.banhistory')}
+            </Button>
+          </Menu.Item>
+        </Menu>
+        
 
         <Button onClick={blackDiscController.open} leftSection={<FaExclamationTriangle />} bg={"red.9"}>
           {t('userDisplay.blacklist')}
@@ -113,6 +130,9 @@ function UserDisplay({data}: UserDisplayProps) {
       </>)
     , value: banArg}} />
     <PopupAsk line={t('userDisplay.blacklist')} open={blackDisc} onNo={blackDiscController.close} onYes={BlacklistUser} input={{element: (<TextInput title={t('userDisplay.blacklistReason')} value={blackReason} onChange={(e) => {setBlackReason(e.currentTarget.value)}} />), value: blackReason}} />
+    <Modal opened={banHistory} onClose={banHistoryController.close} title={t('userDisplay.banhistory')} >
+      {LabeledBans.map((val) => {return (<BanDisplay {...val} />)})}
+    </Modal>
     </>
   );
 }
