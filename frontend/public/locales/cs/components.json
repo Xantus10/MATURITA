@@ -9,5 +9,9 @@
     "until": "Platí do",
     "deleteReassure": "Opravdu chcete příspěvek odebrat?",
     "addDays": "Počet přidaných dnů"
+  },
+  "blackdisplay": {
+    "at": "Přidán na blacklist",
+    "reason": "Důvod"
   }
 }

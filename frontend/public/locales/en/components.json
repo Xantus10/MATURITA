@@ -9,5 +9,9 @@
     "until": "Valid until",
     "deleteReassure": "Remove post?",
     "addDays": "Number of days to extend"
+  },
+  "blackdisplay": {
+    "at": "Blacklisted at",
+    "reason": "Reason"
   }
 }
