@@ -33,6 +33,7 @@
   "admin": {
     "title": "Welcome to the administration portal",
     "manage": "Manage",
-    "users": "Users"
+    "users": "Users",
+    "blacklist": "Blacklist"
   }
 }
