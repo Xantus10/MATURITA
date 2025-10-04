@@ -84,12 +84,14 @@ function UserDisplay({data}: UserDisplayProps) {
           <Menu.Target>
             <Button leftSection={<FaTrashAlt />} bg={"red.9"}>{t('userDisplay.delete')}</Button>
           </Menu.Target>
-          <Menu.Item onClick={deleteDiscController.open}>
-            <Button leftSection={<MdOutlineAccountCircle />} bg={"red.9"}>{t('userDisplay.deleteAcc')}</Button>
-          </Menu.Item>
-          <Menu.Item onClick={deleteUPDiscController.open}>
-            <Button leftSection={<MdOutlineLocalPostOffice />} bg={"red.9"}>{t('userDisplay.deletePosts')}</Button>
-          </Menu.Item>
+          <Menu.Dropdown>
+            <Menu.Item onClick={deleteDiscController.open}>
+              <Button leftSection={<MdOutlineAccountCircle />} bg={"red.9"}>{t('userDisplay.deleteAcc')}</Button>
+            </Menu.Item>
+            <Menu.Item onClick={deleteUPDiscController.open}>
+              <Button leftSection={<MdOutlineLocalPostOffice />} bg={"red.9"}>{t('userDisplay.deletePosts')}</Button>
+            </Menu.Item>
+          </Menu.Dropdown>
         </Menu>
 
         <Menu>
@@ -98,18 +100,20 @@ function UserDisplay({data}: UserDisplayProps) {
               {t('userDisplay.ban')}
             </Button>
           </Menu.Target>
-          <Menu.Item onClick={banDiscController.open}>
-            <Tooltip label={t('userDisplay.blacklistNotice')}>
-              <Button leftSection={<FaBan />} bg={"red.9"} >
-                {t('userDisplay.ban')}
+          <Menu.Dropdown>
+            <Menu.Item onClick={banDiscController.open}>
+              <Tooltip label={t('userDisplay.blacklistNotice')}>
+                <Button leftSection={<FaBan />} bg={"red.9"} >
+                  {t('userDisplay.ban')}
+                </Button>
+              </Tooltip>
+            </Menu.Item>
+            <Menu.Item onClick={banHistoryController.open}>
+              <Button leftSection={<MdHistory />} >
+                {t('userDisplay.banhistory')}
               </Button>
-            </Tooltip>
-          </Menu.Item>
-          <Menu.Item onClick={banHistoryController.open}>
-            <Button leftSection={<MdHistory />} >
-              {t('userDisplay.banhistory')}
-            </Button>
-          </Menu.Item>
+            </Menu.Item>
+          </Menu.Dropdown>
         </Menu>
         
 

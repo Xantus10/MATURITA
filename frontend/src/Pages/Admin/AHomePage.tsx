@@ -10,7 +10,7 @@ import LangSwitch from '../../Components/LangSwitch';
 import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
 
-import classes from '../styles/homepage.module.css'
+import classes from '../../styles/homepage.module.css'
 
 const PRICE_MIN = 0;
 const PRICE_MAX = 1000;
@@ -75,8 +75,8 @@ export default function AHomePage() {
               <Menu.Item onClick={() => {navigate('/users')}}>
                 <Button fullWidth>{t('admin.users')}</Button>
               </Menu.Item>
-              <Menu.Item onClick={() => {}}>
-                <Button fullWidth>YYY</Button>
+              <Menu.Item onClick={() => {navigate('/blacklists')}}>
+                <Button fullWidth>{t('admin.blacklist')}</Button>
               </Menu.Item>
               <Menu.Item>
                 <Logout />

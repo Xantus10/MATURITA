@@ -8,7 +8,7 @@ import BackToHomeButton from '../../Components/BackToHomeButton';
 import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
 
-import classes from '../styles/mypostspage.module.css'
+import classes from '../../styles/mypostspage.module.css'
 
 
 export default function AUsersPage() {

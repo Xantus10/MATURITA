@@ -8,10 +8,10 @@ import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
 import BlacklistDisplay, { type BlacklistData } from '../../Components/BlacklistDisplay';
 
-import classes from '../styles/mypostspage.module.css'
+import classes from '../../styles/mypostspage.module.css'
 
 
-export default function AUsersPage() {
+export default function ABlacklistPage() {
   async function getBlacklists() {
     let res = await get('/blacklist');
     if (res) {

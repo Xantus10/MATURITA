@@ -149,7 +149,7 @@ export default function HomePage() {
               <NumberInput label={`${(priceRange) ? 'Min. ' : ''}${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMin')} {...postForm.getInputProps('priceMin')} />
               <Checkbox m="md" label={t('checkbox')} checked={priceRange} onChange={(e) => {setPriceRange(e.currentTarget.checked)}} />
               <NumberInput label={`Max. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMax')} {...postForm.getInputProps('priceMax')} disabled={!priceRange} display={(!priceRange) ? "none" : "initial"} />
-              <FileInput label={t('form.title.photos')} description={t('form.desc.photos')} key={postForm.key('pictures')} {...postForm.getInputProps('pictures')} />
+              <FileInput label={t('form.title.photos')} description={t('form.desc.photos')} key={postForm.key('pictures')} {...postForm.getInputProps('pictures')} multiple />
               <Button m="md" onClick={createPost}>Post!</Button>
             </Drawer>
           </Stack>
