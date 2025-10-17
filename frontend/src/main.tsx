@@ -19,7 +19,9 @@ import App from './App.tsx'
 
 import './i18n.ts';
 
-// Custom global styles overrides
+/**
+ * Custom global styles overrides
+ */
 const themeOverride = createTheme({
   fontFamily: 'system-ui, Avenir, Helvetica, Arial, sans-serif',
   autoContrast: true,
@@ -27,7 +29,9 @@ const themeOverride = createTheme({
 });
 
 
-// MSAL configuration
+/**
+ * MSAL configuration
+ */
 const configuration: Configuration = {
     auth: {
         clientId: "ab9faf06-dbf6-464e-86ac-8143396d920d",

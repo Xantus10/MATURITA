@@ -9,13 +9,13 @@ import Logout from '../../Components/Logout';
 import LangSwitch from '../../Components/LangSwitch';
 import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
+import { PRICE_MIN, PRICE_MAX } from '../HomePage';
 
 import classes from '../../styles/homepage.module.css'
 
-const PRICE_MIN = 0;
-const PRICE_MAX = 1000;
-
-
+/**
+ * Admin homepage
+ */
 export default function AHomePage() {
   async function getPosts(begin: number, overwrite: boolean) {
     let values = filterForm.getValues();

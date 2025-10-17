@@ -1,8 +1,9 @@
 import { NativeSelect } from "@mantine/core";
 import i18next from "i18next";
 
-
-
+/**
+ * Select to change language
+ */
 function LangSwitch() {
   return (
     <>

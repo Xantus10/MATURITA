@@ -10,7 +10,9 @@ import { autoHttpResponseNotification } from '../../Util/notifications';
 
 import classes from '../../styles/mypostspage.module.css'
 
-
+/**
+ * Admin users page
+ */
 export default function AUsersPage() {
   async function getUserList(afirst: string, alast: string, alimit: number) {
     let res = await get('/users/list', {first: afirst, last: alast, limit: alimit});

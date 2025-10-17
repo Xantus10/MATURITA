@@ -3,13 +3,29 @@ import { useDisclosure } from '@mantine/hooks';
 import { useTranslation } from 'react-i18next';
 
 
+/**
+ * Blacklisted MicrosoftId data
+ */
 export interface BlacklistData {
-  CreatedAt: Date;
+  /**
+   * The MicrosoftId to be blacklisted
+   */
   MicrosoftId: string;
+
+  /**
+   * When was the MicrosoftId blacklisted
+   */
+  CreatedAt: Date;
+
+  /**
+   * For what reason was the MicrosoftId blacklisted
+   */
   Reason: string;
 };
 
-
+/**
+ * A component to display a single Microsoft Id blacklist
+ */
 function BlacklistDisplay({CreatedAt, MicrosoftId, Reason}: BlacklistData) {
   const [dis, disController] = useDisclosure(false);
   const { t } = useTranslation();

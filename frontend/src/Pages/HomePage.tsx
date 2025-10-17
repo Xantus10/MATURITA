@@ -15,10 +15,19 @@ import { autoHttpResponseNotification } from '../Util/notifications';
 
 import classes from '../styles/homepage.module.css'
 
-const PRICE_MIN = 0;
-const PRICE_MAX = 1000;
+/**
+ * Lowest possible price
+ */
+export const PRICE_MIN = 0;
 
+/**
+ * Highest possible price
+ */
+export const PRICE_MAX = 1000;
 
+/**
+ * Home page
+ */
 export default function HomePage() {
   async function getPosts(begin: number, overwrite: boolean) {
     let values = filterForm.getValues();

@@ -1,3 +1,8 @@
+/**
+ * File: i18next.d.ts
+ * Purpose: Type definitions for localization
+ */
+
 import "i18next";
 
 import components from "../public/locales/en/components.json"

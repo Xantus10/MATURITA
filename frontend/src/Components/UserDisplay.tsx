@@ -11,22 +11,63 @@ import { autoHttpResponseNotification } from "../Util/notifications";
 import BanDisplay, { isBanned, labelBans, type BanData } from "./BanDisplay";
 
 
+/**
+ * User data
+ */
 export interface UserData {
+  /**
+   * Id of the user
+   */
   _id: string;
+
+  /**
+   * MicrosoftId of the associated Office365 account
+   */
   MicrosoftId: string;
+
+  /**
+   * The name recieved through Office365
+   */
   Name: {
+    /**
+     * First name of the user
+     */
     First: string;
+    /**
+     * Last name of the user
+     */
     Last: string;
   };
+
+  /**
+   * Role assigned to the user
+   */
   Role: 'user' | 'admin';
+
+  /**
+   * When was the last login of the user
+   */
   LastLogin: Date;
+
+  /**
+   * Array of the users bans
+   */
   Bans: BanData[];
 };
 
+/**
+ * Props for UserDisplay
+ */
 export interface UserDisplayProps {
+  /**
+   * User data for the display
+   */
   data: UserData;
 };
 
+/**
+ * Display info about a user
+ */
 function UserDisplay({data}: UserDisplayProps) {
   const {_id, MicrosoftId, Name, Role, Bans} = data;
   const [deleteDisc, deleteDiscController] = useDisclosure(false);

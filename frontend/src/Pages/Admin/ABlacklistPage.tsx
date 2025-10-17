@@ -10,7 +10,9 @@ import BlacklistDisplay, { type BlacklistData } from '../../Components/Blacklist
 
 import classes from '../../styles/mypostspage.module.css'
 
-
+/**
+ * Admin page for blacklisting Microsoft Ids
+ */
 export default function ABlacklistPage() {
   async function getBlacklists() {
     let res = await get('/blacklist');

@@ -6,6 +6,9 @@ import classes from '../styles/loginpage.module.css'
 import { useTranslation } from 'react-i18next';
 import LangSwitch from '../Components/LangSwitch';
 
+/**
+ * Login page
+ */
 export default function LoginPage() {
   const { t } = useTranslation('loginpage');
   const {instance} = useMsal();

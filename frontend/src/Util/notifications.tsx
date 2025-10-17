@@ -1,13 +1,29 @@
 import { notifications } from "@mantine/notifications";
 import { FaExclamationTriangle, FaInfoCircle, FaCheckCircle } from "react-icons/fa";
 
-
+/**
+ * Props for showing notification
+ */
 export interface showNotificationProps {
+  /**
+   * Title of the notification
+   */
   title: string;
+
+  /**
+   * Optional message of the notification
+   */
   message?: string;
+
+  /**
+   * Which icon to display
+   */
   icon?: 'OK' | 'INFO' | 'ERR';
 };
 
+/**
+ * Display a notification (wrapper around notifications.show)
+ */
 export function showNotification({ title, message="", icon='OK' }: showNotificationProps) {
   console.log(icon);
   notifications.show({
@@ -20,6 +36,13 @@ export function showNotification({ title, message="", icon='OK' }: showNotificat
   });
 }
 
+/**
+ * Generate an automatic notification on Response  
+ * !!! Call BEFORE any interaction with the Response !!!
+ * 
+ * @param res Fetch Response
+ * @param with200 Generate a notification for 200 response?
+ */
 export async function autoHttpResponseNotification(res: Response, with200: boolean=false) {
   let status
   let msg;

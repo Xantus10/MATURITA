@@ -1,6 +1,22 @@
+/**
+ * File: http.ts
+ * Purpose: Wrapper functions around standard fetch API
+ */
+
+
+/**
+ * Base BE URL
+ */
 const BASE_URL = import.meta.env.VITE_BE_URL + '/api';
 import { csrfHeaders } from "./csrf";
 
+/**
+ * Create an URL for a path with query params
+ * 
+ * @param path Path of the request
+ * @param args Query params
+ * @returns Complete URL
+ */
 function constructURL(path: string, args: object = {}) {
   path = (path.length > 0) ? path : '/';
   path = (path[0] === '/') ? path : '/'+path;
@@ -13,6 +29,13 @@ function constructURL(path: string, args: object = {}) {
   return url.toString();
 }
 
+/**
+ * GET method wrapper
+ * 
+ * @param path Relative path to request to
+ * @param args Query params
+ * @returns Response or undefined if request failed
+ */
 export async function get(path: string, args: {[key: string]: any} = {}) {
   let url = constructURL(path, args);
   try {
@@ -23,6 +46,13 @@ export async function get(path: string, args: {[key: string]: any} = {}) {
   }
 }
 
+/**
+ * POST method wrapper
+ * 
+ * @param path Relative path to request to
+ * @param args Body json params
+ * @returns Response or undefined if request failed
+ */
 export async function post(path: string, args: {[key: string]: any} = {}) {
   let url = constructURL(path);
   try {
@@ -33,6 +63,13 @@ export async function post(path: string, args: {[key: string]: any} = {}) {
   }
 }
 
+/**
+ * DELETE method wrapper
+ * 
+ * @param path Relative path to request to
+ * @param args Body json params
+ * @returns Response or undefined if request failed
+ */
 export async function deletef(path: string, args: {[key: string]: any} = {}) {
   let url = constructURL(path);
   try {
@@ -43,6 +80,14 @@ export async function deletef(path: string, args: {[key: string]: any} = {}) {
   }
 }
 
+/**
+ * POST method wrapper  
+ * Used for posting files with multipart/form-data
+ * 
+ * @param path Relative path to request to
+ * @param args Body form params
+ * @returns Response or undefined if request failed
+ */
 export async function postFormV(path: string, args: {[key: string]: any} = {}) {
   let url = constructURL(path);
   let form = new FormData();

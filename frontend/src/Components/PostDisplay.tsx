@@ -12,27 +12,91 @@ import { post, deletef } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
 
 
+/**
+ * Data associated with each post
+ */
 export interface PostData {
+  /**
+   * Id of the post
+   */
   _id: string;
-  Title: string;
+
+  /**
+   * User._id of the creator
+   */
   CreatorId: string;
+
+  /**
+   * Title of the post
+   */
+  Title: string;
+
+  /**
+   * When was the post originally created
+   */
   CreatedAt: Date;
+
+  /**
+   * When to remove the post
+   */
   RemoveAt: Date;
+
+  /**
+   * Subject tags the post is associated with
+   */
   Subjects: string[];
-  State: string;
+
+  /**
+   * State of the book
+   */
+  State: 'Like new' | 'Good' | 'Worn';
+
+  /**
+   * Years the book is used in
+   */
   Years: number[];
+
+  /**
+   * Price info for the book
+   */
   Price: {
+    /**
+     * Lower end of the price spectrum
+     */
     Min: number;
+    /**
+     * Higher end of the price spectrum (if is eq to lower end => the price is not a spectrum)
+     */
     Max: number;
   };
+
+  /**
+   * Paths to associated photos
+   */
   Photos: string[];
 };
 
+/**
+ * Props for PostDisplay
+ */
 export interface PostDisplayProps {
+  /**
+   * Data of the post
+   */
   data: PostData;
+
+  /**
+   * View with possible enhanced functionalities  
+   * normal - standard view  
+   * edit - view for the Creator  
+   * admin - view for admin
+   */
   view: 'normal' | 'edit' | 'admin';
 };
 
+/**
+ * Display a single post
+ */
 function PostDisplay({data, view}: PostDisplayProps) {
   const {_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos} = data;
   const [modalDisc, modalDiscController] = useDisclosure(false);

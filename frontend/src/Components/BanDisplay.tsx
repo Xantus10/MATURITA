@@ -5,18 +5,48 @@ import { useTranslation } from 'react-i18next';
 
 import { UserCache, type UserData } from '../Util/cache';
 
-
+/**
+ * Data associated with a singular user ban
+ */
 export interface BanData {
+  /**
+   * When was the ban issued
+   */
   CreatedAt: Date;
-  Until: Date;
-  IssuedBy: string;
-  Reason: string;
-};
 
+  /**
+   * Date the ban is valid until
+   */
+  Until: Date;
+
+  /**
+   * User._id of the user who issued the ban
+   */
+  IssuedBy: string;
+
+  /**
+   * Reason for the ban
+   */
+  Reason: string;
+}
+
+
+/**
+ * Ban data extended by a Valid field
+ */
 export interface LabeledBanData extends BanData {
+  /**
+   * Is the ban valid as of the current moment
+   */
   Valid: boolean;
 };
 
+/**
+ * Compare all the ban data and conclude if the user has an active ban
+ * 
+ * @param bans Ban data
+ * @returns true if the user is banned, false otherwise
+ */
 export function isBanned(bans: BanData[]) {
   let now = new Date();
   for (let ban of bans) {
@@ -27,6 +57,12 @@ export function isBanned(bans: BanData[]) {
   return false;
 }
 
+/**
+ * Turn bandata into LabeledBanData (Check validity of each ban)
+ * 
+ * @param bans Ban data
+ * @returns Labeled ban data with Valid values, sorted by most recently active
+ */
 export function labelBans(bans: BanData[]) : LabeledBanData[] {
   let now = new Date();
   let lbans: LabeledBanData[] = bans.map((val) => {return {...val, Valid: (now > val.CreatedAt && now < val.Until)}});
@@ -34,6 +70,9 @@ export function labelBans(bans: BanData[]) : LabeledBanData[] {
   return lbans;
 }
 
+/**
+ * A component to display a singular ban
+ */
 export function BanDisplay({CreatedAt, Until, IssuedBy, Reason, Valid}: LabeledBanData) {
   const [disc, discController] = useDisclosure(false);
 

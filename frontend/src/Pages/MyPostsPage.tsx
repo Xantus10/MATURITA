@@ -11,6 +11,9 @@ import classes from '../styles/mypostspage.module.css'
 
 import { useTranslation } from 'react-i18next';
 
+/**
+ * Page with user's posts
+ */
 function MyPostsPage() {
   async function getUserPosts() {
     let res = await get('/posts/user');

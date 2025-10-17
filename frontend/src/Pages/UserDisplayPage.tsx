@@ -13,14 +13,33 @@ import classes from '../styles/userdisplaypage.module.css';
 
 import { useTranslation } from 'react-i18next';
 
+/**
+ * Minified version of user data
+ */
 interface UserData {
+  /**
+   * The name recieved through Office365
+   */
   Name: {
+    /**
+     * First name of the user
+     */
     First: string;
+    /**
+     * Last name of the user
+     */
     Last: string;
   };
-  Role: 'admin' | 'user';
+
+  /**
+   * Role assigned to the user
+   */
+  Role: 'user' | 'admin';
 };
 
+/**
+ * Display information about the current user
+ */
 function UserDisplayPage() {
   async function getUserData() {
     let res = await get('/users/me');

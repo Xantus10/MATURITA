@@ -16,14 +16,16 @@ import { post } from './Util/http';
 import { isCsrf, setCsrfToken } from './Util/csrf';
 import { autoHttpResponseNotification } from './Util/notifications';
 
-async function LogUserIn(idtoken: string) {
-  let res = await post('/auth/idtoken', {idtoken: idtoken});
-  setCsrfToken(res);
-  if (res) autoHttpResponseNotification(res);
-}
-
-
+/**
+ * Main react app
+ */
 function App() {
+  async function LogUserIn(idtoken: string) {
+    let res = await post('/auth/idtoken', {idtoken: idtoken});
+    setCsrfToken(res);
+    if (res) autoHttpResponseNotification(res);
+  }
+
   const getLoginState = () => {return Cookies.get('ROLE') !== undefined && isCsrf()};
 
   const {accounts} = useMsal();
