@@ -5,6 +5,10 @@ import path from 'node:path';
 
 import env from './config/envconfig.js';
 
+
+/**
+ * The express main app
+ */
 const app = express();
 
 app.use(express.json());

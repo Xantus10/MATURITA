@@ -33,5 +33,9 @@ postSchema.static('removeByCreatorId', async function (id: Types.ObjectId) {
   await this.deleteMany( { CreatorId: id } );
 })
 
+
+/**
+ * API to interact with the posts collection
+ */
 const Post = model<PostIF, PostModelIF>('Post', postSchema);
 export default Post;

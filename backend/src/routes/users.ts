@@ -1,3 +1,8 @@
+/**
+ * File: users.ts
+ * Purpose: User related routes
+ */
+
 import { Router, type Request, type Response } from "express";
 import { loggedin, checkRole } from "../middlewares/session.js";
 import { Types } from "mongoose";
@@ -6,8 +11,12 @@ import Post from "../db/models/post.js";
 
 const usersrouter = Router();
 
+// User must be logged in
 usersrouter.use(loggedin);
 
+/**
+ * Get a list of users by their first and last name
+ */
 usersrouter.get('/list', checkRole('admin'), async (req: Request, res: Response) => {
   let first = (req.query.first) ? req.query.first : "";
   let last = (req.query.last) ? req.query.last : "";
@@ -16,13 +25,18 @@ usersrouter.get('/list', checkRole('admin'), async (req: Request, res: Response)
   return res.status(200).send({users: docs});
 });
 
-
+/**
+ * Get info about the currently logged in user
+ */
 usersrouter.get('/me', async (req: Request, res: Response) => {
   let id = new Types.ObjectId(req.session.data?.objId);
   let doc = await User.findById(id, { Name: 1, Role: 1 });
   return res.status(200).send(doc);
 });
 
+/**
+ * Delete the account for the currently logged in user
+ */
 usersrouter.delete('/me', async (req: Request, res: Response) => {
   let id = new Types.ObjectId(req.session.data?.objId);
   await Post.removeByCreatorId(id);
@@ -30,6 +44,9 @@ usersrouter.delete('/me', async (req: Request, res: Response) => {
   return res.status(200).send({msg: 'OK'});
 });
 
+/**
+ * Change a users role
+ */
 usersrouter.post('/role', checkRole('admin'), async (req: Request, res: Response) => {
   if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
   let userId = new Types.ObjectId(req.body.userId as string);
@@ -39,6 +56,9 @@ usersrouter.post('/role', checkRole('admin'), async (req: Request, res: Response
   return res.status(200).send({msg: 'Role changed to '+role});
 });
 
+/**
+ * Ban a user
+ */
 usersrouter.post('/ban', checkRole('admin'), async (req: Request, res: Response) => {
   if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
   let userId = new Types.ObjectId(req.body.userId as string);
@@ -55,8 +75,11 @@ usersrouter.post('/ban', checkRole('admin'), async (req: Request, res: Response)
 
 
 
-// NO ROUTES BEYOND THIS POINT!!!
+// NO ROUTES BEYOND THIS POINT!!! - This route will match every other route
 
+/**
+ * Get info about the specified user
+ */
 usersrouter.get('/:id', async (req: Request, res: Response) => {
   let id = req.params.id;
   if (!id) return res.status(404).send({msg: 'The user does not exist'});
@@ -66,6 +89,9 @@ usersrouter.get('/:id', async (req: Request, res: Response) => {
   return res.status(200).send(doc);
 });
 
+/**
+ * Delete the specified user
+ */
 usersrouter.delete('/:id', checkRole('admin'), async (req: Request, res: Response) => {
   let id = req.params.id;
   if (!id) return res.status(404).send({msg: 'The user does not exist'});

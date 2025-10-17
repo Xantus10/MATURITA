@@ -1,12 +1,39 @@
+/**
+ * File: envconfig.ts  
+ * Purpose: Loading .env variables and providing typing for them
+ */
+
 import dotenv from 'dotenv';
 
 dotenv.config();
 
+/**
+ * App .env config
+ */
 interface Config {
+  /**
+   * URI used for connecting to database
+   */
   DBURI: string;
+
+  /**
+   * Issuer URL used for validating JWT tokens
+   */
   MICROSOFT_ISSUER_URL: string;
+
+  /**
+   * Microsoft tenant app id used for validating JWT tokens
+   */
   MICROSOFT_APP_ID: string;
+
+  /**
+   * Port to run the app on
+   */
   PORT: number;
+
+  /**
+   * Secret for signing CSRF tokens
+   */
   CSRF_SECRET: string;
 };
 

@@ -36,5 +36,9 @@ userSchema.static('ban', async function (id: Types.ObjectId, issuedBy: Types.Obj
   await this.findByIdAndUpdate(id, { $push: { Bans: { Until: days, IssuedBy: issuedBy, Reason: reason } } });
 })
 
+
+/**
+ * API to interact with the users collection
+ */
 const User = model<UserIF, UserModelIF>('User', userSchema);
 export default User;

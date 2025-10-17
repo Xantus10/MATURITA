@@ -1,3 +1,8 @@
+/**
+ * File: blacklist.ts
+ * Purpose: Blacklists related routes
+ */
+
 import { Router, type Request, type Response } from "express";
 import { checkRole, loggedin } from "../middlewares/session.js";
 import User from "../db/models/user.js";
@@ -6,14 +11,21 @@ import Post from "../db/models/post.js";
 
 const blackrouter = Router();
 
+// To access the blacklist API user must be logged in and an admin
 blackrouter.use(loggedin);
 blackrouter.use(checkRole('admin'));
 
+/**
+ * Return a list of all blacklists
+ */
 blackrouter.get('/', async (req: Request, res: Response) => {
   let blists = Blacklist.find();
   return res.status(200).send({blists: blists});
 });
 
+/**
+ * Create a new blacklist record
+ */
 blackrouter.post('/', async (req: Request, res: Response) => {
   if (!req.body.microsoftId) return res.status(400).send({msg: "'microsoftId' is missing"});
   let microsoftId = req.body.microsoftId;

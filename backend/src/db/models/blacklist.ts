@@ -7,6 +7,8 @@ export const blacklistSchema = new Schema<BlacklistIF>({
   Reason: {type: String, default: ""}
 });
 
-
+/**
+ * API to interact with the blacklists collection
+ */
 const Blacklist = model<BlacklistIF>('Blacklist', blacklistSchema);
 export default Blacklist;

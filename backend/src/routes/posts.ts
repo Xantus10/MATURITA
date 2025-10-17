@@ -1,3 +1,8 @@
+/**
+ * File: posts.ts
+ * Purpose: Any posts related routes
+ */
+
 import { Router, type Request, type Response } from "express";
 import { checkRole, loggedin } from "../middlewares/session.js";
 import { Types } from "mongoose";
@@ -10,8 +15,12 @@ import fs from "node:fs";
 
 const postsrouter = Router();
 
+// User must be logged in
 postsrouter.use(loggedin);
 
+/**
+ * Return a list of all posts matching the filters
+ */
 postsrouter.get('/', async (req: Request, res: Response) => {
   if (!req.query.begin) {
     return res.status(400).send({msg: "'begin' parameter missing"});
@@ -41,13 +50,19 @@ postsrouter.get('/', async (req: Request, res: Response) => {
   return res.status(200).send({posts: posts});
 });
 
-
+/**
+ * Path to the photos directory
+ */
 const photosDir = path.join(import.meta.dirname, '../../images');
 
+// Create the photos directory if it does not exist
 if (!fs.existsSync(photosDir)) {
   fs.mkdirSync(photosDir, {recursive: true});
 }
 
+/**
+ * Settings for multer (File upload handler)
+ */
 const multerMiddleware = multer({
   storage: multer.diskStorage({
     destination: (req, file, callback) => {
@@ -69,6 +84,9 @@ const multerMiddleware = multer({
   limits: { fileSize: 5 * 1024 * 1024 }
 });
 
+/**
+ * Create a new post
+ */
 postsrouter.post('/', checkRole('user'), multerMiddleware.array('pictures', 3), async (req: Request, res: Response) => {
   let {title, remove, subjects, state, years, priceMin, priceMax} = req.body;
   if (!(title && remove && subjects && state && years && priceMin)) {
@@ -83,6 +101,9 @@ postsrouter.post('/', checkRole('user'), multerMiddleware.array('pictures', 3), 
   return res.status(201).send({msg: "Post created"});
 });
 
+/**
+ * Remove a post
+ */
 postsrouter.delete('/', async (req: Request, res: Response) => {
   if (!req.body.postId) {
     return res.status(400).send({msg: "'postId' parameter/s missing"});
@@ -99,6 +120,9 @@ postsrouter.delete('/', async (req: Request, res: Response) => {
   return res.status(200).send({msg: 'Post deleted'});
 });
 
+/**
+ * Extend a posts lifespan
+ */
 postsrouter.post('/extend', checkRole('user'), async (req: Request, res: Response) => {
   if (!req.body.postId) {
     return res.status(400).send({msg: "'postId' parameter/s missing"});
@@ -122,6 +146,9 @@ postsrouter.post('/extend', checkRole('user'), async (req: Request, res: Respons
   return res.status(200).send({msg: `Posts lifetime has been extended by ${days} days`});
 });
 
+/**
+ * Get all posts for a user
+ */
 postsrouter.get('/user', async (req: Request, res: Response) => {
   if (req.query.userId && req.session.data?.role !== "admin") {
     return res.status(403).send({msg: "Unauthorized (not admin)!"});
@@ -131,6 +158,9 @@ postsrouter.get('/user', async (req: Request, res: Response) => {
   return res.status(200).send({posts: posts});
 });
 
+/**
+ * Delete all posts for a user
+ */
 postsrouter.delete('/user', checkRole('admin'), async (req: Request, res: Response) => {
   if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
   let userId = new Types.ObjectId(req.body.userId as string);
