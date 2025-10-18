@@ -1,3 +1,7 @@
+Model in mongodb-schema.mml file
+Open with https://mongomodeler.com/editor.html
+
+
 # collection users
 _id		ObjectId
 MicrosoftId	string			unique		// Microsoft Entra Id
@@ -36,7 +40,7 @@ _id		ObjectId				// This collection is NOT for referencing, but for storage
 Subject		string			unique		// Shorthand of the subject
 
 
-# collection blacklist
+# collection blacklists
 _id		ObjectId
 MicrosoftId	string			unique		// Blacklisted Microsoft Entra Id
 CreatedAt	Datetime				// When was user blacklisted
