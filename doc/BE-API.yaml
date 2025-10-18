@@ -1,0 +1,963 @@
+# RunOnce: npm i -g @redocly/cli
+# Run: redocly build-docs -o BE-API.html BE-API.yaml
+
+openapi: '3.0.3'
+info:
+  title: School book market - BE API documentation
+  version: '1.0.0'
+servers:
+  - url: http://localhost
+tags:
+  - name: Auth
+    description: Authentication concerning requests
+  - name: Posts
+    description: Operations about posts
+  - name: Users
+    description: Operations about users
+  - name: Blacklist
+    description: Blacklist microsoft accounts
+paths:
+  /auth/idtoken:
+    post:
+      security: []
+      tags:
+        - Auth
+      summary: Provide an idToken to log in / register
+      description: Provide an idToken and log in (+ register if the user does not yet exist)
+      operationId: idtoken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idtoken:
+                  type: string
+                  description: Microsoft Id token
+                  example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.NHVaYe26MbtOYhSKkoKYdFVomg4i8ZJd8RU8VNbftc4TSMb4bXP3l3YlNWAC
+              required:
+                - idtoken
+      responses:
+        '200':
+          description: >
+            Valid ID Token; 
+            SESSION_ID and ROLE cookies have been set; 
+            SESSION_ID is an authentication cookie which is to be included in all requests requiring authentication; 
+            ROLE is accessible client side for rendering purposes; 
+            The CSRF token can be found in X-Set-Csrf-Token header, this token will be sent via X-Csrf-Token header
+          headers:
+            Set-Cookie:
+              description: Set SESSION_ID and ROLE
+              schema:
+                type: string
+            X-Set-Csrf-Token:
+              description: CSRF Token
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: ID token did not pass validation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /auth/logout:
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Auth
+      summary: Log the user out
+      description: Remove user cookies and delete session
+      operationId: logout
+      responses:
+        '200':
+          description: Signed out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials (You were never logged in)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /posts:
+    get:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Posts
+      summary: Retrieve a list of 10 posts
+      description: Retrieve a list of 10 posts ordered and filtered by criteria
+      operationId: getPosts
+      parameters:
+        - name: begin
+          in: query
+          description: Skip first X posts
+          required: true
+          schema:
+            type: integer
+          example: 0
+        - name: orderBy
+          in: query
+          description: Order the posts by most recent or lowest price
+          required: true
+          schema:
+            type: string
+            enum:
+              - date
+              - price
+          example: date
+        - name: filterSubjects
+          in: query
+          description: All subjects tags of shown posts (logical OR) (When no filter, specify ALL)
+          required: true
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+          example: ANJ,PSI
+        - name: filterYears
+          in: query
+          description: All year tags of shown posts (logical OR) (When no filter, specify ALL)
+          required: true
+          explode: false
+          schema:
+            type: array
+            items:
+              type: integer
+          example: 1,3
+        - name: filterState
+          in: query
+          description: All state tags of shown posts (logical OR) (When no filter, specify ALL)
+          required: true
+          explode: false
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/state"
+          example: Good,Worn
+        - name: priceMin
+          in: query
+          description: Lower end of price range
+          required: false
+          schema:
+            type: number
+            default: 0
+          example: 100
+        - name: priceMax
+          in: query
+          description: Upper end of price range
+          required: false
+          schema:
+            type: number
+            default: MAX_PRICE
+          example: 300
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/post"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Posts
+      summary: Make a new post
+      description: Make a new post
+      operationId: addPost
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/newpost"
+      responses:
+        '201':
+          description: Post created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Admin cannot create posts (Separation of privilege)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+    delete:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Posts
+      summary: Delete a post
+      description: Delete a post (user only his own, admin anyone's)
+      operationId: deletePost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postId:
+                  type: string
+                  description: String representation of posts._id
+                  format: uuid
+              required:
+                - postId
+      responses:
+        '200':
+          description: Post deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (User is not the Creator nor admin)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '404':
+          description: The post does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /posts/extend:
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Posts
+      summary: Extend a posts lifespan
+      description: Extend a posts lifespan
+      operationId: extendPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postId:
+                  type: string
+                  description: String representation of posts._id
+                  format: uuid
+                days:
+                  type: integer
+                  description: Number of days to add to the posts lifespan
+              required:
+                - postId
+                - days
+      responses:
+        '200':
+          description: Post's lifespan extended
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (Only the Creator can extend posts)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '404':
+          description: The post does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /posts/user:
+    get:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Posts
+      summary: Get posts of a user
+      description: Get posts where user is listed as the creator
+      operationId: getUserPosts
+      parameters:
+        - name: userId
+          in: query
+          description: Id of the user (will use the logged in user if unspecified)
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/post"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: If userId is specified, the user must be admin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+    delete:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Posts
+      summary: Delete all posts of a user
+      description: Delete all posts the user has posted
+      operationId: deleteUserPosts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: Id of the user
+                  format: uuid
+              required:
+                - userId
+      responses:
+        '200':
+          description: All posts deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (The user must be admin)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /users/list:
+    get:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Users
+      summary: Get list of users
+      description: Get list of users, filter by first name (WHERE first matches /^{first}.*$/) and similarly for last name
+      operationId: getUsersList
+      parameters:
+        - name: first
+          in: query
+          description: Beginning of first name
+          required: false
+          schema:
+            type: string
+        - name: last
+          in: query
+          description: Beginning of last name
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: How many users to return
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/user"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized, the user must be admin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /users/me:
+    get:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Users
+      summary: Get info about the logged in user
+      description: Get info about the logged in user
+      operationId: getUserMe
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Name:
+                    $ref: "#/components/schemas/name"
+                  Role:
+                    $ref: "#/components/schemas/role"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+    delete:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Users
+      summary: Delete own account
+      description: Delete own account
+      operationId: deleteUserMe
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /users/{userId}:
+    get:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Users
+      summary: Get info about the specified user
+      description: Get info about the specified user
+      operationId: getUser
+      parameters:
+        - name: userId
+          in: path
+          description: Id of the user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Name:
+                    $ref: "#/components/schemas/name"
+        '400':
+          description: The userId is in incorrect format
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '404':
+          description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+    delete:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Users
+      summary: Delete the specified user
+      description: Delete the specified user
+      operationId: deleteUser
+      parameters:
+        - name: userId
+          in: path
+          description: Id of the user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK (User deleted)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: The userId is in incorrect format
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (The user must be admin)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '404':
+          description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /users/role:
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Users
+      summary: Change a user's Role
+      description: Change a user's Role
+      operationId: changeRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: Id of the user
+                  format: uuid
+                role:
+                  $ref: "#/components/schemas/role"
+              required:
+                - userId
+                - role
+      responses:
+        '200':
+          description: OK (User role changed)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (The user must be admin)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /users/ban:
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Users
+      summary: Ban a user
+      description: Ban a user
+      operationId: banUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: Id of the user
+                  format: uuid
+                days:
+                  type: integer
+                  description: No of days to ban the user for
+                reason:
+                  type: string
+                  description: Reason for ban
+              required:
+                - userId
+                - days
+                - reason
+      responses:
+        '200':
+          description: OK (User banned)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (The user must be admin)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /blacklist:
+    get:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Blacklist
+      summary: Retrieve a list of all blacklist
+      description: Retrieve a list of all blacklist
+      operationId: getBlacklist
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blists:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/blacklist"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (The user must be admin)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Blacklist
+      summary: Add a microsoftId to blacklist
+      description: Add a microsoftId to blacklist
+      operationId: addBlacklist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                microsoftId:
+                  type: string
+                  description: Microsoft ID to blacklist
+                  format: uuid
+                reason:
+                  type: string
+                  description: Reason for blacklist
+              required:
+                - microsoftId
+                - reason
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (The user must be admin)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '404':
+          description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+
+
+components:
+  securitySchemes:
+    ssidCookie:
+      type: apiKey
+      in: cookie
+      name: SESSION_ID
+    csrfHeader:
+      type: apiKey
+      in: header
+      name: X-Csrf-Token
+  schemas:
+    state:
+      type: string
+      description: State of the book
+      enum:
+        - Like new
+        - Good
+        - Worn
+    role:
+      type: string
+      description: Role assigned to the user
+      enum:
+        - user
+        - admin
+    banData:
+      type: object
+      description: Data associated with a singular user ban
+      properties:
+        CreatedAt:
+          type: string
+          description: When was the ban issued
+          format: date-time
+        Until:
+          type: string
+          description: Date the ban is valid until
+          format: date-time
+        IssuedBy:
+          type: string
+          description: User._id of the user who issued the ban
+          format: uuid
+        Reason:
+          type: string
+          description: Reason for the ban
+    name:
+      type: object
+      description: The name recieved through Office365
+      properties:
+        First:
+          type: string
+          description: First name of the user
+        Last:
+          type: string
+          description: Last name of the user
+    user:
+      type: object
+      properties:
+        MicrosoftId:
+          type: string
+          description: MicrosoftId of the associated Office365 account
+          format: uuid
+        Name:
+          $ref: "#/components/schemas/name"
+        Role:
+          $ref: "#/components/schemas/role"
+        LastLogin:
+          type: string
+          description: When was the last login of the user
+          format: date-time
+        Bans:
+          type: array
+          description: Array of the users bans
+          items:
+            $ref: "#/components/schemas/banData"
+    newpost:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the post
+        remove:
+          type: number
+          description: No of days for the post to last
+        subjects:
+          type: array
+          description: Subject tags the post is associated with
+          items:
+            type: string
+        state:
+          $ref: "#/components/schemas/state"
+        years:
+          type: array
+          description: Years the book is used in
+          items:
+            type: integer
+        priceMin:
+          type: integer
+          description: Lower end of the price range
+        priceMax:
+          type: integer
+          description: Upper end of price range (if unspecified or equal to priceMin, static price is assumed)
+        pictures:
+          type: array
+          description: Pictures of the book to upload
+          items:
+            type: string
+            format: binary
+      required:
+        - title
+        - remove
+        - subjects
+        - state
+        - years
+        - priceMin
+    post:
+      type: object
+      properties:
+        CreatorId:
+          type: string
+          description: User._id of the creator
+          format: uuid
+        Title:
+          type: string
+          description: Title of the post
+        CreatedAt:
+          type: string
+          description: When was the post originally created
+          format: date-time
+        RemoveAt:
+          type: string
+          description: When to remove the post
+          format: date-time
+        Subjects:
+          type: array
+          description: Subject tags the post is associated with
+          items:
+            type: string
+        State:
+          $ref: "#/components/schemas/state"
+        Years:
+          type: array
+          description: Years the book is used in
+          items:
+            type: integer
+        Price:
+          type: object
+          description: Price info for the book
+          properties:
+            Min:
+              type: integer
+              description: Lower end of the price spectrum
+            Max:
+              type: integer
+              description: Higher end of the price spectrum (if is eq to lower end => the price is not a spectrum)
+        Photos:
+          type: array
+          description: Paths to associated photos
+          items:
+            type: string
+            format: path
+    blacklist:
+      type: object
+      properties:
+        MicrosoftId:
+          type: string
+          description: Blacklisted Microsoft ID
+          format: uuid
+        CreatedAt:
+          type: string
+          description: When was the blacklist entry created
+          format: date-time
+        Reason:
+          type: string
+          description: Reason for blacklist
+    msg:
+      type: object
+      properties:
+        msg:
+          type: string
+          description: A message (Error message for 4xx codes, info for 2xx codes)
