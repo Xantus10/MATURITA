@@ -15,7 +15,13 @@ Student po přihlášení může zobrazit příspěvky a filtrovat/řadit je
 - Student může též příspěvky filtrovat dle předmětu, ročníku, stavu nebo rozmezí ceny od-do (Pro příspěvky, kde je cena vyjádřena rozmezím s bude spodní hranice porovnávat s max cenou a vrchní hranice porovnávat s min cenou)
 - Student, který příspěvek vytvořil by měl mít možnost ho smazat (např. z důvodu úspěšného prodeje), jinak by se měly příspěvky mazat po 1 měsíci (v základu) nebo po době vymezené uživatelem (lze omezit)
 - Uživatelé by měli mít možnost smazat vlastní účet, mělo by zde být i automatické mazání účtů pro účty, které nebyly přihlášeny posledních 15 měsíců
-- Finálně by zde měl být admin, tento bude mít své stránky, na které bude mít přístup jen on. Admin může mazat jakýkoli příspěvek i mazat všechny příspěvky jakéhokoliv uživatele. Dále má také možnost smazat uživatelský účet a zařadit ho na blacklist. Takový uživatel pak nikdy nedostane přístup na platformu, samozřejmě lze uživatele také vymazat z blacklistu.
+- Na platformě bude i admin
+  - Admin bude mít vlastní domovskou stránku, kde může smazat jakýkoli příspěvek + smazat všechny příspěvky od daného uživatele
+  - Admin může mazat uživatelské účty
+  - Admin může komukoli poskytnout adminská privilegia i je opět odebrat
+  - Admin má dvě možnosti pro udělování zákazů přístupu na platformu
+    - Dočasný zákaz (Uživatel se může opět přihlásit po skončení lhůty + jeho data jsou zachována)
+    - Permanentní blacklist (Uživatelský účet je smazán, Office 365 účet je dán na "černou listinu" a je mu zakázán přístup na platformu)
 - Nakonec má admin možnost přidávat, či odebírat vyučovací předměty.
 
 

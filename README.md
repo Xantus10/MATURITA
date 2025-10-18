@@ -15,7 +15,13 @@ After logging in, student can view, order and filter the posts
 - The student can also filter the posts based on subject, year, condition, and price range (For posts that use a price range: The lower end will be compared with max price and the higher end with their min price)
 - The student can delete their own posts (e.g. because they already sold the book), the posts should be automatically deleted after one month (default) or user supplied range (can be limited)
 - Users should be able to delete their own account, auto deletion should also be enabled for accounts, that have not logged in for the past 15 months
-- The system should feature an admin, admin will have their own view, where they can delete any post as well as delete all posts by a given user. He can also delete the whole user profile and blacklist it. Blacklisted user will not be permitted back on the platform. The admin can also remove people from the blacklist
+- The system should feature an admin
+  - The admin will have their own view, where they can delete any post as well as delete all posts by a given user
+  - Admin can also delete users
+  - Admin can give anyone admin privileges and revoke them
+  - Admin has two options for denying access for users
+    - A temporary ban (The user can log in after the ban expires + their data are preserved)
+    - A permanent blacklist (The user account is deleted, Office 365 account tied to it is forbidden from entering the platform)
 - Finally the admin has the option to add/remove any subjects
 
 
