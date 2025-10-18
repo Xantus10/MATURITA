@@ -1,0 +1,10 @@
+site_name: School book market
+repo_url: https://github.com/Xantus10/MATURITA
+edit_uri: edit/master/doc/development-doc/docs/
+nav:
+  - Home: index.md
+  - Technologies: tech.md
+  - Flow overview: flow.md
+  - Directory structure: dir.md
+theme: readthedocs
+use_directory_urls: false
