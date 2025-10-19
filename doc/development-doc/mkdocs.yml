@@ -6,5 +6,8 @@ nav:
   - Technologies: tech.md
   - Flow overview: flow.md
   - Directory structure: dir.md
+  - Running the app: run.md
+  - Adding features: add.md
+  - Security: security.md
 theme: readthedocs
 use_directory_urls: false
