@@ -42,7 +42,7 @@ export default function AUsersPage() {
           <LangSwitch />
           <BackToHomeButton />
         </Group>
-        <Stack  bg={'gray.9'} p="md">
+        <Stack bg={'gray.8'} p={"md"}>
           <Group gap={"xl"}>
             <TextInput label={t('userPage.first')} value={first} onChange={(e) => {setFirst(e.currentTarget.value)}} />
             <TextInput label={t('userPage.last')} value={last} onChange={(e) => {setLast(e.currentTarget.value)}} />

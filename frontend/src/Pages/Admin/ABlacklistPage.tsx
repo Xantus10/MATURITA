@@ -38,7 +38,7 @@ export default function ABlacklistPage() {
           <LangSwitch />
           <BackToHomeButton />
         </Group>
-        <Stack  bg={'gray.9'} p="md">
+        <Stack bg={'gray.8'} p={"md"}>
           {blacklists.map((v) => {return (
             <BlacklistDisplay {...v} />
           )})}
