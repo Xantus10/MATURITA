@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { post, deletef } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
 import BanDisplay, { isBanned, labelBans, type BanData } from "./BanDisplay";
+import { typedates } from "../Util/autotype";
 
 
 /**
@@ -112,12 +113,13 @@ function UserDisplay({data}: UserDisplayProps) {
   }
 
   const inverseRole = (Role==='admin') ? 'user' : 'admin';
-  const userBanned = isBanned(Bans);
-  const LabeledBans = labelBans(Bans);
+  const BansT = typedates(Bans);
+  const userBanned = isBanned(BansT);
+  const LabeledBans = labelBans(BansT);
 
   return (
     <>
-    <Paper bd={(userBanned) ? 'solid 1px var(--mantine-color-red-7)' : ''}>
+    <Paper bd={(userBanned) ? 'solid 1px var(--mantine-color-red-7)' : ''} withBorder={userBanned}>
       <Group gap='xl' justify="space-between" p={"md"} >
         <ManTitle order={2}>{Name.First} {Name.Last} {(userBanned) ? `(${t('userDisplay.banned')})` : ''}</ManTitle>
         <Code>{Role}</Code>

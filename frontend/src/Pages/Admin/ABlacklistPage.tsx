@@ -7,6 +7,7 @@ import BackToHomeButton from '../../Components/BackToHomeButton';
 import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
 import BlacklistDisplay, { type BlacklistData } from '../../Components/BlacklistDisplay';
+import { typedates } from '../../Util/autotype';
 
 import classes from '../../styles/mypostspage.module.css'
 
@@ -18,7 +19,7 @@ export default function ABlacklistPage() {
     let res = await get('/blacklist');
     if (res) {
       autoHttpResponseNotification(res);
-      if (res.status === 200) setBlacklists((await res.json()).blists);
+      if (res.status === 200) setBlacklists(typedates((await res.json()).blists));
     }
   }
 
