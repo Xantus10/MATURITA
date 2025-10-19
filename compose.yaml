@@ -2,6 +2,12 @@ services:
   mongo:
     build: ./db
     container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - DB_NAME=${DB_NAME}
     ports:
       - '27017:27017'
     networks:
@@ -9,6 +15,12 @@ services:
   backend:
     build: ./backend
     container_name: backend
+    environment:
+      - DBURI=${DBURI}
+      - MICROSOFT_ISSUER_URL=${MICROSOFT_ISSUER_URL}
+      - MICROSOFT_APP_ID=${MICROSOFT_APP_ID}
+      - PORT=${PORT}
+      - CSRF_SECRET=${CSRF_SECRET}
     ports:
       - "5000:5000"
     networks:
@@ -19,6 +31,8 @@ services:
   frontend:
     build: ./frontend
     container_name: frontend
+    environment:
+      - VITE_BE_URL=${VITE_BE_URL}
     ports:
       - "3000:3000"
     networks:

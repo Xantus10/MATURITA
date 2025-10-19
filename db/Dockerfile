@@ -1,8 +1,6 @@
 FROM mongo:latest
 
-ENV MONGO_INITDB_ROOT_USERNAME=mongoroot
-ENV MONGO_INITDB_ROOT_PASSWORD=d128WWWf12$$x10
-
-COPY init.js /docker-entrypoint-initdb.d/
+COPY init.sh /docker-entrypoint-initdb.d/init.sh
+COPY create.js /docker-entrypoint-initdb.d/create.js
 
 EXPOSE 27017
