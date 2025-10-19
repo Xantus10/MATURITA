@@ -170,11 +170,11 @@ function UserDisplay({data}: UserDisplayProps) {
     <Popup line={t('userDisplay.deleteReassure')} open={deleteDisc} onNo={deleteDiscController.close} onYes={DeleteUser} />
     <PopupAsk<BanUserArg> line={t('userDisplay.ban')} open={banDisc} onNo={banDiscController.close} onYes={BanUser} input={{element:
       (<>
-        <NumberInput title={t('userDisplay.banDays')} value={banArg.days} onChange={(e) => {setBanArg({...banArg, days: ((typeof e === 'string') ? 0 : e)})}} />
-        <TextInput title={t('userDisplay.banReason')} value={banArg.reason} onChange={(e) => {setBanArg({...banArg, reason: e.currentTarget.value})}} />
+        <NumberInput label={t('userDisplay.banDays')} value={banArg.days} onChange={(e) => {setBanArg({...banArg, days: ((typeof e === 'string') ? 0 : e)})}} />
+        <TextInput label={t('userDisplay.banReason')} value={banArg.reason} onChange={(e) => {setBanArg({...banArg, reason: e.currentTarget.value})}} />
       </>)
     , value: banArg}} />
-    <PopupAsk line={t('userDisplay.blacklist')} open={blackDisc} onNo={blackDiscController.close} onYes={BlacklistUser} input={{element: (<TextInput title={t('userDisplay.blacklistReason')} value={blackReason} onChange={(e) => {setBlackReason(e.currentTarget.value)}} />), value: blackReason}} />
+    <PopupAsk line={t('userDisplay.blacklist')} open={blackDisc} onNo={blackDiscController.close} onYes={BlacklistUser} input={{element: (<TextInput label={t('userDisplay.blacklistReason')} value={blackReason} onChange={(e) => {setBlackReason(e.currentTarget.value)}} />), value: blackReason}} />
     <Modal opened={banHistory} onClose={banHistoryController.close} title={t('userDisplay.banhistory')} >
       {LabeledBans.map((val) => {return (<BanDisplay {...val} />)})}
     </Modal>
