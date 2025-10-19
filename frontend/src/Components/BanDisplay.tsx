@@ -91,7 +91,7 @@ export function BanDisplay({CreatedAt, Until, IssuedBy, Reason, Valid}: LabeledB
 
   return (
     <>
-    <Paper bd={(Valid) ? 'solid 1px var(--mantine-color-red-7)' : ''} p={"sm"} onClick={discController.open} >
+    <Paper bd={(Valid) ? 'solid 1px var(--mantine-color-red-7)' : ''} p={"sm"} onClick={discController.open} withBorder={Valid} >
       <Group justify='space-between' >
         <Text>
           {Reason}
@@ -104,7 +104,7 @@ export function BanDisplay({CreatedAt, Until, IssuedBy, Reason, Valid}: LabeledB
 
     <Modal opened={disc} onClose={discController.close} withCloseButton centered>
       <Stack p={'sm'} gap={'md'}>
-        <Text>{t_adm('userDisplay.banReason')}</Text>
+        <Text>{t_adm('userDisplay.banReason')}: {Reason}</Text>
         <Code>
           {t_comp('postdisplay.created')}: {CreatedAt.toLocaleString()}
         </Code>
