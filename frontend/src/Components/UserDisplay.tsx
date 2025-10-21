@@ -76,6 +76,7 @@ function UserDisplay({data}: UserDisplayProps) {
   const [banDisc, banDiscController] = useDisclosure(false);
   const [blackDisc, blackDiscController] = useDisclosure(false);
   const [banHistory, banHistoryController] = useDisclosure(false);
+  const [changeRoleDisc, changeRoleDiscController] = useDisclosure(false);
 
   const { t } = useTranslation('admin');
 
@@ -164,7 +165,7 @@ function UserDisplay({data}: UserDisplayProps) {
           {t('userDisplay.blacklist')}
         </Button>
         
-        <Button onClick={() => {ChangeUserRole(inverseRole)}}>{t('userDisplay.make')} {inverseRole}</Button>
+        <Button onClick={changeRoleDiscController.open}>{t('userDisplay.make')} {inverseRole}</Button>
       </Group>
     </Paper>
     
@@ -180,6 +181,7 @@ function UserDisplay({data}: UserDisplayProps) {
     <Modal opened={banHistory} onClose={banHistoryController.close} title={t('userDisplay.banhistory')} >
       {LabeledBans.map((val) => {return (<BanDisplay {...val} />)})}
     </Modal>
+    <Popup line={t('userDisplay.make') + ' ' + inverseRole} open={changeRoleDisc} onNo={changeRoleDiscController.close} onYes={() => ChangeUserRole(inverseRole)} />
     </>
   );
 }
