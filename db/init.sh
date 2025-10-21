@@ -6,7 +6,7 @@ MONGO_USER="${MONGO_USER:-dbuser}"
 MONGO_PASSWORD="${MONGO_PASSWORD:-dbpass}"
 
 # Create the MongoDB user
-mongo -u "${MONGO_INITDB_ROOT_USERNAME}" -p "${MONGO_INITDB_ROOT_PASSWORD}" <<EOF
+mongosh -u "${MONGO_INITDB_ROOT_USERNAME}" -p "${MONGO_INITDB_ROOT_PASSWORD}" <<EOF
 use ${DB_NAME}
 db.createUser({
   user: "${MONGO_USER}",
@@ -16,4 +16,4 @@ db.createUser({
 EOF
 
 # Now, load the .js
-mongo $DB_NAME /docker-entrypoint-initdb.d/create.js
+mongosh $DB_NAME /docker-entrypoint-initdb.d/create.js
