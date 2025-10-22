@@ -12,6 +12,7 @@ import { autoHttpResponseNotification } from '../../Util/notifications';
 import { PRICE_MIN, PRICE_MAX } from '../HomePage';
 
 import classes from '../../styles/homepage.module.css'
+import defclasses from '../../styles/default.module.css';
 
 /**
  * Admin homepage
@@ -63,9 +64,9 @@ export default function AHomePage() {
 
   return (
     <>
-      <Stack className={classes.container}>
-        <Group mih={'10vh'} bg={'gray.9'} p="md" justify="space-between">
-          <Title order={1}>{t('admin.title')}</Title>
+      <Stack className={defclasses.container}>
+        <Group mih={'10vh'} className={defclasses.header} justify="space-between">
+          <Title order={1} className={defclasses.title1}>{t('admin.title')}</Title>
           <LangSwitch />
           <Menu position="bottom-end">
             <Menu.Target>
@@ -85,7 +86,7 @@ export default function AHomePage() {
           </Menu>
         </Group>
         <Group className={classes.divider} preventGrowOverflow={false} align='start'>
-          <Stack className={classes.filters} bg={'gray.8'}>
+          <Stack className={classes.filters}>
             <MultiSelect label={t('form.title.subjects')} data={subjects} key={filterForm.key('subjects')} {...filterForm.getInputProps('subjects')} />
             <MultiSelect label={t('form.title.state')} data={STATES} key={filterForm.key('state')} {...filterForm.getInputProps('state')} />
             <MultiSelect label={t('form.title.years')} data={['1', '2', '3', '4']} key={filterForm.key('years')} {...filterForm.getInputProps('years')} />
@@ -93,7 +94,7 @@ export default function AHomePage() {
             <NumberInput label={`Max. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={filterForm.key('priceMax')} {...filterForm.getInputProps('priceMax')} />
             <Button m="md" onClick={() => {getPosts(0, true)}}>{t('filter')}</Button>
           </Stack>
-          <Stack className={classes.main} bg={'gray.8'}>
+          <Stack className={classes.main}>
             <Group>
               <NativeSelect data={[{label: t('orderDate'), value: 'date'}, {label: t('orderPrice'), value: 'price'}]} value={orderBy} onChange={(e) => setOrderBy(e.currentTarget.value)} />
             </Group>

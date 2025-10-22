@@ -8,7 +8,7 @@ import BackToHomeButton from '../../Components/BackToHomeButton';
 import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
 
-import classes from '../../styles/mypostspage.module.css'
+import classes from '../../styles/default.module.css';
 
 /**
  * Admin users page
@@ -37,12 +37,12 @@ export default function AUsersPage() {
   return (
     <>
       <Stack className={classes.container}>
-        <Group mih={'10vh'} bg={'gray.9'} p="md" justify="space-between">
-          <Title order={1}>{t('userPage.title')}</Title>
+        <Group mih={'10vh'} className={classes.header} justify="space-between">
+          <Title order={1} className={classes.title1}>{t('userPage.title')}</Title>
           <LangSwitch />
           <BackToHomeButton />
         </Group>
-        <Stack bg={'gray.8'} p={"md"}>
+        <Stack p={"md"}>
           <Group gap={"xl"}>
             <TextInput label={t('userPage.first')} value={first} onChange={(e) => {setFirst(e.currentTarget.value)}} />
             <TextInput label={t('userPage.last')} value={last} onChange={(e) => {setLast(e.currentTarget.value)}} />

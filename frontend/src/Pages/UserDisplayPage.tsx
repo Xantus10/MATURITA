@@ -9,7 +9,7 @@ import { LogoutFunc } from "../Components/Logout";
 import { get, deletef } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
 
-import classes from '../styles/userdisplaypage.module.css';
+import classes from '../styles/default.module.css';
 
 import { useTranslation } from 'react-i18next';
 
@@ -67,8 +67,8 @@ function UserDisplayPage() {
   return (
     <>
       <Stack className={classes.container} gap={"xl"}>
-        <Group justify="space-between">
-          <Title order={2}>{t('useracc.title')}</Title>
+        <Group justify="space-between" className={classes.header}>
+          <Title order={2} className={classes.title1}>{t('useracc.title')}</Title>
           <LangSwitch />
           <BackToHomeButton />
         </Group>

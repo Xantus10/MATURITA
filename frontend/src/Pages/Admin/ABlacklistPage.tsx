@@ -9,7 +9,7 @@ import { autoHttpResponseNotification } from '../../Util/notifications';
 import BlacklistDisplay, { type BlacklistData } from '../../Components/BlacklistDisplay';
 import { typedates } from '../../Util/autotype';
 
-import classes from '../../styles/mypostspage.module.css'
+import classes from '../../styles/default.module.css';
 
 /**
  * Admin page for blacklisting Microsoft Ids
@@ -34,12 +34,12 @@ export default function ABlacklistPage() {
   return (
     <>
       <Stack className={classes.container}>
-        <Group mih={'10vh'} bg={'gray.9'} p="md" justify="space-between">
-          <Title order={1}>{t('userDisplay.blacklist')}</Title>
+        <Group mih={'10vh'} className={classes.header} justify="space-between">
+          <Title order={1} className={classes.title1}>{t('userDisplay.blacklist')}</Title>
           <LangSwitch />
           <BackToHomeButton />
         </Group>
-        <Stack bg={'gray.8'} p={"md"}>
+        <Stack p={"md"}>
           {blacklists.map((v) => {return (
             <BlacklistDisplay {...v} />
           )})}

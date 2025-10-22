@@ -7,7 +7,7 @@ import LangSwitch from "../Components/LangSwitch";
 import { get } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
 
-import classes from '../styles/mypostspage.module.css'
+import classes from '../styles/default.module.css';
 
 import { useTranslation } from 'react-i18next';
 
@@ -33,12 +33,12 @@ function MyPostsPage() {
   return (
     <>
       <Stack className={classes.container}>
-        <Group justify="space-between">
-          <Title order={2}>{t('userposts.title')}</Title>
+        <Group justify="space-between" className={classes.header}>
+          <Title order={2} className={classes.title1}>{t('userposts.title')}</Title>
           <LangSwitch />
           <BackToHomeButton />
         </Group>
-        <Stack bg={'gray.8'} p={"md"}>
+        <Stack p={"md"}>
           {posts.map((p) => <PostDisplay data={p} view='edit' />)}
         </Stack>
       </Stack>
