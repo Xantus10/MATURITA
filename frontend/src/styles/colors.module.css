@@ -1,0 +1,9 @@
+:root {
+  --bg-grad: hsl(0, 0%, 80%);
+  --bg-grad-a: hsla(0, 0%, 50%, 0.05);
+
+  @mixin dark-root {
+    --bg-grad: hsl(0, 0%, 20%);
+    --bg-grad-a: hsla(0, 0%, 63%, 0.05);
+  }
+}

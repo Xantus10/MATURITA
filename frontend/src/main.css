@@ -3,3 +3,21 @@ body, #root {
   min-width: 100vw;
   min-height: 100vh;
 }
+
+body {
+  background-image: repeating-linear-gradient(
+        45deg,
+        var(--bg-grad-a) 0px,
+        var(--bg-grad-a) 10px,
+        transparent 10px,
+        transparent 100px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        var(--bg-grad-a) 0px,
+        var(--bg-grad-a) 50px,
+        transparent 50px,
+        transparent 100px
+      ),
+      linear-gradient(90deg, var(--bg-grad), var(--bg-grad));
+}

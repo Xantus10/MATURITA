@@ -1,4 +1,5 @@
 @import './media.css';
+@import './colors.module.css';
 
 .container {
   width: 100%;
