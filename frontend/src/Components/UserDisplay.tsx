@@ -11,6 +11,7 @@ import { autoHttpResponseNotification } from "../Util/notifications";
 import BanDisplay, { isBanned, labelBans, type BanData } from "./BanDisplay";
 import { typedates } from "../Util/autotype";
 
+import classes from '../styles/default.module.css'
 
 /**
  * User data
@@ -120,7 +121,7 @@ function UserDisplay({data}: UserDisplayProps) {
 
   return (
     <>
-    <Paper bd={(userBanned) ? 'solid 1px var(--mantine-color-red-7)' : ''} withBorder={userBanned}>
+    <Paper bd={(userBanned) ? 'solid 1px var(--mantine-color-red-7)' : ''} withBorder={userBanned} className={classes.outline}>
       <Group gap='xl' justify="space-between" p={"md"} >
         <ManTitle order={2}>{Name.First} {Name.Last} {(userBanned) ? `(${t('userDisplay.banned')})` : ''}</ManTitle>
         <Code>{Role}</Code>

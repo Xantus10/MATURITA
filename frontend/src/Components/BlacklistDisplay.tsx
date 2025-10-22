@@ -2,6 +2,7 @@ import { Stack, Paper, Text, Code, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useTranslation } from 'react-i18next';
 
+import classes from '../styles/default.module.css'
 
 /**
  * Blacklisted MicrosoftId data
@@ -32,7 +33,7 @@ function BlacklistDisplay({CreatedAt, MicrosoftId, Reason}: BlacklistData) {
 
   return (
     <>
-      <Paper p={"lg"} onClick={disController.open}>
+      <Paper p={"lg"} onClick={disController.open} className={classes.outline}>
         <Text>{MicrosoftId}</Text>
       </Paper>
 

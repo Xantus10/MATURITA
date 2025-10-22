@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { post, deletef } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
 
+import classes from '../styles/default.module.css'
 
 /**
  * Data associated with each post
@@ -186,7 +187,7 @@ function PostDisplay({data, view}: PostDisplayProps) {
 
   return (
     <>
-    <Paper>
+    <Paper className={classes.outline}>
         <Group gap='xl' justify="space-between" >
           <Box onClick={modalDiscController.open} flex={5}>
             <Group gap='xl' justify="space-between" p={"md"} >
