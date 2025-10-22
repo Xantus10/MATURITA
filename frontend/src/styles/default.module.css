@@ -1,0 +1,31 @@
+@import './media.css';
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  margin: auto;
+  padding: 8px;
+
+  @media (--desktop) {
+    width: 70%;
+  }
+}
+
+.title1 {
+  padding: 25px;
+  background: #4300FF;
+  box-shadow:
+    #0065F8 6px 3px,
+    #00CAFF 12px 6px,
+    #00FFDE 18px 9px
+}
+
+.header {
+  padding: var(--mantine-spacing-md);
+}
+
+.outline {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-radius: 20px;
+}
