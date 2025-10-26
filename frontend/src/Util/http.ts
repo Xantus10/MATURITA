@@ -7,7 +7,7 @@
 /**
  * Base BE URL
  */
-const BASE_URL = import.meta.env.VITE_BE_URL + '/api';
+const BASE_URL = window.location.protocol + '://' + import.meta.env.VITE_BE_URL + '/api';
 import { csrfHeaders } from "./csrf";
 
 /**
