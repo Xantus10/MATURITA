@@ -529,6 +529,10 @@ paths:
                 properties:
                   Name:
                     $ref: "#/components/schemas/name"
+                  MicrosoftId:
+                    type: string
+                    description: MicrosoftId of the user
+                    format: uuid
         '400':
           description: The userId is in incorrect format
           content:
