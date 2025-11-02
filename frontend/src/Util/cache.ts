@@ -23,6 +23,11 @@ export interface UserData {
      */
     last: string;
   };
+
+  /**
+   * Microsoft id of the user
+   */
+  microsoftId: string;
 };
 
 /**
@@ -33,6 +38,11 @@ class UserCacheClass {
    * cache of id -> user data
    */
   private cache: {[key: string]: UserData} = {};
+
+  /**
+   * ids currently in fetch status
+   */
+  private fetching: string[] = [];
 
   /**
    * !!! Do not create a new one; Use a single UserCache object provided by the cache.ts file !!!  
@@ -48,6 +58,11 @@ class UserCacheClass {
    * @returns User's data or null if failed
    */
   public async getUserData(id: string): Promise<UserData | null> {
+    let timeout = 30
+    while (this.fetching.includes(id) && timeout > 0) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      timeout--;
+    }
     if (Object.hasOwn(this.cache, id)) {
       return this.cache[id];
     }
@@ -61,10 +76,12 @@ class UserCacheClass {
    * @returns User's data or null if failed
    */
   private async fetchUserData(id: string) {
+    this.fetching.push(id);
     let res = await get(`/users/${id}`);
+    this.fetching.filter((val) => {return val !== id});
     let js = await res?.json();
     if (res?.status === 200) {
-      this.cache[id] = {name: {first: js.Name.First, last: js.Name.Last}}
+      this.cache[id] = {name: {first: js.Name.First, last: js.Name.Last}, microsoftId: js.MicrosoftId};
       return this.cache[id]
     }
     return null;
