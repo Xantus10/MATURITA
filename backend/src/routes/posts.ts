@@ -7,7 +7,7 @@ import { Router, type Request, type Response } from "express";
 import { checkRole, loggedin } from "../middlewares/session.js";
 import { Types } from "mongoose";
 import Post, { MIN_RANGE, MAX_RANGE } from "../db/models/post.js";
-import { strQueryToArray } from "../util/parse.js";
+import { parseArray } from "../util/parse.js";
 import multer from "multer";
 import { v4 as uuidv4 } from "uuid";
 import path from "node:path";
@@ -34,15 +34,13 @@ postsrouter.get('/', async (req: Request, res: Response) => {
     return res.status(400).send({msg: "'filter*' parameter/s missing"});
   }
 
-  let dbstates = strQueryToArray(filterState as string);
-  let dbsubjects = strQueryToArray(filterSubjects as string);
-  let dbyears = strQueryToArray<Number>(filterYears as string, parseInt);
+  let dbyears = parseArray<Number>(filterYears as string[], parseInt);
   
   let dbmin = (priceMin) ? parseInt(priceMin as string) : MIN_RANGE;
   let dbmax = (priceMax) ? parseInt(priceMax as string) : MAX_RANGE;
   let dbsort: {[key: string]: 1 | -1} = (orderBy === 'price') ? { 'Price.Min': 1 } : { 'CreatedAt': -1 };
 
-  let posts = await Post.find({ Subjects: { $in: dbsubjects }, Years: { $in: dbyears }, State: { $in: dbstates }, 'Price.Min': { $lte: dbmax }, 'Price.Max': { $gte: dbmin } })
+  let posts = await Post.find({ Subjects: { $in: filterSubjects }, Years: { $in: dbyears }, State: { $in: filterState }, 'Price.Min': { $lte: dbmax }, 'Price.Max': { $gte: dbmin } })
                     .sort(dbsort)
                     .skip(begin)
                     .limit(10);
@@ -94,10 +92,9 @@ postsrouter.post('/', checkRole('user'), multerMiddleware.array('pictures', 3), 
   }
   let min = parseInt(priceMin);
   let max = (priceMax) ? parseInt(priceMax) : min;
-  let subsArr = strQueryToArray(subjects as string);
-  let yearsArr = strQueryToArray(years as string, parseInt);
+  let yearsArr = parseArray(years as string[], parseInt);
   let photos = (req.files) ? (req.files as Express.Multer.File[]).map(file => file.filename) : [];
-  await Post.create({ CreatorId: req.session.data?.objId, Title: title, RemoveAt: parseInt(remove), Subjects: subsArr, State: state, Years: yearsArr, Price: { Min: min, Max: max }, Photos: photos });
+  await Post.create({ CreatorId: req.session.data?.objId, Title: title, RemoveAt: parseInt(remove), Subjects: subjects, State: state, Years: yearsArr, Price: { Min: min, Max: max }, Photos: photos });
   return res.status(201).send({msg: "Post created"});
 });
 

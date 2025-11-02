@@ -7,7 +7,7 @@
 /**
  * Base BE URL
  */
-const BASE_URL = window.location.protocol + '://' + import.meta.env.VITE_BE_URL + '/api';
+const BASE_URL = window.location.protocol + '//' + import.meta.env.VITE_BE_URL + '/api';
 import { csrfHeaders } from "./csrf";
 
 /**
@@ -23,7 +23,13 @@ function constructURL(path: string, args: object = {}) {
   let url = new URL(`${BASE_URL}${path}`);
   if (args && typeof args === 'object') {
     Object.entries(args).forEach(([k, v]) => {
-      url.searchParams.append(k, v);
+      if (typeof(v) === 'object') {
+        (v as any[]).forEach((val) => {
+          url.searchParams.append(k, val);
+        });
+      } else {
+        url.searchParams.append(k, v);
+      }
     });
   }
   return url.toString();
@@ -93,7 +99,13 @@ export async function postFormV(path: string, args: {[key: string]: any} = {}) {
   let form = new FormData();
   if (args) {
     Object.entries(args).forEach(([k, v]) => {
-      form.append(k, v);
+      if (typeof(v) === 'object') {
+        (v as any[]).forEach((val) => {
+          form.append(k, val);
+        });
+      } else {
+        form.append(k, v);
+      }
     })
   }
   try {
