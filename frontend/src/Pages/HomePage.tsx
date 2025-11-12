@@ -146,6 +146,7 @@ export default function HomePage() {
             </Group>
             <Stack>
               {posts.map((p) => <PostDisplay data={p} view='normal' />)}
+              <Button m="md" onClick={() => {getPosts(posts.length, false)}}>{t('loadmore')}</Button>
             </Stack>
           </Stack>
           <Stack className={classes.new} justify="end" align='center'>

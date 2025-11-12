@@ -100,6 +100,7 @@ export default function AHomePage() {
             </Group>
             <Stack>
               {posts.map((p) => <PostDisplay data={p} view='admin' />)}
+              <Button m="md" onClick={() => {getPosts(posts.length, false)}}>{t('loadmore')}</Button>
             </Stack>
           </Stack>
         </Group>
