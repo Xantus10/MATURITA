@@ -5,4 +5,5 @@
  */
 interface ImportMetaEnv {
   readonly VITE_BE_URL: string;
+  readonly VITE_MS_TENANT: string;
 };

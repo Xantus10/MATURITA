@@ -3,6 +3,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrashAlt } from "react-icons/fa";
+import { useMsal } from "@azure/msal-react";
 import { UserCache, type UserData } from "../Util/cache";
 import ClickableImage from "./ClickableImage";
 import Popup from "./Popup";
@@ -102,9 +103,30 @@ function PostDisplay({data, view}: PostDisplayProps) {
   const {_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos} = data;
   const [modalDisc, modalDiscController] = useDisclosure(false);
 
-  const [creator, setCreator] = useState<UserData>({name: {first: '', last: ''}});
+  const [creator, setCreator] = useState<UserData>({name: {first: '', last: ''}, microsoftId: ''});
 
   const { t } = useTranslation();
+
+  async function teamsChat() {
+    const { instance, accounts } = useMsal();
+    let restoken = await instance.acquireTokenSilent({scopes: ['chat.create'], account: accounts[0], authority: import.meta.env.VITE_MS_TENANT});
+    let res = await fetch('https://graph.microsoft.com/v1.0/chats', {
+      method: 'POST',
+      headers: {Authorization: `Bearer ${restoken.accessToken}`,
+      "Content-Type": 'application/json'},
+      body: JSON.stringify({chatType: 'oneOnOne', members: [{
+          "@odata.type": "#microsoft.graph.aadUserConversationMember",
+          "roles": ["owner"],
+          "user@odata.bind": "https://graph.microsoft.com/v1.0/me"
+        },
+        {
+          "@odata.type": "#microsoft.graph.aadUserConversationMember",
+          "roles": ["owner"],
+          "user@odata.bind": `https://graph.microsoft.com/v1.0/users('${creator.microsoftId}')`
+        }]})});
+    let js = await res.json();
+    window.open(`https://teams.microsoft.com/l/chat/${js.id}`, '_blank')
+  }
 
 
   let menu = (<></>);
@@ -220,6 +242,7 @@ function PostDisplay({data, view}: PostDisplayProps) {
         <Text size="xs">{t('postdisplay.created')}: {CreatedAt.toLocaleString()}</Text>
         <Text size="xs">{t('postdisplay.until')}: {RemoveAt.toLocaleString()}</Text>
         <Text ml="auto">{creator.name.first} {creator.name.last}</Text>
+        <Button ml="auto" onClick={teamsChat}>Teams lmao</Button>
       </Stack>
     </Modal>
     </>

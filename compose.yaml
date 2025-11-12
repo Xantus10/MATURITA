@@ -33,6 +33,7 @@ services:
     container_name: frontend
     environment:
       - VITE_BE_URL=${VITE_BE_URL}
+      - VITE_MS_TENANT=${VITE_MS_TENANT}
     ports:
       - "3000:3000"
     networks:
