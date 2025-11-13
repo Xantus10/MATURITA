@@ -14,3 +14,12 @@ export function parseArray<T = number>(arr: string[], parseFunction?: (item: str
 
   return arr as T[];
 }
+
+/**
+ * Capitalize the first letter of any string
+ * @param val The string to capitalize
+ * @returns Capitalized string
+ */
+export function capitalizeFirstLetter(s: string) {
+    return String(s).charAt(0).toUpperCase() + String(s).slice(1);
+}
