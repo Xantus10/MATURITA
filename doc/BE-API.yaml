@@ -533,6 +533,9 @@ paths:
                     type: string
                     description: MicrosoftId of the user
                     format: uuid
+                  Socials:
+                    $ref: "#/components/schemas/socials"
+                  
         '400':
           description: The userId is in incorrect format
           content:
@@ -698,6 +701,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/msg"
+  /users/socials:
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Users
+      summary: Update user's socials
+      description: Update user's own socials
+      operationId: postSocialsUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/socialslc"
+      responses:
+        '200':
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
   /blacklist:
     get:
       security: [ { ssidCookie: [], csrfHeader: [] } ]
@@ -829,6 +852,11 @@ components:
         Reason:
           type: string
           description: Reason for the ban
+      required:
+        - CreatedAt
+        - Until
+        - IssuedBy
+        - Reason
     name:
       type: object
       description: The name recieved through Office365
@@ -839,6 +867,41 @@ components:
         Last:
           type: string
           description: Last name of the user
+      required:
+        - First
+        - Last
+    socials:
+      type: object
+      description: Optional contacts
+      properties:
+        Email:
+          type: string
+          description: Email of the user
+        Phone:
+          type: string
+          description: Phone number
+        Instagram:
+          type: string
+          description: Instagram username
+        Discord:
+          type: string
+          description: Discord username
+    socialslc:
+      type: object
+      description: Optional contacts
+      properties:
+        email:
+          type: string
+          description: Email of the user
+        phone:
+          type: string
+          description: Phone number
+        instagram:
+          type: string
+          description: Instagram username
+        discord:
+          type: string
+          description: Discord username
     user:
       type: object
       properties:
@@ -859,6 +922,12 @@ components:
           description: Array of the users bans
           items:
             $ref: "#/components/schemas/banData"
+      required:
+        - MicrosoftId
+        - Name
+        - Role
+        - LastLogin
+        - Bans
     newpost:
       type: object
       properties:
@@ -939,12 +1008,24 @@ components:
             Max:
               type: integer
               description: Higher end of the price spectrum (if is eq to lower end => the price is not a spectrum)
+          required:
+            - Min
+            - Max
         Photos:
           type: array
           description: Paths to associated photos
           items:
             type: string
             format: path
+      required:
+        - CreatorId
+        - Title
+        - CreatedAt
+        - RemoveAt
+        - Subjects
+        - Years
+        - Price
+        - Photos
     blacklist:
       type: object
       properties:
@@ -959,6 +1040,10 @@ components:
         Reason:
           type: string
           description: Reason for blacklist
+      required:
+        - MicrosoftId
+        - CreatedAt
+        - Reason
     msg:
       type: object
       properties:

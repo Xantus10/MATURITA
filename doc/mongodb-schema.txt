@@ -17,6 +17,12 @@ Bans[] {
  IssuedBy	ObjectId -> users._id			// Who issued the ban
  Reason		string					// Reason for ban
 }
+Socials {						// Optional contact info for user
+ Email		string		NotReq			// Email
+ Phone		string		NotReq			// Phone number
+ Instagram	string		NotReq			// Instagram username
+ Discord	string		NotReq			// Discord username
+}
 
 
 # collection posts
