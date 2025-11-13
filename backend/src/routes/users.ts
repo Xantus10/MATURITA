@@ -8,6 +8,8 @@ import { loggedin, checkRole } from "../middlewares/session.js";
 import { Types } from "mongoose";
 import User from "../db/models/user.js";
 import Post from "../db/models/post.js";
+import { SocialsKeys, type Socials } from "../db/interfaces/user.js";
+import { capitalizeFirstLetter } from "../util/parse.js";
 
 const usersrouter = Router();
 
@@ -71,7 +73,18 @@ usersrouter.post('/ban', checkRole('admin'), async (req: Request, res: Response)
   return res.status(200).send({msg: `User has been banned for ${days} days`});
 });
 
-
+/**
+ * Update user socials
+ */
+usersrouter.post('/socials', async (req: Request, res: Response) => {
+  let socials: {[key: string]: string} = {}
+  SocialsKeys.forEach(k => {
+    if (req.body[k]) socials[`Socials.${capitalizeFirstLetter(k)}`] = req.body[k];
+  });
+  let id = new Types.ObjectId(req.session.data?.objId);
+  User.findByIdAndUpdate(id, socials);
+  return res.status(200).send({msg: 'Updated'});
+})
 
 
 
@@ -84,7 +97,7 @@ usersrouter.get('/:id', async (req: Request, res: Response) => {
   let id = req.params.id;
   if (!id) return res.status(404).send({msg: 'The user does not exist'});
   if (!(/[0-9a-fA-F]{24}/.test(id))) return res.status(400).send({msg: 'The id is not valid mongodb id'});
-  let doc = await User.findById(new Types.ObjectId(id), { Name: 1, MicrosoftId: 1 });
+  let doc = await User.findById(new Types.ObjectId(id), { Name: 1, MicrosoftId: 1, Socials: 1 });
   if (!doc) return res.status(404).send({msg: 'The user does not exist'});
   return res.status(200).send(doc);
 });

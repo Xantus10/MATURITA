@@ -26,6 +26,37 @@ export interface BanData {
 }
 
 /**
+ * Object of optional contacts
+ */
+export interface Socials {
+    /**
+     * Email address
+     */
+    Email: string;
+
+    /**
+     * Phone number
+     */
+    Phone: string;
+
+    /**
+     * Instagram username
+     */
+    Instagram: string;
+
+    /**
+     * Discord username
+     */
+    Discord: string;
+}
+
+/**
+ * Array of all socials keys
+ */
+
+export const SocialsKeys = ['Email', 'Phone', 'Instagram', 'Discord'];
+
+/**
  * User data
  */
 export interface UserIF {
@@ -62,6 +93,11 @@ export interface UserIF {
    * Array of the users bans
    */
   Bans: BanData[];
+
+  /**
+   * Object of optional contacts
+   */
+  Socials: Socials;
 };
 
 export interface UserModelIF extends Model<UserIF> {

@@ -21,7 +21,13 @@ export const userSchema = new Schema<UserIF, Model<UserIF>, UserModelIF>({
     }},
     IssuedBy: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     Reason: {type: String, default: ""}
-  }]
+  }],
+  Socials: {
+    Email: {type: String},
+    Phone: {type: String},
+    Instagram: {type: String},
+    Discord: {type: String}
+  }
 });
 
 userSchema.static('updateLastLogin', async function (id: Types.ObjectId) {
