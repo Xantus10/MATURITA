@@ -8,6 +8,8 @@ import { OAuth } from "../oauth/oauthkeys.js";
 import { Session } from "../middlewares/session.js";
 import { generateCsrf, CSRF_SET_HEADER_NAME } from "../middlewares/csrf.js";
 import User from "../db/models/user.js";
+import Blacklist from "../db/models/blacklist.js";
+import { isBanned } from "../db/interfaces/user.js";
 import { Types } from "mongoose";
 
 const authrouter = Router();
@@ -16,11 +18,19 @@ const authrouter = Router();
  * Login route
  */
 authrouter.post('/idtoken', async (req: Request, res: Response) => {
+  // Validate Id token
   let idtoken = await OAuth.validateIdToken(req.body.idtoken);
   if (idtoken.oid === '') {
     return res.status(401).send({msg: "Invalid Id Token!"});
   }
-  let exists = await User.findOne({ MicrosoftId: idtoken.oid }, { _id: 1, Role: 1 });
+
+  // Check blacklist
+  let blist = await Blacklist.findOne({ MicrosoftId: idtoken.oid });
+  if (blist) {
+    return res.status(403).send({reason: blist.Reason, until: null});
+  }
+  
+  let exists = await User.findOne({ MicrosoftId: idtoken.oid }, { _id: 1, Role: 1, Bans: 1 });
   let objId: Types.ObjectId;
   let role: 'user' | 'admin';
   if (exists === null) {
@@ -30,6 +40,11 @@ authrouter.post('/idtoken', async (req: Request, res: Response) => {
     objId = doc._id;
     role = doc.Role;
   } else {
+    // Check ban
+    let ban = isBanned(exists.Bans);
+    if (ban) {
+      return res.status(403).send({reason: ban.Reason, until: ban.Until});
+    }
     objId = exists._id;
     role = exists.Role;
     User.updateLastLogin(objId);

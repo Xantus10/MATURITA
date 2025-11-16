@@ -64,6 +64,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/msg"
+        '403':
+          description: The user was denied access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/bannedmsg"
   /auth/logout:
     post:
       security: [ { ssidCookie: [], csrfHeader: [] } ]
@@ -1050,3 +1056,13 @@ components:
         msg:
           type: string
           description: A message (Error message for 4xx codes, info for 2xx codes)
+    bannedmsg:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: Reason for the ban/blacklist
+        until:
+          type: string
+          description: Until when is the user banned (If null, then the user is permanently blacklisted)
+          format: date-time

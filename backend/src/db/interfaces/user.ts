@@ -26,6 +26,22 @@ export interface BanData {
 }
 
 /**
+ * Compare all the ban data and conclude if the user has an active ban
+ * 
+ * @param bans Ban data
+ * @returns A Ban object if the user is banned, null otherwise
+ */
+export function isBanned(bans: BanData[]) {
+  let now = new Date();
+  for (let ban of bans) {
+    if (now > ban.CreatedAt && now < ban.Until) {
+      return ban;
+    }
+  }
+  return null;
+}
+
+/**
  * Object of optional contacts
  */
 export interface Socials {
