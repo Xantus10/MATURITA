@@ -79,7 +79,7 @@ export function BanDisplay({CreatedAt, Until, IssuedBy, Reason, Valid}: LabeledB
   const t_comp = useTranslation().t;
   const t_adm = useTranslation('admin').t;
 
-  const [by, setBy] = useState<UserData>({name: {first: '', last: ''}});
+  const [by, setBy] = useState<UserData>({name: {first: '', last: ''}, microsoftId: ''});
 
   useEffect(() => {
     UserCache.getUserData(IssuedBy).then((val) => {
