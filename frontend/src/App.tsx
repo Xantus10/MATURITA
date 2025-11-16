@@ -14,7 +14,7 @@ import ABlacklistPage from './Pages/Admin/ABlacklistPage';
 
 import { post } from './Util/http';
 import { isCsrf, setCsrfToken } from './Util/csrf';
-import { autoHttpResponseNotification } from './Util/notifications';
+import { showNotification } from './Util/notifications';
 
 /**
  * Main react app
@@ -23,7 +23,19 @@ function App() {
   async function LogUserIn(idtoken: string) {
     let res = await post('/auth/idtoken', {idtoken: idtoken});
     setCsrfToken(res);
-    if (res) autoHttpResponseNotification(res);
+    if (res) {
+      let js = await res.json();
+      switch (res.status) {
+        case 200:
+          break;
+        case 401:
+          showNotification({title: 'Log in failed', message: js.msg, icon: 'ERR'});
+          break;
+        case 403:
+          setBanMsg({reason: js.reason, until: (js.until) ? new Date(js.until) : null});
+          break;
+      }
+    }
   }
 
   const getLoginState = () => {return Cookies.get('ROLE') !== undefined && isCsrf()};
@@ -31,6 +43,7 @@ function App() {
   const {accounts} = useMsal();
 
   const [loggedIn, setLoggedIn] = useState<boolean>(getLoginState());
+  const [banmsg, setBanMsg] = useState<{reason: string; until: Date | null}>();
   const msloggedIn = accounts.length !== 0
 
   useEffect(() => {
@@ -64,6 +77,14 @@ function App() {
   }
 
   if (!loggedIn) {
+    if (banmsg) {
+      if (banmsg.until) {
+        return (<>YOU HAVE BEEN BANNED FOR {banmsg.reason} UNTIL {banmsg.until}</>);
+      } else {
+        return (<>YOU HAVE BEEN BLACKLISTED FOR {banmsg.reason}</>);
+      }
+    }
+
     return (<>INVALID MICROSOFT LOGIN</>);
   }
 
