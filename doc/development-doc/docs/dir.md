@@ -65,6 +65,9 @@ mongodb-schema.txt  -- Main mongo model documentation
       | /en           -- English localization
 /src          -- Source code
   | /Components   -- Custom reusable components for the app
+      | /Clickables   -- Components whose primary purpose is to be clicked
+      | /Displays     -- Components whose primary purpose is to display (json) data
+      | /Overlays     -- Components whose primary focus is on displaying an overlay
   | /Pages        -- App pages to render
       | /Admin        -- Admin pages
   | /styles       -- Postcss style files
