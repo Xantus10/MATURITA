@@ -19,7 +19,7 @@ export default function HomePage() {
   const { t } = useTranslation('homepage');
   const navigate = useNavigate();
 
-  const { FilterForm, MultiPostDisplay, Subjects } = useMultiPostDisplay({className: classes.filters}, {className: classes.main});
+  const { FilterForm, MultiPostDisplay, Subjects } = useMultiPostDisplay({className: classes.filters}, {className: classes.main}, 'normal');
 
   return (
     <>

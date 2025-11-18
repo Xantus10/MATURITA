@@ -2,7 +2,7 @@ import { Stack, MultiSelect, NativeSelect, Button, NumberInput, type StackProps 
 import { useForm } from "@mantine/form";
 import { useState, useEffect } from "react";
 
-import PostDisplay, { PRICE_MIN, PRICE_MAX, STATES, type PostData } from "./PostDisplay";
+import PostDisplay, { PRICE_MIN, PRICE_MAX, STATES, type PostData, type PostDisplayProps } from "./PostDisplay";
 import { get } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
 
@@ -12,13 +12,13 @@ import { useTranslation } from "react-i18next";
  * Wrapper function for whole post displaying functionality
  * 
  * @param filterFormProps Props to be passed down to FilterForm component
- * @param postDisplayProps Props to be passed down to MultiPostDisplay component
+ * @param multiPostDisplayProps Props to be passed down to MultiPostDisplay component
  * @returns 
  * FilterForm: Component of filter form  
  * MultiPostDisplay: Component of multi post display  
  * Subjects: State variable of all subjects  
  */
-export default function useMultiPostDisplay(filterFormProps: StackProps, postDisplayProps: StackProps)
+export default function useMultiPostDisplay(filterFormProps: StackProps, multiPostDisplayProps: StackProps, postDisplayType: PostDisplayProps['view'])
   : {
   FilterForm: React.ReactNode;
   MultiPostDisplay: React.ReactNode;
@@ -77,9 +77,9 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, postDis
     </>),
 
     MultiPostDisplay: (<>
-      <Stack {...postDisplayProps}>
+      <Stack {...multiPostDisplayProps}>
         <NativeSelect data={[{label: t('orderDate'), value: 'date'}, {label: t('orderPrice'), value: 'price'}]} value={orderBy} onChange={(e) => setOrderBy(e.currentTarget.value)} />
-        {posts.map((p) => <PostDisplay data={p} view='normal' />)}
+        {posts.map((p) => <PostDisplay data={p} view={postDisplayType} />)}
         <Button m="md" onClick={() => {getPosts(posts.length, false)}}>{t('loadmore')}</Button>
       </Stack>
     </>),
