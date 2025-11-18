@@ -3,13 +3,13 @@ import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { FaTrashAlt, FaBan, FaExclamationTriangle } from "react-icons/fa";
 import { MdOutlineAccountCircle, MdOutlineLocalPostOffice, MdHistory } from 'react-icons/md';
-import Popup from "./Popup";
-import PopupAsk from "./PopupAsk";
+import Popup from "../Overlays/Popup";
+import PopupAsk from "../Overlays/PopupAsk";
 import { useTranslation } from "react-i18next";
-import { post, deletef } from "../Util/http";
-import { autoHttpResponseNotification } from "../Util/notifications";
+import { post, deletef } from "../../Util/http";
+import { autoHttpResponseNotification } from "../../Util/notifications";
 import BanDisplay, { isBanned, labelBans, type BanData } from "./BanDisplay";
-import { typedates } from "../Util/autotype";
+import { typedates } from "../../Util/autotype";
 
 import classes from '../styles/default.module.css'
 

@@ -4,7 +4,7 @@ import { Center, Text, Title, Button, Stack } from '@mantine/core'
 import classes from '../styles/default.module.css';
 
 import { useTranslation } from 'react-i18next';
-import LangSwitch from '../Components/LangSwitch';
+import LangSwitch from '../Components/Clickables/LangSwitch';
 
 /**
  * Login page

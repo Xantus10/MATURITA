@@ -2,11 +2,11 @@ import { Title, Stack, Group } from '@mantine/core';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import LangSwitch from '../../Components/LangSwitch';
-import BackToHomeButton from '../../Components/BackToHomeButton';
+import LangSwitch from '../../Components/Clickables/LangSwitch';
+import BackToHomeButton from '../../Components/Clickables/BackToHomeButton';
 import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
-import BlacklistDisplay, { type BlacklistData } from '../../Components/BlacklistDisplay';
+import BlacklistDisplay, { type BlacklistData } from '../../Components/Displays/BlacklistDisplay';
 import { typedates } from '../../Util/autotype';
 
 import classes from '../../styles/default.module.css';

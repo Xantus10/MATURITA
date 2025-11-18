@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import PostDisplay, { type PostData } from '../../Components/PostDisplay';
-import Logout from '../../Components/Logout';
-import LangSwitch from '../../Components/LangSwitch';
+import PostDisplay, { type PostData } from '../../Components/Displays/PostDisplay';
+import Logout from '../../Components/Clickables/Logout';
+import LangSwitch from '../../Components/Clickables/LangSwitch';
 import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
 import { PRICE_MIN, PRICE_MAX } from '../HomePage';

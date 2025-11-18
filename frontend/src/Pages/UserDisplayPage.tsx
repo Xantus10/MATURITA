@@ -2,10 +2,10 @@ import { Title, Text, Stack, Group, Paper, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
-import BackToHomeButton from "../Components/BackToHomeButton";
-import LangSwitch from "../Components/LangSwitch";
-import Popup from "../Components/Popup";
-import { LogoutFunc } from "../Components/Logout";
+import BackToHomeButton from "../Components/Clickables/BackToHomeButton";
+import LangSwitch from "../Components/Clickables/LangSwitch";
+import Popup from "../Components/Overlays/Popup";
+import { LogoutFunc } from "../Components/Clickables/Logout";
 import { get, deletef } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
 

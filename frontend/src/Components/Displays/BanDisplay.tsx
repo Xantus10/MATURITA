@@ -3,7 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { UserCache, type UserData } from '../Util/cache';
+import { UserCache, type UserData } from '../../Util/cache';
 
 /**
  * Data associated with a singular user ban

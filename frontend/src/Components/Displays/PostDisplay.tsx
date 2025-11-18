@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrashAlt } from "react-icons/fa";
 import { useMsal } from "@azure/msal-react";
-import { UserCache, type UserData } from "../Util/cache";
-import ClickableImage from "./ClickableImage";
-import Popup from "./Popup";
-import PopupAsk from "./PopupAsk";
+import { UserCache, type UserData } from "../../Util/cache";
+import ClickableImage from "../Clickables/ClickableImage";
+import Popup from "../Overlays/Popup";
+import PopupAsk from "../Overlays/PopupAsk";
 import { useTranslation } from "react-i18next";
-import { post, deletef } from "../Util/http";
-import { autoHttpResponseNotification } from "../Util/notifications";
+import { post, deletef } from "../../Util/http";
+import { autoHttpResponseNotification } from "../../Util/notifications";
 
 import classes from '../styles/default.module.css'
 
@@ -77,6 +77,22 @@ export interface PostData {
    */
   Photos: string[];
 };
+
+/**
+ * Quality of the book
+ */
+export const STATES = ['Like new', 'Good', 'Worn'];
+
+
+/**
+ * Lowest possible price
+ */
+export const PRICE_MIN = 0;
+
+/**
+ * Highest possible price
+ */
+export const PRICE_MAX = 1000;
 
 /**
  * Props for PostDisplay

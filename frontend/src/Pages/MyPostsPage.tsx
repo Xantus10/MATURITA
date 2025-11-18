@@ -1,9 +1,9 @@
 import { Stack, Group, Title } from "@mantine/core";
 import { useState, useEffect } from "react";
 
-import PostDisplay, { type PostData } from "../Components/PostDisplay";
-import BackToHomeButton from "../Components/BackToHomeButton";
-import LangSwitch from "../Components/LangSwitch";
+import PostDisplay, { type PostData } from "../Components/Displays/PostDisplay";
+import BackToHomeButton from "../Components/Clickables/BackToHomeButton";
+import LangSwitch from "../Components/Clickables/LangSwitch";
 import { get } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
 
