@@ -1,9 +1,8 @@
-import { Title, Text, Stack, Group, Paper, Button } from "@mantine/core";
+import { Text, Stack, Paper, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
-import BackToHomeButton from "../Components/Clickables/BackToHomeButton";
-import LangSwitch from "../Components/Clickables/LangSwitch";
+import Header from "../Components/Clickables/Header";
 import Popup from "../Components/Overlays/Popup";
 import { LogoutFunc } from "../Components/Clickables/Logout";
 import { get, deletef } from "../Util/http";
@@ -67,11 +66,7 @@ function UserDisplayPage() {
   return (
     <>
       <Stack className={classes.container} gap={"xl"}>
-        <Group justify="space-between" className={classes.header}>
-          <Title order={2} className={classes.title1}>{t('useracc.title')}</Title>
-          <LangSwitch />
-          <BackToHomeButton />
-        </Group>
+        <Header title={t('useracc.title')} view="user" />
         <Paper p={"md"}>
           <Stack>
             <Text>{t('useracc.name')}: {userData.Name.First} {userData.Name.Last}</Text>

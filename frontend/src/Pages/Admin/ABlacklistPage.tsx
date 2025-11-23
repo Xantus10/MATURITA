@@ -1,9 +1,8 @@
-import { Title, Stack, Group } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import LangSwitch from '../../Components/Clickables/LangSwitch';
-import BackToHomeButton from '../../Components/Clickables/BackToHomeButton';
+import Header from '../../Components/Clickables/Header';
 import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
 import BlacklistDisplay, { type BlacklistData } from '../../Components/Displays/BlacklistDisplay';
@@ -34,11 +33,7 @@ export default function ABlacklistPage() {
   return (
     <>
       <Stack className={classes.container}>
-        <Group mih={'10vh'} className={classes.header} justify="space-between">
-          <Title order={1} className={classes.title1}>{t('userDisplay.blacklist')}</Title>
-          <LangSwitch />
-          <BackToHomeButton />
-        </Group>
+        <Header title={t('userDisplay.blacklist')} view="admin" />
         <Stack p={"md"}>
           {blacklists.map((v) => {return (
             <BlacklistDisplay {...v} />

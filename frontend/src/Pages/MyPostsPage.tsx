@@ -1,9 +1,8 @@
-import { Stack, Group, Title } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { useState, useEffect } from "react";
 
+import Header from "../Components/Clickables/Header";
 import PostDisplay, { type PostData } from "../Components/Displays/PostDisplay";
-import BackToHomeButton from "../Components/Clickables/BackToHomeButton";
-import LangSwitch from "../Components/Clickables/LangSwitch";
 import { get } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
 
@@ -33,11 +32,7 @@ function MyPostsPage() {
   return (
     <>
       <Stack className={classes.container}>
-        <Group justify="space-between" className={classes.header}>
-          <Title order={2} className={classes.title1}>{t('userposts.title')}</Title>
-          <LangSwitch />
-          <BackToHomeButton />
-        </Group>
+        <Header title={t('userposts.title')} view="user" />
         <Stack p={"md"}>
           {posts.map((p) => <PostDisplay data={p} view='edit' />)}
         </Stack>

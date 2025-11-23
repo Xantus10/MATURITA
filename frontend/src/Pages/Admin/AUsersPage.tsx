@@ -1,10 +1,9 @@
-import { Title, Stack, Group, TextInput, NativeSelect } from '@mantine/core';
+import { Stack, Group, TextInput, NativeSelect } from '@mantine/core';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import Header from '../../Components/Clickables/Header';
 import UserDisplay, { type UserData } from '../../Components/Displays/UserDisplay';
-import LangSwitch from '../../Components/Clickables/LangSwitch';
-import BackToHomeButton from '../../Components/Clickables/BackToHomeButton';
 import { get } from '../../Util/http';
 import { autoHttpResponseNotification } from '../../Util/notifications';
 
@@ -37,11 +36,7 @@ export default function AUsersPage() {
   return (
     <>
       <Stack className={classes.container}>
-        <Group mih={'10vh'} className={classes.header} justify="space-between">
-          <Title order={1} className={classes.title1}>{t('userPage.title')}</Title>
-          <LangSwitch />
-          <BackToHomeButton />
-        </Group>
+        <Header title={t('userPage.title')} view="admin" />
         <Stack p={"md"}>
           <Group gap={"xl"}>
             <TextInput label={t('userPage.first')} value={first} onChange={(e) => {setFirst(e.currentTarget.value)}} />
