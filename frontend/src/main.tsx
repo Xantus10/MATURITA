@@ -34,8 +34,8 @@ const themeOverride = createTheme({
  */
 const configuration: Configuration = {
     auth: {
-        clientId: "ab9faf06-dbf6-464e-86ac-8143396d920d",
-        authority: "https://login.microsoftonline.com/986a3974-67bd-4338-af77-835ff0f8b550"
+        clientId: import.meta.env.VITE_MS_APP_ID,
+        authority: `https://login.microsoftonline.com/${import.meta.env.VITE_MS_TENANT}`
     }
 };
 
