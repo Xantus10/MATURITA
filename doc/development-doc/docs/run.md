@@ -13,6 +13,38 @@ In development environment as of this day, it is recommended to do the following
 
 ## Production
 
+### Microsoft Entra Tenant setup
+
+To link the application to the Entra Tenant, do the following
+
+1. Navigate to the tenant properties page
+2. In the column under `Users` click on the number beside `Applications`
+3. Now click on `New application`
+4. Enter a name for the application (Doesn't really matter)
+5. Select the option *Accounts in this organizational directory only* (It should be pre-selected)
+6. For the redirect URI, select `SPA` and enter the URL the app is hosted on (Method should be https:// for production)
+7. After creating write down the `application (client) id` and `tenant id` and add them to .env
+
+Now the application is able to authenticate users. Next add permissions to create chats in msteams.
+
+1. Navigate to `Manage/API permissions`
+2. Add permission
+3. Select `Microsoft Graph`
+4. Select `Delegated permission`
+5. Search for and add the `Channel.Create` permission
+6. Confirm
+
+
+New app
+Enter name
+Select the "only users in this tenant" option
+For the redirect URI select SPA and enter the URL at which the app is running (with https)
+After creating, mark the APP id, OBJ id, tenant id
+Under Manage/Token config - Add optional declaration - Token type=ID, declare family_name+given_name
+-- TEST THIS --
+Under Manage/API permissions - Add permission / Microsoft Graph / Delegated perm / Channel.Create
+### Running the app
+
 Prerequesities: Have docker installed on your production device
 
 1. Make `.env` file from `.env.example`, be sure to replace security related info like secrets and passwords
