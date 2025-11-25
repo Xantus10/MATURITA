@@ -47,11 +47,13 @@ import authrouter from './routes/auth.js';
 import postsrouter from './routes/posts.js';
 import usersrouter from './routes/users.js';
 import blackrouter from './routes/blacklist.js';
+import subjectsrouter from './routes/subjects.js';
 
 app.use('/auth', authrouter);
 app.use('/posts', postsrouter);
 app.use('/users', usersrouter);
 app.use('/blacklist', blackrouter);
+app.use('/subjects', subjectsrouter);
 
 app.listen(env.PORT, () => {
   console.log(`Server is running at localhost:${env.PORT}`);
