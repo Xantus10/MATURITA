@@ -909,12 +909,12 @@ paths:
             schema:
               type: object
               properties:
-                subject:
+                subjectid:
                   type: string
-                  description: A three letter code of the new subject
-                  example: PSI
+                  description: mongoDB ID
+                  format: uuid
               required:
-                - subject
+                - subjectid
       responses:
         '200':
           description: OK
