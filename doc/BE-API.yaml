@@ -16,6 +16,8 @@ tags:
     description: Operations about users
   - name: Blacklist
     description: Blacklist microsoft accounts
+  - name: Subjects
+    description: Operations about subjects
 paths:
   /auth/idtoken:
     post:
@@ -809,6 +811,137 @@ paths:
                 $ref: "#/components/schemas/msg"
         '404':
           description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /subjects:
+    get:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Subjects
+      summary: Get all subjects
+      description: Get a list of all current subjects
+      operationId: getSubjects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slist:
+                    type: array
+                    description: Array of the subjects
+                    items:
+                      type: object
+                      description: Subject db entry
+                      properties:
+                        _id:
+                          type: string
+                          description: mongoDB ID
+                          format: uuid
+                        Subject:
+                          type: string
+                          description: A three letter code of the subject
+                          example: PSI
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Subjects
+      summary: Add a new subject
+      description: Add a new subject (If subject exists, do nothing)
+      operationId: addSubject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subject:
+                  type: string
+                  description: A three letter code of the new subject
+                  example: PSI
+              required:
+                - subject
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (The user must be admin)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+    delete:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Subjects
+      summary: Remove a subject
+      description: Remove a subject
+      operationId: addSubject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subject:
+                  type: string
+                  description: A three letter code of the new subject
+                  example: PSI
+              required:
+                - subject
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (The user must be admin)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '404':
+          description: The subject does not exist
           content:
             application/json:
               schema:
