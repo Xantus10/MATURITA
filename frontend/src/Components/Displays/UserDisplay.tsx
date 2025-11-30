@@ -11,7 +11,7 @@ import { autoHttpResponseNotification } from "../../Util/notifications";
 import BanDisplay, { isBanned, labelBans, type BanData } from "./BanDisplay";
 import { typedates } from "../../Util/autotype";
 
-import classes from '../styles/default.module.css'
+import classes from '../../styles/default.module.css'
 
 /**
  * User data

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import Header from '../../Components/Clickables/Header';
 import useMultiPostDisplay from '../../Components/Displays/MutiPostDisplay';
 
-import classes from '../styles/homepage.module.css';
-import defclasses from '../styles/default.module.css';
+import classes from '../../styles/homepage.module.css';
+import defclasses from '../../styles/default.module.css';
 
 /**
  * Admin homepage

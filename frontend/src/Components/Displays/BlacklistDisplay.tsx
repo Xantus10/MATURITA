@@ -2,7 +2,7 @@ import { Stack, Paper, Text, Code, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useTranslation } from 'react-i18next';
 
-import classes from '../styles/default.module.css'
+import classes from '../../styles/default.module.css'
 
 /**
  * Blacklisted MicrosoftId data

@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { post, deletef } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
 
-import classes from '../styles/default.module.css'
+import classes from '../../styles/default.module.css'
 
 /**
  * Data associated with each post
