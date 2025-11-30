@@ -2,6 +2,9 @@ services:
   mongo:
     build: ./db
     container_name: mongodb
+    volumes:
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
@@ -15,6 +18,8 @@ services:
   backend:
     build: ./backend
     container_name: backend
+    volumes:
+      - image_data:/app/images
     environment:
       - DBURI=${DBURI}
       - MICROSOFT_ISSUER_URL=${MICROSOFT_ISSUER_URL}
@@ -55,3 +60,8 @@ services:
 networks:
   mat-network:
     driver: bridge
+
+volumes:
+  mongo_data:
+  mongo_config:
+  image_data:
