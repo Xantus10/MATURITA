@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
  * 
  * @param filterFormProps Props to be passed down to FilterForm component
  * @param multiPostDisplayProps Props to be passed down to MultiPostDisplay component
+ * @param postDisplayType Type to be passed down to individual PostDisplays
  * @returns 
  * FilterForm: Component of filter form  
  * MultiPostDisplay: Component of multi post display  
@@ -25,6 +26,14 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
   Subjects: string[];
   }
   {
+
+  async function getSubjects() {
+    let res = await get('/subjects');
+    if (res) {
+      setSubjects(((await res.json()).slist as any[]).map((val) => val.Subject));
+    }
+  }
+  
   async function getPosts(begin: number, overwrite: boolean) {
     let values = filterForm.getValues();
     if (values.priceMax < values.priceMin) values.priceMax = values.priceMin;
@@ -39,9 +48,12 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
 
   const [posts, setPosts] = useState<PostData[]>([]);
   const [orderBy, setOrderBy] = useState('date');
-  const [subjects, setSubjects] = useState(['CJK', 'ANJ', 'PSI']);
-  setSubjects;
+  const [subjects, setSubjects] = useState<string[]>([]);
   
+  useEffect(() => {
+    getSubjects();
+  }, [])
+
   useEffect(() => {
     getPosts(0, true);
   }, [orderBy]);
