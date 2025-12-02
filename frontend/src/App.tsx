@@ -4,6 +4,8 @@ import Cookies from 'js-cookie'
 import { useState, useEffect } from 'react';
 
 import LoginPage from './Pages/LoginPage';
+import NoAccessPage from './Pages/NoAccessPage';
+
 import HomePage from './Pages/HomePage';
 import MyPostsPage from './Pages/MyPostsPage';
 import UserDisplayPage from './Pages/UserDisplayPage';
@@ -79,13 +81,13 @@ function App() {
   if (!loggedIn) {
     if (banmsg) {
       if (banmsg.until) {
-        return (<>YOU HAVE BEEN BANNED FOR {banmsg.reason} UNTIL {banmsg.until}</>);
+        return (<NoAccessPage reason={banmsg.reason} until={banmsg.until} />);
       } else {
-        return (<>YOU HAVE BEEN BLACKLISTED FOR {banmsg.reason}</>);
+        return (<NoAccessPage reason={banmsg.reason} until={null} />);
       }
     }
 
-    return (<>INVALID MICROSOFT LOGIN</>);
+    return (<NoAccessPage reason={null} until={null} />);
   }
 
   return (routes);

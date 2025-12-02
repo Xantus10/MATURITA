@@ -1,4 +1,12 @@
 {
   "welcome": "Welcome to the market for used books",
-  "log_in": "To continue, log in with your school account"
+  "log_in": "To continue, log in with your school account",
+  "noAccess": {
+    "msid": "Your microsoft login was evalueted as invalid, please contact administrator",
+    "banned": "You have been banned",
+    "for": "For",
+    "until": "Until",
+    "blacklisted": "You have been permanently blacklisted",
+    "blacklistnotice": "If you think this is a mistake, please contact the administrator"
+  }
 }

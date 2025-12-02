@@ -1,4 +1,12 @@
 {
   "welcome": "Vítejte na trhu pro použité učebnice",
-  "log_in": "Pro pokračování se přihlašte vaším školním účtem"
+  "log_in": "Pro pokračování se přihlašte vaším školním účtem",
+  "noAccess": {
+    "msid": "Vaše microsoft přihlášení bylo vyhodnoceno jako neplatné, prosím kontaktujte administrátora",
+    "banned": "Byl vám odepřen přístup k aplikaci",
+    "for": "Za",
+    "until": "Do",
+    "blacklisted": "Byli jste permanentně přidáni na blacklist",
+    "blacklistnotice": "Pokud si myslíte, že se jedná o chybu, prosím kontaktujte administrátora"
+  }
 }
