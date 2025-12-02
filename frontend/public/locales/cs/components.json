@@ -32,5 +32,10 @@
   },
   "subjectdisplay": {
     "delete": "Smazat předmět?"
+  },
+  "addsubject": {
+    "err3let": "Zkratka předmětu musí mít 3 písmena",
+    "subcode": "Zkratka předmětu",
+    "addsub": "Přidat předmět"
   }
 }

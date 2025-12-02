@@ -32,5 +32,10 @@
   },
   "subjectdisplay": {
     "delete": "Delete subject?"
+  },
+  "addsubject": {
+    "err3let": "A subject code has to be 3 letters!",
+    "subcode": "Subject code",
+    "addsub": "Add subject"
   }
 }
