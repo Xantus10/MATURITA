@@ -27,7 +27,7 @@ export default function AddSubject() {
 
   return (
     <>
-      <Button onClick={addBtnDiscController.open} radius="50%" h="50px" w="50px"><FaPlus /></Button>
+      <Button onClick={addBtnDiscController.open} radius="50%" h="50px" w="50px" pos='fixed' bottom='50px' right='50px'><FaPlus /></Button>
       <Drawer opened={addBtnDisc} onClose={addBtnDiscController.close} title={t('addsubject.addsub')} position='right' offset={18} radius="md">
         <TextInput label={t('addsubject.subcode')} value={inp} onChange={(e) => {setInp(e.currentTarget.value)}} placeholder="MAT, INT, ..." />
         <Button m="md" onClick={addSubject}>{t('addsubject.addsub')}</Button>
