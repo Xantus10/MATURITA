@@ -79,7 +79,7 @@ function UserDisplay({data}: UserDisplayProps) {
   const [banHistory, banHistoryController] = useDisclosure(false);
   const [changeRoleDisc, changeRoleDiscController] = useDisclosure(false);
 
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation('components');
 
   async function DeleteUser() {
     let res = await deletef(`/users/${_id}`);

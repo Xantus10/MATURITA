@@ -10,6 +10,22 @@
     "deleteReassure": "Opravdu chcete příspěvek odebrat?",
     "addDays": "Počet přidaných dnů"
   },
+  "userDisplay": {
+    "delete": "Smazat",
+    "deleteAcc": "Smazat účet",
+    "deletePosts": "Smazat všechny příspěvky",
+    "deleteReassure": "Opravdu chcete smazat uživatele",
+    "deletePostsReassure": "Opravdu chcete smazat všechny příspěvky od uživatele",
+    "make": "Změnit na",
+    "ban": "Zakázat přístup",
+    "banhistory": "Historie",
+    "banned": "Zakázán",
+    "banDays": "Na kolik dní chcete uživateli zakázat přístup",
+    "banReason": "Důvod",
+    "blacklistNotice": "Pro permanentní zákaz uživatele ho přidejte na blacklist",
+    "blacklist": "Blacklist",
+    "blacklistReason": "Důvod pro blacklist"
+  },
   "blackdisplay": {
     "at": "Přidán na blacklist",
     "reason": "Důvod"

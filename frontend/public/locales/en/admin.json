@@ -1,20 +1,4 @@
 {
-  "userDisplay": {
-    "delete": "Delete",
-    "deleteAcc": "Delete account",
-    "deletePosts": "Delete all posts",
-    "deleteReassure": "Do you really want to delete the user",
-    "deletePostsReassure": "Do you really want to remove all of user's posts",
-    "make": "Make",
-    "ban": "Ban",
-    "banhistory": "Ban history",
-    "banned": "Banned",
-    "banDays": "How many days should the user stay banned for",
-    "banReason": "Reason for ban",
-    "blacklistNotice": "For permanent user removal, blacklist them",
-    "blacklist": "Blacklist",
-    "blacklistReason": "Reason for blacklist"
-  },
   "userPage": {
     "title": "Users management",
     "first": "First name",
