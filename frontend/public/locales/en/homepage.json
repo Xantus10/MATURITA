@@ -35,6 +35,7 @@
     "title": "Welcome to the administration portal",
     "manage": "Manage",
     "users": "Users",
-    "blacklist": "Blacklist"
+    "blacklist": "Blacklist",
+    "subjects": "Subjects"
   }
 }

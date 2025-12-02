@@ -13,6 +13,7 @@ import UserDisplayPage from './Pages/UserDisplayPage';
 import AHomePage from './Pages/Admin/AHomePage';
 import AUsersPage from './Pages/Admin/AUsersPage';
 import ABlacklistPage from './Pages/Admin/ABlacklistPage';
+import ASubjectsPage from './Pages/Admin/ASubjectsPage';
 
 import { post } from './Util/http';
 import { isCsrf, setCsrfToken } from './Util/csrf';
@@ -70,6 +71,7 @@ function App() {
         <Route path='/' element={<AHomePage />} />
         <Route path='/users' element={<AUsersPage />} />
         <Route path='/blacklists' element={<ABlacklistPage />} />
+        <Route path='/subjects' element={<ASubjectsPage />} />
       </Routes>
     </>
   );
