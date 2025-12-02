@@ -3,6 +3,7 @@ import { useForm } from "@mantine/form";
 import { useState, useEffect } from "react";
 
 import PostDisplay, { PRICE_MIN, PRICE_MAX, STATES, type PostData, type PostDisplayProps } from "./PostDisplay";
+import type { SubjectData } from "./SubjectDisplay";
 import { get } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
 
@@ -30,7 +31,7 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
   async function getSubjects() {
     let res = await get('/subjects');
     if (res) {
-      setSubjects(((await res.json()).slist as any[]).map((val) => val.Subject));
+      setSubjects(((await res.json()).slist as SubjectData[]).map((val) => val.Subject));
     }
   }
   
