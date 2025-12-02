@@ -13,5 +13,8 @@
   "blackdisplay": {
     "at": "Blacklisted at",
     "reason": "Reason"
+  },
+  "subjectdisplay": {
+    "delete": "Delete subject?"
   }
 }

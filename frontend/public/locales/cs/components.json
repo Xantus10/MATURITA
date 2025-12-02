@@ -13,5 +13,8 @@
   "blackdisplay": {
     "at": "Přidán na blacklist",
     "reason": "Důvod"
+  },
+  "subjectdisplay": {
+    "delete": "Smazat předmět?"
   }
 }
