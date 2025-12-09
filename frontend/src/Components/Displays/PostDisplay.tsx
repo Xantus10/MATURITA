@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrashAlt } from "react-icons/fa";
 import { useMsal } from "@azure/msal-react";
-import { UserCache, type UserData } from "../../Util/cache";
+import { UserCache, type PublicUserData } from "../../Util/cache";
 import ClickableImage from "../Clickables/ClickableImage";
 import Popup from "../Overlays/Popup";
 import PopupAsk from "../Overlays/PopupAsk";
@@ -119,7 +119,7 @@ function PostDisplay({data, view}: PostDisplayProps) {
   const {_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos} = data;
   const [modalDisc, modalDiscController] = useDisclosure(false);
 
-  const [creator, setCreator] = useState<UserData>({name: {first: '', last: ''}, microsoftId: ''});
+  const [creator, setCreator] = useState<PublicUserData>();
 
   const { t } = useTranslation();
 
@@ -138,7 +138,7 @@ function PostDisplay({data, view}: PostDisplayProps) {
         {
           "@odata.type": "#microsoft.graph.aadUserConversationMember",
           "roles": ["owner"],
-          "user@odata.bind": `https://graph.microsoft.com/v1.0/users('${creator.microsoftId}')`
+          "user@odata.bind": `https://graph.microsoft.com/v1.0/users('${creator?.MicrosoftId}')`
         }]})});
     let js = await res.json();
     window.open(`https://teams.microsoft.com/l/chat/${js.id}`, '_blank')
@@ -257,7 +257,7 @@ function PostDisplay({data, view}: PostDisplayProps) {
         </Group>
         <Text size="xs">{t('postdisplay.created')}: {CreatedAt.toLocaleString()}</Text>
         <Text size="xs">{t('postdisplay.until')}: {RemoveAt.toLocaleString()}</Text>
-        <Text ml="auto">{creator.name.first} {creator.name.last}</Text>
+        <Text ml="auto">{creator?.Name.First} {creator?.Name.Last}</Text>
         <Button ml="auto" onClick={teamsChat}>Teams lmao</Button>
       </Stack>
     </Modal>

@@ -6,28 +6,68 @@
 import { get } from "./http";
 
 /**
- * User data stored in cache
+ * Object of optional contacts
  */
-export interface UserData {
-  /**
-   * Name of the user
-   */
-  name: {
+export interface Socials {
     /**
-     * First name
+     * Email address
      */
-    first: string;
+    Email: string;
 
     /**
-     * Last name
+     * Phone number
      */
-    last: string;
+    Phone: string;
+
+    /**
+     * Instagram username
+     */
+    Instagram: string;
+
+    /**
+     * Discord username
+     */
+    Discord: string;
+}
+
+/**
+ * Array of all socials keys
+ */
+
+export const SocialsKeys = ['Email', 'Phone', 'Instagram', 'Discord'];
+
+/**
+ * UserData, which is publicly availible
+ */
+export interface PublicUserData {
+  /**
+   * MicrosoftId of the associated Office365 account
+   */
+  MicrosoftId: string;
+
+  /**
+   * The name recieved through Office365
+   */
+  Name: {
+    /**
+     * First name of the user
+     */
+    First: string;
+    /**
+     * Last name of the user
+     */
+    Last: string;
   };
 
   /**
-   * Microsoft id of the user
+   * Role assigned to the user
    */
-  microsoftId: string;
+  Role: 'user' | 'admin';
+
+  /**
+   * Object of optional contacts
+   */
+  Socials: Socials;
 };
 
 /**
@@ -37,7 +77,7 @@ class UserCacheClass {
   /**
    * cache of id -> user data
    */
-  private cache: {[key: string]: UserData} = {};
+  private cache: {[key: string]: PublicUserData} = {};
 
   /**
    * ids currently in fetch status
@@ -57,7 +97,7 @@ class UserCacheClass {
    * @param id Id of the user
    * @returns User's data or null if failed
    */
-  public async getUserData(id: string): Promise<UserData | null> {
+  public async getUserData(id: string): Promise<PublicUserData | null> {
     let timeout = 30
     while (this.fetching.includes(id) && timeout > 0) {
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -81,7 +121,7 @@ class UserCacheClass {
     this.fetching.filter((val) => {return val !== id});
     let js = await res?.json();
     if (res?.status === 200) {
-      this.cache[id] = {name: {first: js.Name.First, last: js.Name.Last}, microsoftId: js.MicrosoftId};
+      this.cache[id] = js;
       return this.cache[id]
     }
     return null;

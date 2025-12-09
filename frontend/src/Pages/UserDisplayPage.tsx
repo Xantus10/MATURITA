@@ -7,34 +7,12 @@ import Popup from "../Components/Overlays/Popup";
 import { LogoutFunc } from "../Components/Clickables/Logout";
 import { get, deletef } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
+import type { PublicUserData } from "../Util/cache";
 
 import classes from '../styles/default.module.css';
 
 import { useTranslation } from 'react-i18next';
 
-/**
- * Minified version of user data
- */
-interface UserData {
-  /**
-   * The name recieved through Office365
-   */
-  Name: {
-    /**
-     * First name of the user
-     */
-    First: string;
-    /**
-     * Last name of the user
-     */
-    Last: string;
-  };
-
-  /**
-   * Role assigned to the user
-   */
-  Role: 'user' | 'admin';
-};
 
 /**
  * Display information about the current user
@@ -55,7 +33,7 @@ function UserDisplayPage() {
 
   const { t } = useTranslation('userpages');
 
-  const [userData, setUserData] = useState<UserData>({Name: {First: '', Last: ''}, Role: 'user'});
+  const [userData, setUserData] = useState<PublicUserData>();
 
   const [deleteDisc, deleteDiscController] = useDisclosure(false);
 
@@ -69,8 +47,8 @@ function UserDisplayPage() {
         <Header title={t('useracc.title')} view="user" />
         <Paper p={"md"}>
           <Stack>
-            <Text>{t('useracc.name')}: {userData.Name.First} {userData.Name.Last}</Text>
-            <Text>{t('useracc.role')}: {userData.Role}</Text>
+            <Text>{t('useracc.name')}: {userData?.Name.First} {userData?.Name.Last}</Text>
+            <Text>{t('useracc.role')}: {userData?.Role}</Text>
             <Button bg={'red'} rightSection={<FaTrashAlt />} onClick={deleteDiscController.open} size="md">{t('useracc.delete')}</Button>
           </Stack>
         </Paper>
