@@ -20,3 +20,6 @@ The main file is `doc/mongodb-schema.txt`. For a graphical overview (but with ce
 | Technologies | The technologies used in the app |
 | Flow overview | The various flows of the application |
 | Directory structure | The structure of the repository |
+| Runnning the app | Running the app in development and deployment to production |
+| Adding features | Common workflows for adding new features |
+| Security | Explanations for security measures used |

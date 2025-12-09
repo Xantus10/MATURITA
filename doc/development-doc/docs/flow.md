@@ -5,7 +5,7 @@
 ![App-flow](img/app-flow.png)
 
 - The user visits `domain.com` and is given the React FE by serve
-- The user then interacts with the FE application, which sends requests to `domain.com/api`
+- The user then interacts with the FE application, which sends requests to `domain.com/api/*`
 - These requests get rerouted through nginx to Express BE
 - Express BE handles communication with MongoDB through mongoose models
 

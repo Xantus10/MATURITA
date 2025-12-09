@@ -41,7 +41,8 @@ tsconfig.json -- TS configuration
 
 ```
 Dockerfile    -- Dockerfile for dockerizing mongodb
-init.js       -- Mongo docker init script
+init.sh       -- Mongo docker init script (create user+call `create.js`)
+create.js     -- Create all collections, indexes and such
 ```
 
 ### Doc

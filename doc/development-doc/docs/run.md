@@ -6,7 +6,8 @@ In development environment as of this day, it is recommended to do the following
 
 1. Dev MongoDB can be run locally either with a separate install or a separate container
 2. Nginx can be handled with a portable executable
-3. To run both frontend and backend
+3. ENV variables are to be passed via .env file in each separate directory (frontend, backend)
+4. To run both frontend and backend
       1. Navigate to their respective directories
       2. Run `npm run build`
       3. If there were no errors run `npm run start`
@@ -34,15 +35,6 @@ Now the application is able to authenticate users. Next add permissions to creat
 5. Search for and add the `Channel.Create` permission
 6. Confirm
 
-
-New app
-Enter name
-Select the "only users in this tenant" option
-For the redirect URI select SPA and enter the URL at which the app is running (with https)
-After creating, mark the APP id, OBJ id, tenant id
-Under Manage/Token config - Add optional declaration - Token type=ID, declare family_name+given_name
--- TEST THIS --
-Under Manage/API permissions - Add permission / Microsoft Graph / Delegated perm / Channel.Create
 ### Running the app
 
 Prerequesities: Have docker installed on your production device
