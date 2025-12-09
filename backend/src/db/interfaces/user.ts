@@ -73,9 +73,9 @@ export interface Socials {
 export const SocialsKeys = ['Email', 'Phone', 'Instagram', 'Discord'];
 
 /**
- * User data
+ * UserData, which is publicly availible
  */
-export interface UserIF {
+export interface PublicUserData {
   /**
    * MicrosoftId of the associated Office365 account
    */
@@ -101,6 +101,16 @@ export interface UserIF {
   Role: 'user' | 'admin';
 
   /**
+   * Object of optional contacts
+   */
+  Socials: Socials;
+};
+
+/**
+ * User data
+ */
+export interface UserIF extends PublicUserData {
+  /**
    * When was the last login of the user (TTL index on 1.5 years)
    */
   LastLogin: Date;
@@ -109,11 +119,6 @@ export interface UserIF {
    * Array of the users bans
    */
   Bans: BanData[];
-
-  /**
-   * Object of optional contacts
-   */
-  Socials: Socials;
 };
 
 export interface UserModelIF extends Model<UserIF> {
@@ -141,4 +146,10 @@ export interface UserModelIF extends Model<UserIF> {
    * @param reason Reason for ban
    */
   ban(id: Types.ObjectId, issuedBy: Types.ObjectId, days: number, reason: string): Promise<void>;
+
+  /**
+   * 
+   * @param id User._id to identify the user
+   */
+  getUserData(id: Types.ObjectId): Promise<PublicUserData>;
 };

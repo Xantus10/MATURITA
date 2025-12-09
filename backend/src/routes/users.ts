@@ -32,7 +32,7 @@ usersrouter.get('/list', checkRole('admin'), async (req: Request, res: Response)
  */
 usersrouter.get('/me', async (req: Request, res: Response) => {
   let id = new Types.ObjectId(req.session.data?.objId);
-  let doc = await User.findById(id, { Name: 1, Role: 1 });
+  let doc = await User.getUserData(id);
   return res.status(200).send(doc);
 });
 
@@ -97,7 +97,7 @@ usersrouter.get('/:id', async (req: Request, res: Response) => {
   let id = req.params.id;
   if (!id) return res.status(404).send({msg: 'The user does not exist'});
   if (!(/[0-9a-fA-F]{24}/.test(id))) return res.status(400).send({msg: 'The id is not valid mongodb id'});
-  let doc = await User.findById(new Types.ObjectId(id), { Name: 1, MicrosoftId: 1, Socials: 1 });
+  let doc = await User.getUserData(new Types.ObjectId(id));
   if (!doc) return res.status(404).send({msg: 'The user does not exist'});
   return res.status(200).send(doc);
 });

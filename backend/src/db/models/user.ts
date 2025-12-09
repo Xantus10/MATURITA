@@ -40,7 +40,11 @@ userSchema.static('setRole', async function (id: Types.ObjectId, role: UserIF['R
 
 userSchema.static('ban', async function (id: Types.ObjectId, issuedBy: Types.ObjectId, days: number, reason: string) {
   await this.findByIdAndUpdate(id, { $push: { Bans: { Until: days, IssuedBy: issuedBy, Reason: reason } } });
-})
+});
+
+userSchema.static('getUserData', async function (id: Types.ObjectId) {
+  return await this.findById(id, { Name: 1, MicrosoftId: 1, Role: 1, Socials: 1 });
+});
 
 
 /**

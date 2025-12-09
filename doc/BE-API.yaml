@@ -479,12 +479,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  Name:
-                    $ref: "#/components/schemas/name"
-                  Role:
-                    $ref: "#/components/schemas/role"
+                $ref: "#/components/schemas/userdata"
         '401':
           description: Invalid credentials
           content:
@@ -533,16 +528,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  Name:
-                    $ref: "#/components/schemas/name"
-                  MicrosoftId:
-                    type: string
-                    description: MicrosoftId of the user
-                    format: uuid
-                  Socials:
-                    $ref: "#/components/schemas/socials"
+                $ref: "#/components/schemas/userdata"
                   
         '400':
           description: The userId is in incorrect format
@@ -1041,6 +1027,20 @@ components:
         discord:
           type: string
           description: Discord username
+    userdata:
+      type: object
+      description: Publicly availible user data
+      properties:
+        Name:
+          $ref: "#/components/schemas/name"
+        MicrosoftId:
+          type: string
+          description: MicrosoftId of the user
+          format: uuid
+        Role:
+          $ref: "#/components/schemas/role"
+        Socials:
+          $ref: "#/components/schemas/socials"
     user:
       type: object
       properties:
