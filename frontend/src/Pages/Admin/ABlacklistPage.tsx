@@ -22,7 +22,7 @@ export default function ABlacklistPage() {
     }
   }
 
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
 
   const [blacklists, setBlacklists] = useState<BlacklistData[]>([]);
 

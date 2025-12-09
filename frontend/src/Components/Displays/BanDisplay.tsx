@@ -3,7 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { UserCache, type UserData } from '../../Util/cache';
+import { UserCache, type PublicUserData } from '../../Util/cache';
 
 /**
  * Data associated with a singular user ban
@@ -76,10 +76,9 @@ export function labelBans(bans: BanData[]) : LabeledBanData[] {
 export function BanDisplay({CreatedAt, Until, IssuedBy, Reason, Valid}: LabeledBanData) {
   const [disc, discController] = useDisclosure(false);
 
-  const t_comp = useTranslation().t;
-  const t_adm = useTranslation('admin').t;
+  const { t } = useTranslation();
 
-  const [by, setBy] = useState<UserData>({name: {first: '', last: ''}, microsoftId: ''});
+  const [by, setBy] = useState<PublicUserData>();
 
   useEffect(() => {
     UserCache.getUserData(IssuedBy).then((val) => {
@@ -104,14 +103,14 @@ export function BanDisplay({CreatedAt, Until, IssuedBy, Reason, Valid}: LabeledB
 
     <Modal opened={disc} onClose={discController.close} withCloseButton centered>
       <Stack p={'sm'} gap={'md'}>
-        <Text>{t_adm('userDisplay.banReason')}: {Reason}</Text>
+        <Text>{t('userDisplay.banReason')}: {Reason}</Text>
         <Code>
-          {t_comp('postdisplay.created')}: {CreatedAt.toLocaleString()}
+          {t('postdisplay.created')}: {CreatedAt.toLocaleString()}
         </Code>
         <Code>
-          {t_comp('postdisplay.until')}: {Until.toLocaleString()}
+          {t('postdisplay.until')}: {Until.toLocaleString()}
         </Code>
-        <Text>{by.name.first} {by.name.last}</Text>
+        <Text>{by?.Name.First} {by?.Name.Last}</Text>
       </Stack>
     </Modal>
     </>
