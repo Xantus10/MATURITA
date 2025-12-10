@@ -38,7 +38,7 @@ services:
     container_name: frontend
     environment:
       - VITE_BE_URL=${VITE_BE_URL}
-      - VITE_MS_TENANT=${MICROSOFT_TENTANT}
+      - VITE_MS_TENANT=${MICROSOFT_TENANT}
       - VITE_MS_APP_ID=${MICROSOFT_APP_ID}
     ports:
       - "3000:3000"
