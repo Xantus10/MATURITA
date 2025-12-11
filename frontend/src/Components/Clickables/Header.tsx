@@ -35,6 +35,7 @@ function Header({ title, view }: HeaderProps) {
 
   if (pathname === "/") {
     if (view === 'admin') {
+      menuComp = <>
       <Menu position="bottom-end">
         <Menu.Target>
           <Button w="110px" h="40px">{t('admin.manage')}</Button>
@@ -54,6 +55,7 @@ function Header({ title, view }: HeaderProps) {
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
+      </>;
     } else {
       menuComp = <>
       <Menu position="bottom-end">
