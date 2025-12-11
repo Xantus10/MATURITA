@@ -37,5 +37,6 @@
     "err3let": "A subject code has to be 3 letters!",
     "subcode": "Subject code",
     "addsub": "Add subject"
-  }
+  },
+  "socials": "Contacts"
 }

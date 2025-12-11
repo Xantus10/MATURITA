@@ -8,6 +8,7 @@ import { UserCache, type PublicUserData } from "../../Util/cache";
 import ClickableImage from "../Clickables/ClickableImage";
 import Popup from "../Overlays/Popup";
 import PopupAsk from "../Overlays/PopupAsk";
+import SocialsPopup from "../Overlays/SocialsPopup";
 import { useTranslation } from "react-i18next";
 import { post, deletef } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
@@ -257,7 +258,7 @@ function PostDisplay({data, view}: PostDisplayProps) {
         </Group>
         <Text size="xs">{t('postdisplay.created')}: {CreatedAt.toLocaleString()}</Text>
         <Text size="xs">{t('postdisplay.until')}: {RemoveAt.toLocaleString()}</Text>
-        <Text ml="auto">{creator?.Name.First} {creator?.Name.Last}</Text>
+        <Text ml="auto">{creator?.Name.First} {creator?.Name.Last} <SocialsPopup contacts={creator?.Socials} /></Text>
         <Button ml="auto" onClick={teamsChat}>Teams lmao</Button>
       </Stack>
     </Modal>

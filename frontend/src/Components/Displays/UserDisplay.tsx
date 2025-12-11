@@ -10,6 +10,7 @@ import { post, deletef } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
 import BanDisplay, { isBanned, labelBans, type BanData } from "./BanDisplay";
 import { typedates } from "../../Util/autotype";
+import type { Socials } from "../../Util/cache";
 
 import classes from '../../styles/default.module.css'
 
@@ -55,6 +56,11 @@ export interface UserData {
    * Array of the users bans
    */
   Bans: BanData[];
+
+  /**
+   * Optional contacts
+   */
+  Socials: Socials;
 };
 
 /**
