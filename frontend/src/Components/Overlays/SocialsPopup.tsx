@@ -1,4 +1,4 @@
-import { Modal, Grid, Button, Tooltip } from "@mantine/core";
+import { Modal, Table, Button, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IoShareSocial } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
@@ -20,13 +20,9 @@ function SocialsPopup({ contacts }: { contacts?: Socials }) {
     </Tooltip>
 
     <Modal opened={open} onClose={openController.close}>
-      <Grid>
-        {
-          Object.entries((contacts) ? contacts : {}).map(([key, val]) => {
-            return <><Grid.Col span={6}>{key}</Grid.Col><Grid.Col span={6}><ClickAndCopy display={val} copy={val} /></Grid.Col></>
-          })
-        }
-      </Grid>
+      <Table data={{body: Object.entries((contacts) ? contacts : {}).map(([key, val]) => {
+        return [key, <ClickAndCopy display={val} copy={val} />]
+      })}} />
     </Modal>
     </>
   );

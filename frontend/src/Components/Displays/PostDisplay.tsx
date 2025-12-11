@@ -1,4 +1,4 @@
-import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Grid, Menu, Button, NumberInput, Box } from "@mantine/core";
+import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Table, Menu, Button, NumberInput, Box } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
@@ -245,14 +245,13 @@ function PostDisplay({data, view}: PostDisplayProps) {
           <ManTitle order={2}>{Title}</ManTitle>
           <Text>{(Price.Min === Price.Max) ? Price.Min : `${Price.Min} - ${Price.Max}`} Kč</Text>
         </Group>
-        <Grid>
-          <Grid.Col span={6}>{t('postdisplay.State')}</Grid.Col>
-          <Grid.Col span={6}><Code>{State}</Code></Grid.Col>
-          <Grid.Col span={6}>{t('postdisplay.Subjects')}</Grid.Col>
-          <Grid.Col span={6}>{Subjects.map((sub) => {return <><Code>{sub}</Code>&nbsp;</>})}</Grid.Col>
-          <Grid.Col span={6}>{t('postdisplay.Years')}</Grid.Col>
-          <Grid.Col span={6}>{Years.map((sub) => {return <><Code>{sub}.</Code>&nbsp;</>})}</Grid.Col>
-        </Grid>
+        <Table data={{
+          body: [
+            [t('postdisplay.State'), State],
+            [t('postdisplay.Subjects'), Subjects.map((sub) => {return <><Code>{sub}</Code>&nbsp;</>})],
+            [t('postdisplay.Years'), Years.map((sub) => {return <><Code>{sub}.</Code>&nbsp;</>})]
+          ]
+        }} />
         <Group>
           {Photos.map((uri: string) => {return (<ClickableImage mah={"200px"} fit="contain" src={`/images/${uri}`} />);})}
         </Group>
