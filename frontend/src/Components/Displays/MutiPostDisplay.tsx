@@ -31,11 +31,17 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
   async function getSubjects() {
     let res = await get('/subjects');
     if (res) {
-      setSubjects(((await res.json()).slist as SubjectData[]).map((val) => val.Subject));
+      let newsubjects = ((await res.json()).slist as SubjectData[]).map((val) => val.Subject);
+      setSubjects(newsubjects);
+      filterForm.setFieldValue('subjects', newsubjects);
+      await getPosts(0, true);
     }
   }
   
   async function getPosts(begin: number, overwrite: boolean) {
+    if (filterForm.validate().hasErrors) {
+      return
+    }
     let values = filterForm.getValues();
     if (values.priceMax < values.priceMin) values.priceMax = values.priceMin;
     let res = await get('/posts', {begin: begin, orderBy: orderBy, filterState: values.state, filterYears: values.years, filterSubjects: values.subjects, priceMin: values.priceMin, priceMax: values.priceMax});

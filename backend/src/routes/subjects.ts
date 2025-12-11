@@ -17,7 +17,7 @@ subjectsrouter.use(loggedin);
  * Return a list of all subjects
  */
 subjectsrouter.get('/', async (req: Request, res: Response) => {
-  let slist = Subject.find();
+  let slist = await Subject.find();
   return res.status(200).send({slist: slist});
 });
 
