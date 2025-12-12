@@ -771,7 +771,7 @@ paths:
                 - microsoftId
                 - reason
       responses:
-        '200':
+        '201':
           description: OK
           content:
             application/json:
@@ -858,7 +858,7 @@ paths:
               required:
                 - subject
       responses:
-        '200':
+        '201':
           description: OK
           content:
             application/json:

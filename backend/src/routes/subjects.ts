@@ -31,7 +31,7 @@ subjectsrouter.post('/', checkRole('admin'), async (req: Request, res: Response)
   if (!exists) {
     await Subject.insertOne({ Subject: subject });
   }
-  return res.status(200).send({msg: `Subject ${subject} added!`});
+  return res.status(201).send({msg: `Subject ${subject} added!`});
 });
 
 /**

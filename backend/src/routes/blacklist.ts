@@ -36,7 +36,7 @@ blackrouter.post('/', async (req: Request, res: Response) => {
   await Post.removeByCreatorId(usr._id);
   await User.findByIdAndDelete(usr._id);
   await Blacklist.create({ MicrosoftId: microsoftId, Reason: reason });
-  return res.status(200).send({msg: `Microsoft id ${microsoftId} blacklisted`});
+  return res.status(201).send({msg: `Microsoft id ${microsoftId} blacklisted`});
 });
 
 export default blackrouter;
