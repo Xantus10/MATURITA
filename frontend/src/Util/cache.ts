@@ -80,6 +80,11 @@ class UserCacheClass {
   private cache: {[key: string]: PublicUserData} = {};
 
   /**
+   * SESSIONSTORAGE name to check
+   */
+  private readonly SESSIONSTORAGENAME = "UserCacheStore";
+
+  /**
    * ids currently in fetch status
    */
   private fetching: string[] = [];
@@ -89,7 +94,12 @@ class UserCacheClass {
    *   
    * This class is not exported on purpose to avoid any misconceptions about the design
    */
-  public constructor() {}
+  public constructor() {
+    let sstor = sessionStorage.getItem(this.SESSIONSTORAGENAME);
+    if (sstor) {
+      this.cache = JSON.parse(sstor);
+    }
+  }
 
   /**
    * Get the user data based on id
@@ -122,6 +132,7 @@ class UserCacheClass {
     let js = await res?.json();
     if (res?.status === 200) {
       this.cache[id] = js;
+      sessionStorage.setItem(this.SESSIONSTORAGENAME, JSON.stringify(this.cache));
       return this.cache[id]
     }
     return null;
