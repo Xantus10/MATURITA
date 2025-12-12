@@ -39,7 +39,7 @@ subjectsrouter.post('/', checkRole('admin'), async (req: Request, res: Response)
  */
 subjectsrouter.delete('/', checkRole('admin'), async (req: Request, res: Response) => {
   if (!req.body.subjectid) return res.status(400).send({msg: "'subjectid' is missing"});
-  let subjectid = new Types.ObjectId(req.body.subject as string);
+  let subjectid = new Types.ObjectId(req.body.subjectid as string);
   let exists = await Subject.findById(subjectid);
   if (exists) {
     let rmsub = await Subject.findByIdAndDelete(subjectid);
