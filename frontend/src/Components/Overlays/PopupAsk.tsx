@@ -60,7 +60,7 @@ function PopupAsk<T=string>({line, open, onNo, onYes, input }: PopupAskProps<T>)
       
       <Group justify="space-between">
         <Button onClick={onNo} color="red">{t('no')}</Button>
-        <Button onClick={() => {onYes(input.value)}} color="green">{t('yes')}</Button>
+        <Button onClick={() => {onYes(input.value); onNo()}} color="green">{t('yes')}</Button>
       </Group>
     </Modal>
   );

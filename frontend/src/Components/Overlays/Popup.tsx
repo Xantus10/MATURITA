@@ -37,7 +37,7 @@ function Popup({line, open, onNo, onYes}: PopupProps) {
       <Title order={4}>{line}</Title>
       <Group justify="space-between">
         <Button onClick={onNo} color="red">{t('no')}</Button>
-        <Button onClick={onYes} color="green">{t('yes')}</Button>
+        <Button onClick={() => {onYes(); onNo()}} color="green">{t('yes')}</Button>
       </Group>
     </Modal>
   );
