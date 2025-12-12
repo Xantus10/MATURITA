@@ -7,6 +7,9 @@
  * @returns Array of values of type T
  */
 export function parseArray<T = number>(arr: string[], parseFunction?: (item: string) => T): T[] {
+  if (typeof arr !== 'object') {
+    return [arr] as T[];
+  }
 
   if (parseFunction) {
     return arr.map((val) => parseFunction(val));
