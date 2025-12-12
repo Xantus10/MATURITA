@@ -1,4 +1,4 @@
-import { Modal, Table, Button, Tooltip } from "@mantine/core";
+import { Modal, Table, Center, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IoShareSocial } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,7 @@ function SocialsPopup({ contacts }: { contacts?: Socials }) {
   return (
     <>
     <Tooltip label={t('socials')}>
-      <Button onClick={openController.open} style={{aspectRatio: "1/1", height: "2rem"}} ><IoShareSocial /></Button>
+      <Center onClick={openController.open} p="7px" w="fit-content" bdrs="100%" bg="blue" style={{aspectRatio: "1/1", cursor: 'pointer'}} ><IoShareSocial size="1.5rem" /></Center>
     </Tooltip>
 
     <Modal opened={open} onClose={openController.close}>

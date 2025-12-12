@@ -257,7 +257,10 @@ function PostDisplay({data, view}: PostDisplayProps) {
         </Group>
         <Text size="xs">{t('postdisplay.created')}: {CreatedAt.toLocaleString()}</Text>
         <Text size="xs">{t('postdisplay.until')}: {RemoveAt.toLocaleString()}</Text>
-        <Text ml="auto">{creator?.Name.First} {creator?.Name.Last} <SocialsPopup contacts={creator?.Socials} /></Text>
+        <Group ml="auto">
+          <Text>{creator?.Name.First} {creator?.Name.Last}</Text>
+          <SocialsPopup contacts={creator?.Socials} />
+        </Group>
         <Button ml="auto" onClick={teamsChat}>Teams lmao</Button>
       </Stack>
     </Modal>
