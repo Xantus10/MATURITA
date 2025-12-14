@@ -5,9 +5,10 @@ import { FaTrashAlt } from "react-icons/fa";
 import Header from "../Components/Clickables/Header";
 import Popup from "../Components/Overlays/Popup";
 import { LogoutFunc } from "../Components/Clickables/Logout";
+import SocialsDisplayEdit, { type SocialsDisplayEditProps } from "../Components/Displays/SocialsDisplayEdit";
 import { get, deletef } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
-import type { PublicUserData } from "../Util/cache";
+import { type PublicUserData } from "../Util/cache";
 
 import classes from '../styles/default.module.css';
 
@@ -26,6 +27,8 @@ function UserDisplayPage() {
     }
   }
 
+  
+
   async function deleteAcc() {
     await deletef('/users/me');
     await LogoutFunc();
@@ -36,6 +39,10 @@ function UserDisplayPage() {
   const [userData, setUserData] = useState<PublicUserData>();
 
   const [deleteDisc, deleteDiscController] = useDisclosure(false);
+
+  
+
+
 
   useEffect(() => {
     getUserData();
@@ -49,6 +56,7 @@ function UserDisplayPage() {
           <Stack>
             <Text>{t('useracc.name')}: {userData?.Name.First} {userData?.Name.Last}</Text>
             <Text>{t('useracc.role')}: {userData?.Role}</Text>
+            <SocialsDisplayEdit data={(userData?.Socials) ? userData?.Socials : {} as SocialsDisplayEditProps['data']} />
             <Button bg={'red'} rightSection={<FaTrashAlt />} onClick={deleteDiscController.open} size="md">{t('useracc.delete')}</Button>
           </Stack>
         </Paper>
