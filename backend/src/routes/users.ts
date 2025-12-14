@@ -9,7 +9,6 @@ import { Types } from "mongoose";
 import User from "../db/models/user.js";
 import Post from "../db/models/post.js";
 import { SocialsKeys, type Socials } from "../db/interfaces/user.js";
-import { capitalizeFirstLetter } from "../util/parse.js";
 
 const usersrouter = Router();
 
@@ -79,7 +78,7 @@ usersrouter.post('/ban', checkRole('admin'), async (req: Request, res: Response)
 usersrouter.post('/socials', async (req: Request, res: Response) => {
   let socials: {[key: string]: string} = {}
   SocialsKeys.forEach(k => {
-    if (req.body[k]) socials[`Socials.${capitalizeFirstLetter(k)}`] = req.body[k];
+    if (req.body[k]) socials[`Socials.${k}`] = req.body[k];
   });
   let id = new Types.ObjectId(req.session.data?.objId);
   User.findByIdAndUpdate(id, socials);

@@ -707,7 +707,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/socialslc"
+              $ref: "#/components/schemas/socials"
       responses:
         '200':
           description: Updated successfully
@@ -1009,22 +1009,6 @@ components:
           type: string
           description: Instagram username
         Discord:
-          type: string
-          description: Discord username
-    socialslc:
-      type: object
-      description: Optional contacts
-      properties:
-        email:
-          type: string
-          description: Email of the user
-        phone:
-          type: string
-          description: Phone number
-        instagram:
-          type: string
-          description: Instagram username
-        discord:
           type: string
           description: Discord username
     userdata:
