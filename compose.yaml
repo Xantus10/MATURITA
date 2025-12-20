@@ -1,5 +1,5 @@
 services:
-  mongo:
+  mongodb:
     build: ./db
     container_name: mongodb
     volumes:
@@ -31,15 +31,17 @@ services:
     networks:
       - mat-network
     depends_on:
-      - mongo
+      - mongodb
     command: ["npm", "run", "start"]
   frontend:
-    build: ./frontend
     container_name: frontend
-    environment:
-      - VITE_BE_URL=${VITE_BE_URL}
-      - VITE_MS_TENANT=${MICROSOFT_TENANT}
-      - VITE_MS_APP_ID=${MICROSOFT_APP_ID}
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_BE_URL=${VITE_BE_URL}
+        - VITE_MS_TENANT=${MICROSOFT_TENANT}
+        - VITE_MS_APP_ID=${MICROSOFT_APP_ID}
     ports:
       - "3000:3000"
     networks:
