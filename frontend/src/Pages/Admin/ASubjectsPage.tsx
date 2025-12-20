@@ -24,6 +24,14 @@ function ASubjectsPage() {
     }
   }
 
+  /**
+   * Locally remove a subject from the UI, exposed to SubjectDisplay
+   * @param _id Id of the subject
+   */
+  function UIremoveSubject(_id: string) {
+    setSubjects(subjects.filter((val) => val._id !== _id));
+  }
+
   useEffect(() => {
     getSubjects();
   }, []);
@@ -33,7 +41,7 @@ function ASubjectsPage() {
       <Stack className={classes.container}>
         <Header title={t('admin.subjects')} view="admin" />
         <Stack p={"md"}>
-          {subjects.map((v) => <SubjectDisplay data={v} />)}
+          {subjects.map((v) => <SubjectDisplay data={v} removeSelf={() => UIremoveSubject(v._id)} />)}
         </Stack>
         <AddSubject />
       </Stack>

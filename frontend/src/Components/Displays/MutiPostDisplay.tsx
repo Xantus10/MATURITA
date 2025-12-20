@@ -56,6 +56,14 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
   const [posts, setPosts] = useState<PostData[]>([]);
   const [orderBy, setOrderBy] = useState('date');
   const [subjects, setSubjects] = useState<string[]>([]);
+
+  /**
+   * Locally remove a post from the UI, exposed to PostDisplay
+   * @param _id Id of the post
+   */
+  function UIremovePost(_id: string) {
+    setPosts(posts.filter((val) => val._id !== _id));
+  }
   
   useEffect(() => {
     getSubjects();
@@ -98,7 +106,7 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
     MultiPostDisplay: (<>
       <Stack {...multiPostDisplayProps}>
         <NativeSelect data={[{label: t('orderDate'), value: 'date'}, {label: t('orderPrice'), value: 'price'}]} value={orderBy} onChange={(e) => setOrderBy(e.currentTarget.value)} />
-        {posts.map((p) => <PostDisplay data={p} view={postDisplayType} />)}
+        {posts.map((p) => <PostDisplay data={p} view={postDisplayType} removeSelf={() => UIremovePost(p._id)} />)}
         <Button m="md" onClick={() => {getPosts(posts.length, false)}}>{t('loadmore')}</Button>
       </Stack>
     </>),

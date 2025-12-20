@@ -34,9 +34,14 @@ export interface SubjectDisplayProps {
    * Data from db
    */
   data: SubjectData;
+
+  /**
+   * Function called when the post wants to remove itself from parent component
+   */
+  removeSelf: () => void;
 };
 
-function SubjectDisplay({data}: SubjectDisplayProps) {
+function SubjectDisplay({data, removeSelf}: SubjectDisplayProps) {
   const { t } = useTranslation('components');
   const [deleteDisc, deleteDiscController] = useDisclosure(false);
 
@@ -44,6 +49,9 @@ function SubjectDisplay({data}: SubjectDisplayProps) {
     let res = await deletef('/subjects', {subjectid: data._id});
     if (res) {
       autoHttpResponseNotification(res);
+      if (res.status === 200) {
+        removeSelf();
+      }
     }
   }
 

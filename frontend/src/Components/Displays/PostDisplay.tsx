@@ -111,13 +111,19 @@ export interface PostDisplayProps {
    * admin - view for admin
    */
   view: 'normal' | 'edit' | 'admin';
+
+  /**
+   * Function called when the post wants to remove itself from parent component
+   */
+  removeSelf: () => void;
 };
 
 /**
  * Display a single post
  */
-function PostDisplay({data, view}: PostDisplayProps) {
-  const {_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos} = data;
+function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
+  const [localData, setLocalData] = useState(data);
+  const {_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos} = localData;
   const [modalDisc, modalDiscController] = useDisclosure(false);
 
   const [creator, setCreator] = useState<PublicUserData>();
@@ -155,12 +161,22 @@ function PostDisplay({data, view}: PostDisplayProps) {
 
     async function ExtendPostLifespan(days: number) {
       let res = await post('/posts/extend', {postId: _id, days: days});
-      if (res) autoHttpResponseNotification(res, true);
+      if (res) {
+        autoHttpResponseNotification(res, true);
+        if (res.status === 200) {
+          setLocalData((prevLocalData) => ({...prevLocalData, RemoveAt: new Date(prevLocalData.RemoveAt.getTime() + days*1000*86400)}))
+        }
+      }
     }
 
     async function DeletePost() {
       let res = await deletef('/posts', {postId: _id});
-      if (res) autoHttpResponseNotification(res, true);
+      if (res) {
+        autoHttpResponseNotification(res, true);
+        if (res.status === 200) {
+          removeSelf();
+        }
+      }
     }
 
     menu = (

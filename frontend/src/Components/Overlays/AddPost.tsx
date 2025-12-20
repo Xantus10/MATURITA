@@ -17,7 +17,12 @@ export default function AddPost({ subjects }: {subjects?: string[]} = { subjects
     let values = postForm.getValues();
     if (values.priceMax < values.priceMin || !priceRange) values.priceMax = values.priceMin;
     let res = await postFormV('/posts', values);
-    if (res) autoHttpResponseNotification(res);
+    if (res) {
+      autoHttpResponseNotification(res);
+      if (res.status === 201) {
+        addbtncontroller.close();
+      }
+    }
   }
 
   const { t } = useTranslation('homepage');

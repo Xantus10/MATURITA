@@ -71,13 +71,19 @@ export interface UserDisplayProps {
    * User data for the display
    */
   data: UserData;
+
+  /**
+   * Function called when the post wants to remove itself from parent component
+   */
+  removeSelf: () => void;
 };
 
 /**
  * Display info about a user
  */
-function UserDisplay({data}: UserDisplayProps) {
-  const {_id, MicrosoftId, Name, Role, Bans} = data;
+function UserDisplay({data, removeSelf}: UserDisplayProps) {
+  const [localData, setLocalData] = useState(data)
+  const {_id, MicrosoftId, Name, Role, Bans} = localData;
   const [deleteDisc, deleteDiscController] = useDisclosure(false);
   const [deleteUPDisc, deleteUPDiscController] = useDisclosure(false);
   const [banDisc, banDiscController] = useDisclosure(false);
@@ -89,7 +95,12 @@ function UserDisplay({data}: UserDisplayProps) {
 
   async function DeleteUser() {
     let res = await deletef(`/users/${_id}`);
-    if (res) autoHttpResponseNotification(res, true);
+    if (res) {
+      autoHttpResponseNotification(res);
+      if (res.status === 200) {
+        removeSelf();
+      }
+    }
   }
 
   async function DeleteUserPosts() {
@@ -99,7 +110,12 @@ function UserDisplay({data}: UserDisplayProps) {
 
   async function ChangeUserRole(role: 'admin' | 'user') {
     let res = await post('/users/role', {userId: _id, role: role});
-    if (res) autoHttpResponseNotification(res, true);
+    if (res) {
+      autoHttpResponseNotification(res);
+      if (res.status === 200) {
+        setLocalData((prevLocalData) => ({...prevLocalData, Role: inverseRole}));
+      }
+    }
   }
 
   interface BanUserArg {
@@ -112,12 +128,22 @@ function UserDisplay({data}: UserDisplayProps) {
 
   async function BanUser({days, reason}: BanUserArg) {
     let res = await post('/users/ban', {userId: _id, days: days, reason: reason});
-    if (res) autoHttpResponseNotification(res, true);
+    if (res) {
+      autoHttpResponseNotification(res);
+      if (res.status === 200) {
+        setLocalData((prevLocalData) => ({...prevLocalData, Bans: [...prevLocalData.Bans, {CreatedAt: new Date(), Until: new Date(Date.now() + days*1000*86400), Reason: reason, IssuedBy: ""}]}));
+      }
+    }
   }
 
   async function BlacklistUser(reason: string) {
     let res = await post('/blacklist', {microsoftId: MicrosoftId, reason: reason});
-    if (res) autoHttpResponseNotification(res, true);
+    if (res) {
+      autoHttpResponseNotification(res);
+      if (res.status === 201) {
+        removeSelf();
+      }
+    }
   }
 
   const inverseRole = (Role==='admin') ? 'user' : 'admin';

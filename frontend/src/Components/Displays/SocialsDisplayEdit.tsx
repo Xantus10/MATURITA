@@ -17,6 +17,7 @@ export interface SocialsDisplayEditProps {
 function SocialsDisplayEdit({ data }: SocialsDisplayEditProps) {
 
   const [tempEdit, setTempEdit] = useState<string>("");
+  const [localData, setLocalData] = useState(data);
   const [discs, setDiscs] = useState<{[K in keyof Socials]: boolean}>(Object.fromEntries(SocialsKeys.map((val) => {return [val, false]})) as {[K in keyof Socials]: boolean});
 
   function setDisc(at: keyof Socials, val: boolean) {
@@ -28,7 +29,12 @@ function SocialsDisplayEdit({ data }: SocialsDisplayEditProps) {
 
   async function editSocial(which: keyof Socials) {
     let res = await post('/users/socials', { [which]: tempEdit });
-    if (res) autoHttpResponseNotification(res, true);
+    if (res) {
+      autoHttpResponseNotification(res, true);
+      if (res.status === 200) {
+        setLocalData((prevLocalData) => ({...prevLocalData, [which]: tempEdit}))
+      }
+    }
   }
 
   return (<>
@@ -44,9 +50,9 @@ function SocialsDisplayEdit({ data }: SocialsDisplayEditProps) {
           <Table.Td>
             <Group>
               <Text>
-                {(data[val as keyof Socials]) ? data[val as keyof Socials] : "-"}
+                {(localData[val as keyof Socials]) ? localData[val as keyof Socials] : "-"}
               </Text>
-              <Center onClick={() => setDisc(val as keyof Socials, true)} p="7px" w="fit-content" bdrs="10%" bg="blue" style={{aspectRatio: "1/1", cursor: 'pointer'}} ><FaEdit size="1rem" /></Center>              
+              <Center onClick={() => setDisc(val as keyof Socials, true)} p="7px" w="fit-content" bdrs="10%" bg="blue" style={{aspectRatio: "1/1", cursor: 'pointer'}} ><FaEdit size="1rem" /></Center>
             </Group>
           </Table.Td>
         </Table.Tr>

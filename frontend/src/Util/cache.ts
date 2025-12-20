@@ -108,6 +108,7 @@ class UserCacheClass {
    * @returns User's data or null if failed
    */
   public async getUserData(id: string): Promise<PublicUserData | null> {
+    if (id === "") return null;
     let timeout = 30
     while (this.fetching.includes(id) && timeout > 0) {
       await new Promise(resolve => setTimeout(resolve, 1000));

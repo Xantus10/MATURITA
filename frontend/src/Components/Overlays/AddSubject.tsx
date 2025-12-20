@@ -19,6 +19,9 @@ export default function AddSubject() {
       let res = await post('/subjects', {subject: inp});
       if (res) {
         autoHttpResponseNotification(res);
+        if (res.status === 201) {
+          addBtnDiscController.close();
+        }
       }
     } else {
       showNotification({title: t('addsubject.err3let'), message: "", icon: 'INFO'})

@@ -29,6 +29,14 @@ export default function AUsersPage() {
   const [last, setLast] = useState("");
   const [limit, setLimit] = useState('20');
 
+  /**
+   * Locally remove a user from the UI, exposed to UserDisplay
+   * @param _id Id of the subject
+   */
+  function UIremoveUser(_id: string) {
+    setUsers(users.filter((val) => val._id !== _id));
+  }
+
   useEffect(() => {
     getUserList(first, last, parseInt(limit));
   }, [first, last, limit])
@@ -44,7 +52,7 @@ export default function AUsersPage() {
             <NativeSelect label={t('userPage.display')} value={limit} data={['10', '20', '50']} onChange={(e) => {setLimit(e.currentTarget.value)}} />
           </Group>
           <Stack>
-            {users.map((v) => <UserDisplay data={v} />)}
+            {users.map((v) => <UserDisplay data={v} removeSelf={() => UIremoveUser(v._id)} />)}
           </Stack>
         </Stack>
       </Stack>
