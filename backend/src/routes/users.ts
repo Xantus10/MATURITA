@@ -81,7 +81,7 @@ usersrouter.post('/socials', async (req: Request, res: Response) => {
     if (req.body[k]) socials[`Socials.${k}`] = req.body[k];
   });
   let id = new Types.ObjectId(req.session.data?.objId);
-  User.findByIdAndUpdate(id, socials);
+  await User.findByIdAndUpdate(id, {$set: socials});
   return res.status(200).send({msg: 'Updated'});
 })
 
