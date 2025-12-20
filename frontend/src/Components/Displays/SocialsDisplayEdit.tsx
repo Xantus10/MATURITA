@@ -2,6 +2,7 @@ import { Table, TextInput, Text, Group, Center, Modal, Button } from "@mantine/c
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { post } from "../../Util/http";
+import { autoHttpResponseNotification } from "../../Util/notifications";
 import { SocialsKeys, type Socials } from "../../Util/cache";
 
 
@@ -27,6 +28,7 @@ function SocialsDisplayEdit({ data }: SocialsDisplayEditProps) {
 
   async function editSocial(which: keyof Socials) {
     let res = await post('/users/socials', { [which]: tempEdit });
+    if (res) autoHttpResponseNotification(res, true);
   }
 
   return (<>
