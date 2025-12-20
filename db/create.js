@@ -1,4 +1,4 @@
-const DB_NAME = 'Maturita';
+const DB_NAME = 'maturita';
 
 const db = new Mongo().getDB(DB_NAME);
 
