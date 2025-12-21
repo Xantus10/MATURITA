@@ -25,6 +25,8 @@ To link the application to the Entra Tenant, do the following
 5. Select the option *Accounts in this organizational directory only* (It should be pre-selected)
 6. For the redirect URI, select `SPA` and enter the URL the app is hosted on (Method should be https:// for production)
 7. After creating write down the `application (client) id` and `tenant id` and add them to .env
+8. Navigate to `Token configuration` and click on `New optional declaration`
+9. Select `ID` token type and add `family_name` and `given_name`
 
 Now the application is able to authenticate users. Next add permissions to create chats in msteams.
 
@@ -40,4 +42,5 @@ Now the application is able to authenticate users. Next add permissions to creat
 Prerequesities: Have docker installed on your production device
 
 1. Make `.env` file from `.env.example`, be sure to replace security related info like secrets and passwords
-2. Run docker compose up
+2. Add cerificates to `nginx/ssl` (filenames specified in dockerfile)
+3. Run docker compose up
