@@ -25,6 +25,14 @@ function MyPostsPage() {
 
   const [posts, setPosts] = useState<PostData[]>([]);
 
+  /**
+   * Locally remove a post from the UI, exposed to PostDisplay
+   * @param _id Id of the post
+   */
+  function UIremovePost(_id: string) {
+    setPosts(posts.filter((val) => val._id !== _id));
+  }
+
   useEffect(() => {
     getUserPosts();
   }, [])
@@ -34,7 +42,7 @@ function MyPostsPage() {
       <Stack className={classes.container}>
         <Header title={t('userposts.title')} view="user" />
         <Stack p={"md"}>
-          {posts.map((p) => <PostDisplay data={p} view='edit' />)}
+          {posts.map((p) => <PostDisplay data={p} view='edit' removeSelf={() => UIremovePost(p._id)} />)}
         </Stack>
       </Stack>
     </>
