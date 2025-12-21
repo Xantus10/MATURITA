@@ -5,6 +5,7 @@ import Header from "../Components/Clickables/Header";
 import PostDisplay, { type PostData } from "../Components/Displays/PostDisplay";
 import { get } from "../Util/http";
 import { autoHttpResponseNotification } from "../Util/notifications";
+import { typedates } from "../Util/autotype";
 
 import classes from '../styles/default.module.css';
 
@@ -18,7 +19,7 @@ function MyPostsPage() {
     let res = await get('/posts/user');
     if (res) autoHttpResponseNotification(res);
     let js = await res?.json();
-    setPosts(js.posts);
+    setPosts(typedates(js.posts));
   }
 
   const { t } = useTranslation('userpages');

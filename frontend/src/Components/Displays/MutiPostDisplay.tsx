@@ -6,6 +6,7 @@ import PostDisplay, { PRICE_MIN, PRICE_MAX, STATES, type PostData, type PostDisp
 import type { SubjectData } from "./SubjectDisplay";
 import { get } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
+import { typedates } from "../../Util/autotype";
 
 import { useTranslation } from "react-i18next";
 
@@ -47,7 +48,7 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
     let res = await get('/posts', {begin: begin, orderBy: orderBy, filterState: values.state, filterYears: values.years, filterSubjects: values.subjects, priceMin: values.priceMin, priceMax: values.priceMax});
     if (res) {
       autoHttpResponseNotification(res);
-      setPosts((overwrite) ? ((await res.json()).posts) : (posts.concat((await res.json()).posts)));
+      setPosts(typedates((overwrite) ? ((await res.json()).posts) : (posts.concat((await res.json()).posts))));
     }
   }
 

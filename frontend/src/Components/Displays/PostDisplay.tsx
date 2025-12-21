@@ -208,7 +208,12 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
 
     async function DeletePost() {
       let res = await deletef('/posts', {postId: _id});
-      if (res) autoHttpResponseNotification(res, true);
+      if (res) {
+        autoHttpResponseNotification(res, true);
+        if (res.status === 200) {
+          removeSelf();
+        }
+      }
     }
 
     menu = (
