@@ -68,7 +68,7 @@ usersrouter.post('/ban', checkRole('admin'), async (req: Request, res: Response)
   if (!req.body.days) return res.status(400).send({msg: "'days' is missing"});
   let days = parseInt(req.body.days);
   let objId = (req.session.data?.objId) ? req.session.data?.objId : new Types.ObjectId();
-  User.ban(userId, objId, days, reason);
+  await User.ban(userId, objId, days, reason);
   return res.status(200).send({msg: `User has been banned for ${days} days`});
 });
 
