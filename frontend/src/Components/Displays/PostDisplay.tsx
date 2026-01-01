@@ -125,13 +125,13 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
   const [localData, setLocalData] = useState(data);
   const {_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos} = localData;
   const [modalDisc, modalDiscController] = useDisclosure(false);
+  const { instance, accounts } = useMsal();
 
   const [creator, setCreator] = useState<PublicUserData>();
 
   const { t } = useTranslation();
 
   async function teamsChat() {
-    const { instance, accounts } = useMsal();
     let restoken = await instance.acquireTokenSilent({scopes: ['chat.create'], account: accounts[0], authority: import.meta.env.VITE_MS_TENANT});
     let res = await fetch('https://graph.microsoft.com/v1.0/chats', {
       method: 'POST',
