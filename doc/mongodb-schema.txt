@@ -51,3 +51,13 @@ _id		ObjectId
 MicrosoftId	string			unique		// Blacklisted Microsoft Entra Id
 CreatedAt	Datetime				// When was user blacklisted
 Reason		string					// Reason for blacklist
+
+
+# collection messages
+_id		ObjectId
+Sender		ObjectId -> users._id			// Sender of the message
+TargetUser	ObjectId -> users._id	nullable	// Reciever user (mutually exclusive targets)
+TargetGroup	'admin' | 'all'		nullable	// Reciever group (mutually exclusive targets)
+SentAt		Date			TTL index	// When was the message sent (delete after 3 mon)
+Title		string					// Title of the message
+Content		string					// Content of the message

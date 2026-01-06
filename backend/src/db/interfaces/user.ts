@@ -48,22 +48,22 @@ export interface Socials {
     /**
      * Email address
      */
-    Email: string;
+    Email?: string;
 
     /**
      * Phone number
      */
-    Phone: string;
+    Phone?: string;
 
     /**
      * Instagram username
      */
-    Instagram: string;
+    Instagram?: string;
 
     /**
      * Discord username
      */
-    Discord: string;
+    Discord?: string;
 }
 
 /**

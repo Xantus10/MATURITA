@@ -1167,6 +1167,38 @@ components:
         - MicrosoftId
         - CreatedAt
         - Reason
+    message:
+      type: object
+      properties:
+        Sender:
+          type: string
+          description: Sender userId
+          format: uuid
+        TargetUser:
+          type: string
+          description: Userid of the user to recieve the msg
+          format: uuid
+        TargetGroup:
+          type: string
+          description: Group to recieve the msg
+          enum:
+            - admins
+            - all
+        SentAt:
+          type: string
+          description: When was the message sent
+          format: date-time
+        Title:
+          type: string
+          description: Title of the message
+        Content:
+          type: string
+          description: Content of the message
+      required:
+        - Sender
+        - SendAt
+        - Title
+        - Content
     msg:
       type: object
       properties:
