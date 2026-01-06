@@ -7,7 +7,7 @@ export const MAX_RANGE = 1000;
 export const postSchema = new Schema<PostIF, Model<PostIF>, PostModelIF>({
   CreatorId: {type: Schema.Types.ObjectId, ref: 'User', required: true},
   Title: {type: String, required: true},
-  CreatedAt: {type: Date, default: Date.now},
+  CreatedAt: {type: Date, default: Date.now, required: true},
   RemoveAt: {type: Date, required: true, expires: 1, set: (days: number | Date) => {
     if (typeof(days) === 'number') {
       return new Date(Date.now() + 86400 * 1000 * days);

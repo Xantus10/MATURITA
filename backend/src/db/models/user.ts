@@ -9,9 +9,9 @@ export const userSchema = new Schema<UserIF, Model<UserIF>, UserModelIF>({
     Last: {type: String, required: true}
   },
   Role: {type: String, enum: ['user', 'admin'], default: 'user'},
-  LastLogin: {type: Date, default: Date.now, expires: 86400 * 30 * 15},
+  LastLogin: {type: Date, default: Date.now, expires: 86400 * 30 * 15, required: true},
   Bans: [{
-    CreatedAt: {type: Date, default: Date.now},
+    CreatedAt: {type: Date, default: Date.now, required: true},
     Until: {type: Date, required: true, set: (days: number | Date) => {
       if (typeof(days) === 'number') {
         return new Date(Date.now() + 86400 * 1000 * days);
