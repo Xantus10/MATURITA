@@ -21,7 +21,7 @@ messagesrouter.get('/', async (req: Request, res: Response) => {
   let id = new Types.ObjectId(req.session.data?.objId);
   let orQuery = [{TargetUser: id}, {TargetGroup: 'all'}];
   if (req.session.data?.role === 'admin') {
-    orQuery.push({TargetGroup: 'admins'})
+    orQuery.push({TargetGroup: 'admin'})
   }
   let msgs = await Message.find({ $or: orQuery }).sort({ SentAt: -1 });
   return res.status(200).send({msgs: msgs});
@@ -37,10 +37,15 @@ messagesrouter.post('/react', async (req: Request, res: Response) => {
     return res.status(400).send({msg: 'A required field is missing \'target\''})
   }
 
+  let post = req.body.post as string;
+  if (!post) {
+    return res.status(400).send({msg: 'A required field is missing \'post\''})
+  }
+
   let senderId = new Types.ObjectId(req.session.data?.objId);
   let name = await User.findById(senderId);
 
-  await Message.create({ Sender: senderId, TargetUser: new Types.ObjectId(target), Title: 'CODE:REACT', Content: `${name?.Name.First}:${name?.Name.Last}` });
+  await Message.create({ Sender: senderId, TargetUser: new Types.ObjectId(target), Title: 'CODE:REACT', Content: `${name?.Name.First}:${name?.Name.Last}:${post}` });
 
   return res.status(200).send({msg: 'OK'});
 });
