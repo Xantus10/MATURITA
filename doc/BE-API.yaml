@@ -18,6 +18,8 @@ tags:
     description: Blacklist microsoft accounts
   - name: Subjects
     description: Operations about subjects
+  - name: Messages
+    description: Internal application messages
 paths:
   /auth/idtoken:
     post:
@@ -932,6 +934,117 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/msg"
+  /messages:
+    get:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Messages
+      summary: Get messages to display
+      description: Get a list of all messages addressed to the curernt user
+      operationId: getMessages
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msgs:
+                    type: array
+                    description: Array of message objects
+                    items:
+                      $ref: "#/components/schemas/message"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /messages/react:
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Messages
+      summary: Generate automated reaction message
+      description: Generate automated reaction message for a post
+      operationId: postReactMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target:
+                  type: string
+                  description: Target user id
+                  format: uuid
+                post:
+                  type: string
+                  description: Title of the post to react to
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /messages/group:
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Messages
+      summary: Post a message for a group of people
+      description: Post a message for a group of people
+      operationId: postGroupMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target:
+                  type: string
+                  description: Target user id
+                  format: uuid
+                title:
+                  type: string
+                  description: Title of the message
+                content:
+                  type: string
+                  description: Content of the message
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+
 
 
 components:
