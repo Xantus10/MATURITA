@@ -85,6 +85,7 @@ function Header({ title, view }: HeaderProps) {
           <LangSwitch />
           <Group>
             <ThemeSwitch />
+            
             {menuComp}
           </Group>
         </Group>
