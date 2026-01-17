@@ -132,7 +132,8 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
   const { t } = useTranslation();
 
   async function teamsChat() {
-    let restoken = await instance.acquireTokenSilent({scopes: ['chat.create'], account: accounts[0], authority: import.meta.env.VITE_MS_TENANT});
+    await post('/messages/react', {target: data.CreatorId, post: data.Title});
+    let restoken = await instance.acquireTokenSilent({scopes: ['Chat.Create'], account: accounts[0]});
     let res = await fetch('https://graph.microsoft.com/v1.0/chats', {
       method: 'POST',
       headers: {Authorization: `Bearer ${restoken.accessToken}`,

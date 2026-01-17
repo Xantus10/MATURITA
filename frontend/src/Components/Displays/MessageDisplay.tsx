@@ -1,6 +1,8 @@
-import { Paper, Text, Button, Group } from '@mantine/core';
+import { Paper, Text } from '@mantine/core';
+import { useState, useEffect } from 'react';
+import { UserCache, type PublicUserData } from '../../Util/cache';
 
-import { useTranslation } from 'react-i18next';
+//import { useTranslation } from 'react-i18next';
 
 import classes from '../../styles/default.module.css'
 
@@ -56,14 +58,36 @@ export interface MessageDisplayProps {
 };
 
 function MessageDisplay({data}: MessageDisplayProps) {
-  const { t } = useTranslation('components');
+  //const { t } = useTranslation('components');
+  const [sender, setSender] = useState<PublicUserData | null>(null);
+
+  async function getSender() {
+    setSender(await UserCache.getUserData(data.Sender));
+  }
+
+  useEffect(() => {
+    getSender()
+  }, [])
+
+  let tit = data.Title;
+  let con = data.Content;
+
+  if (tit.startsWith("CODE:")) {
+    if (tit.endsWith("REACT")) {
+      tit = 'Somebody reacted to your post!'
+      let [ fn, ln, post ] = con.split('§');
+      con = `${fn} ${ln} reacted to your ${post} post!`;
+    }
+  }
 
   return (
     <>
-      <Paper p={"lg"} className={classes.outline}>
-        <Group justify='space-between'>
-          
-        </Group>
+      <Paper p={"lg"} className={classes.outline} maw={"500px"}>
+        <Text>From: {`${sender?.Name.First} ${sender?.Name.Last}`}</Text>
+        <Text>To: {(data.TargetUser) ? 'You' : data.TargetGroup}</Text>
+        <Text fw={700}>{tit}</Text>
+        <Text>{con}</Text>
+        <Text size='xs'>{new Date(data.SentAt).toLocaleString()}</Text>
       </Paper>
     </>
   );
