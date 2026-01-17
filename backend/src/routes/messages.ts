@@ -45,7 +45,7 @@ messagesrouter.post('/react', async (req: Request, res: Response) => {
   let senderId = new Types.ObjectId(req.session.data?.objId);
   let name = await User.findById(senderId);
 
-  await Message.create({ Sender: senderId, TargetUser: new Types.ObjectId(target), Title: 'CODE:REACT', Content: `${name?.Name.First}:${name?.Name.Last}:${post}` });
+  await Message.create({ Sender: senderId, TargetUser: new Types.ObjectId(target), Title: 'CODE:REACT', Content: `${name?.Name.First}§${name?.Name.Last}§${post}` });
 
   return res.status(200).send({msg: 'OK'});
 });
