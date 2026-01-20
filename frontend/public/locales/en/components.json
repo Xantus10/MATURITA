@@ -8,7 +8,11 @@
     "created": "Created",
     "until": "Valid until",
     "deleteReassure": "Remove post?",
-    "addDays": "Number of days to extend"
+    "addDays": "Number of days to extend",
+    "extendLifespan": "Extend lifespan",
+    "delete": "Delete",
+    "react": "Reach out",
+    "reacttooltip": "Notify the user and chat through teams"
   },
   "userDisplay": {
     "delete": "Delete",
@@ -38,5 +42,17 @@
     "subcode": "Subject code",
     "addsub": "Add subject"
   },
-  "socials": "Contacts"
+  "messagedisplay": {
+    "c:react": {
+      "title": "Somebody reacted to your post!",
+      "content": "{{fn}} {{ln}} reacted to your {{post}} post!"
+    },
+    "from": "From",
+    "to": "To",
+    "you": "You",
+    "nomsg": "No messages"
+  },
+  "socials": "Contacts",
+  "back": "Back",
+  "backtooltip": "Go back to homepage"
 }

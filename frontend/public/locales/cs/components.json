@@ -8,7 +8,11 @@
     "created": "Vytvořeno",
     "until": "Platí do",
     "deleteReassure": "Opravdu chcete příspěvek odebrat?",
-    "addDays": "Počet přidaných dnů"
+    "addDays": "Počet přidaných dnů",
+    "extendLifespan": "Prodloužit trvanlivost",
+    "delete": "Odebrat",
+    "react": "Kontaktovat",
+    "reacttooltip": "Kontaktovat uživatele a vytvořit chat v teams"
   },
   "userDisplay": {
     "delete": "Smazat",
@@ -38,5 +42,17 @@
     "subcode": "Zkratka předmětu",
     "addsub": "Přidat předmět"
   },
-  "socials": "Kontakty"
+  "messagedisplay": {
+    "c:react": {
+      "title": "Někdo zareagoval na váš příspěvek!",
+      "content": "{{fn}} {{ln}} zareagoval na příspěvek {{post}}!"
+    },
+    "from": "Od",
+    "to": "Pro",
+    "you": "Vás",
+    "nomsg": "Žádné zprávy"
+  },
+  "socials": "Kontakty",
+  "back": "Zpět",
+  "backtooltip": "Zpět na domovskou stránku"
 }

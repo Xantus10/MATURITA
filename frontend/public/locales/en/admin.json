@@ -4,5 +4,10 @@
     "first": "First name",
     "last": "Last name",
     "display": "Display results"
+  },
+  "sendMsgPage": {
+    "title": "Send global message",
+    "send": "Send",
+    "group": "Send to group"
   }
 }

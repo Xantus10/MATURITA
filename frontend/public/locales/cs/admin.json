@@ -4,5 +4,10 @@
     "first": "Jméno",
     "last": "Příjmení",
     "display": "Počet výsledků"
+  },
+  "sendMsgPage": {
+    "title": "Poslat globální zprávu",
+    "send": "Odeslat",
+    "group": "Skupina příjemců"
   }
 }

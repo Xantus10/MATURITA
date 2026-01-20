@@ -51,6 +51,9 @@ function Header({ title, view }: HeaderProps) {
           <Menu.Item onClick={() => {navigate('/subjects')}}>
             <Button fullWidth>{t('admin.subjects')}</Button>
           </Menu.Item>
+          <Menu.Item onClick={() => {navigate('/sendmsg')}}>
+            <Button fullWidth>{t('admin.sendmsg')}</Button>
+          </Menu.Item>
           <Menu.Item>
             <Logout />
           </Menu.Item>

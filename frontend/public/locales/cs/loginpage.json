@@ -1,6 +1,7 @@
 {
   "welcome": "Vítejte na trhu pro použité učebnice",
   "log_in": "Pro pokračování se přihlašte vaším školním účtem",
+  "btn": "Přihlásit",
   "noAccess": {
     "msid": "Vaše microsoft přihlášení bylo vyhodnoceno jako neplatné, prosím kontaktujte administrátora",
     "banned": "Byl vám odepřen přístup k aplikaci",

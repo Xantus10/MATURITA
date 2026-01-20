@@ -1,6 +1,7 @@
 {
   "welcome": "Welcome to the market for used books",
   "log_in": "To continue, log in with your school account",
+  "btn": "Login",
   "noAccess": {
     "msid": "Your microsoft login was evalueted as invalid, please contact administrator",
     "banned": "You have been banned",

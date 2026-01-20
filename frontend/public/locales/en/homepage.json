@@ -36,6 +36,7 @@
     "manage": "Manage",
     "users": "Users",
     "blacklist": "Blacklist",
-    "subjects": "Subjects"
+    "subjects": "Subjects",
+    "sendmsg": "Send message"
   }
 }

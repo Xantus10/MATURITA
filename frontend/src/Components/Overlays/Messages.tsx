@@ -5,6 +5,8 @@ import { FiMessageCircle } from "react-icons/fi";
 import { get } from "../../Util/http";
 import MessageDisplay, {type MessageData} from "../Displays/MessageDisplay";
 
+import { useTranslation } from "react-i18next";
+
 
 /**
  * Button to show popup with messages
@@ -13,6 +15,8 @@ function Messages() {
   const [modalDisc, modalDiscController] = useDisclosure(false);
 
   const [messages, setMessages] = useState<MessageData[]>([]);
+
+  const { t } = useTranslation();
 
   async function getMessages() {
     let res = await get('/messages');
@@ -34,7 +38,7 @@ function Messages() {
             (messages.length > 0) ?
               messages.map((val) => <MessageDisplay key={val._id} data={val} />)
             :
-              <Text>No messages</Text>
+              <Text>{t('messagedisplay.nomsg')}</Text>
           }
         </Stack>
       </Modal>

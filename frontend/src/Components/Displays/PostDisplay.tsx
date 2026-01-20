@@ -1,4 +1,4 @@
-import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Table, Menu, Button, NumberInput, Box } from "@mantine/core";
+import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Table, Menu, Button, NumberInput, Box, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
@@ -190,10 +190,10 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item onClick={extendDiscController.open}>
-              <Button fullWidth>Extend lifespan</Button>
+              <Button fullWidth>{t('postdisplay.extendLifespan')}</Button>
             </Menu.Item>
             <Menu.Item onClick={deleteDiscController.open}>
-              <Button fullWidth color="red" leftSection={<FaTrashAlt />}>Delete post</Button>
+              <Button fullWidth color="red" leftSection={<FaTrashAlt />}>{t('postdisplay.delete')}</Button>
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
@@ -227,7 +227,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item onClick={deleteDiscController.open}>
-              <Button fullWidth color="red" leftSection={<FaTrashAlt />}>Delete post</Button>
+              <Button fullWidth color="red" leftSection={<FaTrashAlt />}>{t('postdisplay.delete')}</Button>
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
@@ -283,7 +283,9 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
           <Text>{creator?.Name.First} {creator?.Name.Last}</Text>
           <SocialsPopup contacts={creator?.Socials} />
         </Group>
-        <Button ml="auto" onClick={teamsChat}>Teams lmao</Button>
+        <Tooltip label={t('postdisplay.reacttooltip')}>
+          <Button ml="auto" onClick={teamsChat}>{t('postdisplay.react')}</Button>
+        </Tooltip>
       </Stack>
     </Modal>
     </>

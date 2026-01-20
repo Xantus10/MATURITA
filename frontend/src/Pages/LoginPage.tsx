@@ -21,7 +21,7 @@ export default function LoginPage() {
           <Stack>
             <Title order={2} className={classes.title1}>{t('welcome')}</Title>
             <Text>{t('log_in')}</Text>
-            <Button onClick={() => {instance.loginRedirect();}} w='200px'>Log in</Button>
+            <Button onClick={() => {instance.loginRedirect();}} w='200px'>{t('btn')}</Button>
           </Stack>
       </Center>
     </Stack>
