@@ -8,6 +8,8 @@
   "sendMsgPage": {
     "title": "Poslat globální zprávu",
     "send": "Odeslat",
-    "group": "Skupina příjemců"
+    "group": "Skupina příjemců",
+    "labeltitle": "Titulek",
+    "labelcont": "Zpráva"
   }
 }

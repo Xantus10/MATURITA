@@ -8,6 +8,8 @@
   "sendMsgPage": {
     "title": "Send global message",
     "send": "Send",
-    "group": "Send to group"
+    "group": "Send to group",
+    "labeltitle": "Title",
+    "labelcont": "Message"
   }
 }
