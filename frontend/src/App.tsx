@@ -14,6 +14,7 @@ import AHomePage from './Pages/Admin/AHomePage';
 import AUsersPage from './Pages/Admin/AUsersPage';
 import ABlacklistPage from './Pages/Admin/ABlacklistPage';
 import ASubjectsPage from './Pages/Admin/ASubjectsPage';
+import ASendMessage from './Pages/Admin/ASendMessage';
 
 import { post } from './Util/http';
 import { isCsrf, setCsrfToken } from './Util/csrf';
@@ -72,6 +73,7 @@ function App() {
         <Route path='/users' element={<AUsersPage />} />
         <Route path='/blacklists' element={<ABlacklistPage />} />
         <Route path='/subjects' element={<ASubjectsPage />} />
+        <Route path='/sendmsg' element={<ASendMessage />} />
       </Routes>
     </>
   );
