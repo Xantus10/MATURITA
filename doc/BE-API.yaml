@@ -983,7 +983,7 @@ paths:
                   type: string
                   description: Title of the post to react to
       responses:
-        '200':
+        '201':
           description: OK
           content:
             application/json:
@@ -1017,8 +1017,10 @@ paths:
               properties:
                 target:
                   type: string
-                  description: Target user id
-                  format: uuid
+                  description: Target group
+                  enum:
+                    - admin
+                    - all
                 title:
                   type: string
                   description: Title of the message
@@ -1026,7 +1028,7 @@ paths:
                   type: string
                   description: Content of the message
       responses:
-        '200':
+        '201':
           description: OK
           content:
             application/json:

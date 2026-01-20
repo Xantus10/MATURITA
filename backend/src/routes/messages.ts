@@ -47,7 +47,7 @@ messagesrouter.post('/react', async (req: Request, res: Response) => {
 
   await Message.create({ Sender: senderId, TargetUser: new Types.ObjectId(target), Title: 'CODE:REACT', Content: `${name?.Name.First}§${name?.Name.Last}§${post}` });
 
-  return res.status(200).send({msg: 'OK'});
+  return res.status(201).send({msg: 'User has been notified!'});
 });
 
 /**
@@ -72,7 +72,7 @@ messagesrouter.post('/group', checkRole('admin'), async (req: Request, res: Resp
 
   await Message.create({ Sender: senderId, TargetGroup: target, Title: title, Content: cont });
 
-  return res.status(200).send({msg: 'OK'});
+  return res.status(201).send({msg: 'Message sent!'});
 });
 
 
