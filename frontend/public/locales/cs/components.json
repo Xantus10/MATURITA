@@ -50,7 +50,8 @@
     "from": "Od",
     "to": "Pro",
     "you": "Vás",
-    "nomsg": "Žádné zprávy"
+    "nomsg": "Žádné zprávy",
+    "group": "skupina<{{group}}>"
   },
   "socials": "Kontakty",
   "back": "Zpět",
