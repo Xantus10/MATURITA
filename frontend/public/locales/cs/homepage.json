@@ -1,8 +1,9 @@
 {
   "form": {
     "title": {
+      "head": "Vytvořit příspěvek",
       "title": "Titulek",
-      "remove": "Doba trvání",
+      "remove": "Doba trvání (dny)",
       "subjects": "Předmět/y",
       "state": "Stav učebnice",
       "years": "Ročník/y",

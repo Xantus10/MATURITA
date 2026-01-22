@@ -1,8 +1,9 @@
 {
   "form": {
     "title": {
+      "head": "Create post",
       "title": "Title",
-      "remove": "Duration",
+      "remove": "Duration (days)",
       "subjects": "Subject/s",
       "state": "Book condition",
       "years": "Year/s",

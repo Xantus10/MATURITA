@@ -68,7 +68,7 @@ export default function AddPost({ subjects }: {subjects?: string[]} = { subjects
 
   return (<>
   <Button onClick={addbtncontroller.open} radius="50%" h="50px" w="50px"><FaPlus /></Button>
-  <Drawer opened={addbtn} onClose={addbtncontroller.close} title={"Create post"} position='right' offset={18} radius="md">
+  <Drawer opened={addbtn} onClose={addbtncontroller.close} title={t('form.title.head')} position='right' offset={18} radius="md">
     <TextInput label={t('form.title.title')} key={postForm.key('title')} {...postForm.getInputProps('title')} />
     <NumberInput label={t('form.title.remove')} key={postForm.key('remove')} min={1} max={90} {...postForm.getInputProps('remove')} />
     <MultiSelect label={t('form.title.subjects')} data={(subjects) ? subjects : csubjects} key={postForm.key('subjects')} {...postForm.getInputProps('subjects')} />
