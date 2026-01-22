@@ -55,7 +55,7 @@ function UserDisplayPage() {
         <Paper p={"md"}>
           <Stack>
             <Text>{t('useracc.name')}: {userData?.Name.First} {userData?.Name.Last}</Text>
-            <Text>{t('useracc.role')}: {userData?.Role}</Text>
+            <Text>{t('useracc.role')}: {t('useracc.psrole', {role: userData?.Role})}</Text>
             <SocialsDisplayEdit data={(userData?.Socials) ? userData?.Socials : {} as SocialsDisplayEditProps['data']} />
             <Button bg={'red'} rightSection={<FaTrashAlt />} onClick={deleteDiscController.open} size="md">{t('useracc.delete')}</Button>
           </Stack>

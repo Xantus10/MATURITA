@@ -6,6 +6,7 @@
     "title": "My account",
     "name": "Name",
     "role": "Role",
+    "psrole": "role<{{role}}>",
     "delete": "Delete account",
     "deleteReassure": "Do you really want to delete your account?"
   }

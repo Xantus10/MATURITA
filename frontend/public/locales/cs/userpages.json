@@ -6,6 +6,7 @@
     "title": "Můj účet",
     "name": "Jméno",
     "role": "Role",
+    "psrole": "role<{{role}}>",
     "delete": "Smazat účet",
     "deleteReassure": "Opravdu si přejete smazat váš účet?"
   }
