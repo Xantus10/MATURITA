@@ -1,4 +1,4 @@
-import { Stack, Paper, Group, Text, Code, Modal } from '@mantine/core';
+import { Stack, Paper, Grid, Text, Code, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -91,14 +91,18 @@ export function BanDisplay({CreatedAt, Until, IssuedBy, Reason, Valid}: LabeledB
   return (
     <>
     <Paper bd={(Valid) ? 'solid 1px var(--mantine-color-red-7)' : ''} p={"sm"} onClick={discController.open} withBorder={Valid} >
-      <Group justify='space-between' >
-        <Text>
-          {Reason}
-        </Text>
-        <Code>
-          {Until.toLocaleString()}
-        </Code>
-      </Group>
+      <Grid>
+        <Grid.Col span={6}>
+          <Text>
+            {Reason}
+          </Text>
+        </Grid.Col>
+        <Grid.Col span={6}>
+          <Code>
+            {Until.toLocaleString()}
+          </Code>
+        </Grid.Col>
+      </Grid>
     </Paper>
 
     <Modal opened={disc} onClose={discController.close} withCloseButton centered>

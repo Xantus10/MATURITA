@@ -1,4 +1,4 @@
-import { Title as ManTitle, Group, Paper, Code, Button, Menu, Tooltip, TextInput, NumberInput, Modal } from "@mantine/core";
+import { Title as ManTitle, Grid, Paper, Code, Button, Menu, Tooltip, TextInput, NumberInput, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { FaTrashAlt, FaBan, FaExclamationTriangle } from "react-icons/fa";
@@ -158,52 +158,60 @@ function UserDisplay({data, removeSelf}: UserDisplayProps) {
   return (
     <>
     <Paper bd={(userBanned) ? 'solid 1px var(--mantine-color-red-7)' : ''} withBorder={userBanned} className={classes.outline}>
-      <Group gap='xl' justify="space-between" p={"md"} >
-        <ManTitle order={2}>{Name.First} {Name.Last} {(userBanned) ? `(${t('userDisplay.banned')})` : ''}</ManTitle>
-        <Code>{Role}</Code>
-        <Menu>
-          <Menu.Target>
-            <Button leftSection={<FaTrashAlt />} bg={"red.9"}>{t('userDisplay.delete')}</Button>
-          </Menu.Target>
-          <Menu.Dropdown>
-            <Menu.Item onClick={deleteDiscController.open}>
-              <Button leftSection={<MdOutlineAccountCircle />} bg={"red.9"}>{t('userDisplay.deleteAcc')}</Button>
-            </Menu.Item>
-            <Menu.Item onClick={deleteUPDiscController.open}>
-              <Button leftSection={<MdOutlineLocalPostOffice />} bg={"red.9"}>{t('userDisplay.deletePosts')}</Button>
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
-
-        <Menu>
-          <Menu.Target>
-            <Button leftSection={<FaBan />} bg={"red.9"} >
-              {t('userDisplay.ban')}
-            </Button>
-          </Menu.Target>
-          <Menu.Dropdown>
-            <Menu.Item onClick={banDiscController.open}>
-              <Tooltip label={t('userDisplay.blacklistNotice')}>
-                <Button leftSection={<FaBan />} bg={"red.9"} >
-                  {t('userDisplay.ban')}
-                </Button>
-              </Tooltip>
-            </Menu.Item>
-            <Menu.Item onClick={banHistoryController.open}>
-              <Button leftSection={<MdHistory />} >
-                {t('userDisplay.banhistory')}
+      <Grid p={"md"} >
+        <Grid.Col span={2}>
+          <ManTitle order={2}>{Name.First} {Name.Last} {(userBanned) ? `(${t('userDisplay.banned')})` : ''}</ManTitle>
+        </Grid.Col>
+        <Grid.Col span={2}>
+          <Code>{Role}</Code>
+        </Grid.Col>
+        <Grid.Col span={2}>
+          <Menu>
+            <Menu.Target>
+              <Button leftSection={<FaTrashAlt />} bg={"red.9"}>{t('userDisplay.delete')}</Button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item onClick={deleteDiscController.open}>
+                <Button leftSection={<MdOutlineAccountCircle />} bg={"red.9"}>{t('userDisplay.deleteAcc')}</Button>
+              </Menu.Item>
+              <Menu.Item onClick={deleteUPDiscController.open}>
+                <Button leftSection={<MdOutlineLocalPostOffice />} bg={"red.9"}>{t('userDisplay.deletePosts')}</Button>
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </Grid.Col>
+        <Grid.Col span={2}>
+          <Menu>
+            <Menu.Target>
+              <Button leftSection={<FaBan />} bg={"red.9"} >
+                {t('userDisplay.ban')}
               </Button>
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
-        
-
-        <Button onClick={blackDiscController.open} leftSection={<FaExclamationTriangle />} bg={"red.9"}>
-          {t('userDisplay.blacklist')}
-        </Button>
-        
-        <Button onClick={changeRoleDiscController.open}>{t('userDisplay.make')} {inverseRole}</Button>
-      </Group>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item onClick={banDiscController.open}>
+                <Tooltip label={t('userDisplay.blacklistNotice')}>
+                  <Button leftSection={<FaBan />} bg={"red.9"} >
+                    {t('userDisplay.ban')}
+                  </Button>
+                </Tooltip>
+              </Menu.Item>
+              <Menu.Item onClick={banHistoryController.open}>
+                <Button leftSection={<MdHistory />} >
+                  {t('userDisplay.banhistory')}
+                </Button>
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </Grid.Col>
+        <Grid.Col span={2}>
+          <Button onClick={blackDiscController.open} leftSection={<FaExclamationTriangle />} bg={"red.9"}>
+            {t('userDisplay.blacklist')}
+          </Button>
+        </Grid.Col>
+        <Grid.Col span={2}>
+          <Button onClick={changeRoleDiscController.open}>{t('userDisplay.make')} {inverseRole}</Button>
+        </Grid.Col>
+      </Grid>
     </Paper>
     
     <Popup line={t('userDisplay.deletePostsReassure')} open={deleteUPDisc} onNo={deleteUPDiscController.close} onYes={DeleteUserPosts} />
