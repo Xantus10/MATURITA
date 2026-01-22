@@ -33,6 +33,7 @@ function SocialsDisplayEdit({ data }: SocialsDisplayEditProps) {
       autoHttpResponseNotification(res, true);
       if (res.status === 200) {
         setLocalData((prevLocalData) => ({...prevLocalData, [which]: tempEdit}))
+        setDisc(which, false);
       }
     }
   }
