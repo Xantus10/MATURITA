@@ -1,6 +1,6 @@
 import { Title as ManTitle, Group, Paper, Code, Button, Menu, Tooltip, TextInput, NumberInput, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaTrashAlt, FaBan, FaExclamationTriangle } from "react-icons/fa";
 import { MdOutlineAccountCircle, MdOutlineLocalPostOffice, MdHistory } from 'react-icons/md';
 import Popup from "../Overlays/Popup";
@@ -117,6 +117,10 @@ function UserDisplay({data, removeSelf}: UserDisplayProps) {
       }
     }
   }
+
+  useEffect(() => {
+    setLocalData(data);
+  }, [data])
 
   interface BanUserArg {
     days: number;
