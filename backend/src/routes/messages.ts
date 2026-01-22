@@ -36,6 +36,7 @@ messagesrouter.post('/react', async (req: Request, res: Response) => {
   if (!target) {
     return res.status(400).send({msg: 'A required field is missing \'target\''})
   }
+  let targetId = new Types.ObjectId(target);
 
   let post = req.body.post as string;
   if (!post) {
@@ -43,9 +44,14 @@ messagesrouter.post('/react', async (req: Request, res: Response) => {
   }
 
   let senderId = new Types.ObjectId(req.session.data?.objId);
+
+  if (senderId.equals(targetId)) {
+    return res.status(403).send({msg: 'Cannot react to own posts!'})
+  }
+
   let name = await User.findById(senderId);
 
-  await Message.create({ Sender: senderId, TargetUser: new Types.ObjectId(target), Title: 'CODE:REACT', Content: `${name?.Name.First}§${name?.Name.Last}§${post}` });
+  await Message.create({ Sender: senderId, TargetUser: targetId, Title: 'CODE:REACT', Content: `${name?.Name.First}§${name?.Name.Last}§${post}` });
 
   return res.status(201).send({msg: 'User has been notified!'});
 });

@@ -1001,6 +1001,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/msg"
+        '403':
+          description: User tried reacting to his own post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
   /messages/group:
     post:
       security: [ { ssidCookie: [], csrfHeader: [] } ]
