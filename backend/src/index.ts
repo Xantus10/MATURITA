@@ -19,9 +19,10 @@ app.use(cookieParser());
 
 app.set('trust proxy', 1); // Trust nginx
 
-app.use(helmet({
+app.use(helmet({ // We are setting these from nginx
   hsts: {maxAge: 0}, // Disable HSTS, because we communicate through nginx
-  xssFilter: false   // Disable X-XSS-Protection - deprecated header
+  xssFilter: false,   // Disable X-XSS-Protection - deprecated header
+  frameguard: false
 }));
 
 import connect from './db/conn.js';
