@@ -12,7 +12,9 @@
     "extendLifespan": "Extend lifespan",
     "delete": "Delete",
     "react": "Reach out",
-    "reacttooltip": "Notify the user and chat through teams"
+    "reacttooltip": "Notify the user and chat through teams",
+    "addinfo": "Add info",
+    "addinfolong": "Add additional info/notes to post"
   },
   "userDisplay": {
     "delete": "Delete",

@@ -12,7 +12,9 @@
     "extendLifespan": "Prodloužit trvanlivost",
     "delete": "Odebrat",
     "react": "Kontaktovat",
-    "reacttooltip": "Kontaktovat uživatele a vytvořit chat v teams"
+    "reacttooltip": "Kontaktovat uživatele a vytvořit chat v teams",
+    "addinfo": "Přidat info",
+    "addinfolong": "Přidat další info/poznámky k příspěvku"
   },
   "userDisplay": {
     "delete": "Smazat",

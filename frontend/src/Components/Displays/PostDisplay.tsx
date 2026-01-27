@@ -1,4 +1,4 @@
-import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Table, Menu, Button, NumberInput, Box, Tooltip } from "@mantine/core";
+import { Title as ManTitle, Text, Modal, Group, Stack, Paper, Code, Table, Menu, Button, NumberInput, Box, Tooltip, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
@@ -77,6 +77,11 @@ export interface PostData {
    * Paths to associated photos
    */
   Photos: string[];
+
+  /**
+   * Additional info/messages/updates
+   */
+  AddInfo: string[];
 };
 
 /**
@@ -158,7 +163,9 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
   if (view === 'edit') {
     const [deleteDisc, deleteDiscController] = useDisclosure(false);
     const [extendDisc, extendDiscController] = useDisclosure(false);
+    const [msgDisc, msgDiscController] = useDisclosure(false);
     const [days, setDays] = useState(0);
+    const [msg, setMsg] = useState("");
 
     async function ExtendPostLifespan(days: number) {
       let res = await post('/posts/extend', {postId: _id, days: days});
@@ -180,6 +187,16 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
       }
     }
 
+    async function AddInfo(msg: string) {
+      let res = await post('/posts/addinfo', {postId: _id, msg: msg});
+      if (res) {
+        autoHttpResponseNotification(res, true);
+        if (res.status === 201) {
+          setLocalData((prevLocalData) => ({...prevLocalData, AddInfo: [...prevLocalData.AddInfo, msg]}));
+        }
+      }
+    }
+
     menu = (
       <>
         <Menu>
@@ -192,6 +209,9 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
             <Menu.Item onClick={extendDiscController.open}>
               <Button fullWidth>{t('postdisplay.extendLifespan')}</Button>
             </Menu.Item>
+            <Menu.Item onClick={msgDiscController.open}>
+              <Button fullWidth>{t('postdisplay.addinfo')}</Button>
+            </Menu.Item>
             <Menu.Item onClick={deleteDiscController.open}>
               <Button fullWidth color="red" leftSection={<FaTrashAlt />}>{t('postdisplay.delete')}</Button>
             </Menu.Item>
@@ -202,6 +222,8 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
         <PopupAsk<number> open={extendDisc} onNo={extendDiscController.close} onYes={ExtendPostLifespan}
           input={{element: <NumberInput label={t('postdisplay.addDays')} max={30} min={1} value={days} onChange={(val) => {(typeof val === 'string') ? setDays(0) : setDays(val)}} />,
                   value: days}} />
+        <PopupAsk<string> open={msgDisc} onNo={msgDiscController.close} onYes={AddInfo}
+          input={{element: <TextInput label={t('postdisplay.addinfolong')} value={msg} onChange={(e) => setMsg(e.currentTarget.value)} />, value: msg}} />
       </>
     );
   } else if (view === 'admin') {
