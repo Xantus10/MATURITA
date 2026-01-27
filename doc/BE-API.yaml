@@ -417,6 +417,62 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/msg"
+  /posts/addinfo:
+    post:
+      security: [ { ssidCookie: [], csrfHeader: [] } ]
+      tags:
+        - Posts
+      summary: Add info to a post
+      description: Add additional information/updates/notes to a post
+      operationId: addinfoPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postId:
+                  type: string
+                  description: String representation of posts._id
+                  format: uuid
+                msg:
+                  type: string
+                  description: Message to add
+              required:
+                - postId
+                - msg
+      responses:
+        '201':
+          description: Message added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '400':
+          description: A required field is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '403':
+          description: Unauthorized (User is not the Creator)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+        '404':
+          description: The post does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+
   /users/list:
     get:
       security: [ { ssidCookie: [], csrfHeader: [] } ]

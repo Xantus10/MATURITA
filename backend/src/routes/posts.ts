@@ -165,4 +165,28 @@ postsrouter.delete('/user', checkRole('admin'), async (req: Request, res: Respon
   return res.status(200).send({msg: "Posts deleted"});
 });
 
+/**
+ * Add additional info to post
+ */
+postsrouter.post('/addinfo', async (req: Request, res: Response) => {
+  if (!req.body.postId) return res.status(400).send({msg: "'postId' is missing"});
+  if (!req.body.msg) return res.status(400).send({msg: "'msg' is missing"});
+
+  let postId = new Types.ObjectId(req.body.postId as string);
+  let msg = req.body.msg;
+
+  let post = await Post.findById(postId);
+
+  if (!post) {
+    return res.status(404).send({msg: "Post does not exist!"});
+  }
+  if (!(post.CreatorId.equals(req.session.data?.objId))) {
+    return res.status(403).send({msg: "Unauthorized (not creator)!"});
+  }
+
+  await Post.addInfo(postId, msg);
+
+  return res.status(201).send({msg: "OK"});
+});
+
 export default postsrouter;

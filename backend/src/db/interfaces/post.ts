@@ -57,6 +57,11 @@ export interface PostIF {
    * Paths to associated photos
    */
   Photos: string[];
+
+  /**
+   * Additional info/messages/updates
+   */
+  AddInfo: string[];
 };
 
 export interface PostModelIF extends Model<PostIF> {
@@ -74,4 +79,11 @@ export interface PostModelIF extends Model<PostIF> {
    * @param id User._id to match with Post.CreatorId
    */
   removeByCreatorId(id: Types.ObjectId): Promise<void>;
+
+  /**
+   * Add and AddInfo msg
+   * 
+   * @param id Post._id to identify the post
+   */
+  addInfo(id: Types.ObjectId, msg: string): Promise<void>;
 };

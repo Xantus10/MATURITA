@@ -22,7 +22,8 @@ export const postSchema = new Schema<PostIF, Model<PostIF>, PostModelIF>({
     Min: {type: Number, required: true, min: MIN_RANGE, max: MAX_RANGE},
     Max: {type: Number, required: true, min: MIN_RANGE, max: MAX_RANGE}
   },
-  Photos: {type: [String], required: true}
+  Photos: {type: [String], required: true},
+  AddInfo: {type: [String], required: true}
 });
 
 postSchema.static('extendRemoveAt', async function (id: Types.ObjectId, newDate: Date) {
@@ -31,6 +32,10 @@ postSchema.static('extendRemoveAt', async function (id: Types.ObjectId, newDate:
 
 postSchema.static('removeByCreatorId', async function (id: Types.ObjectId) {
   await this.deleteMany( { CreatorId: id } );
+});
+
+postSchema.static('addInfo', async function addInfo(id: Types.ObjectId, msg: string) {
+  await this.findByIdAndUpdate(id, { $push: { AddInfo: msg } }); 
 })
 
 

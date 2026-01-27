@@ -39,6 +39,7 @@ Price {							// Prices of the book, in case the price is not a range, the min
  Max		integer
 }
 Photos		string[]				// Filesystem paths to the photos of the book
+AddInfo		string[]				// Additional messages/updates
 
 
 # collection subjects
