@@ -159,10 +159,12 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
       "Content-Type": 'application/json'},
       body: JSON.stringify({chatType: 'oneOnOne', members: [{
           "@odata.type": "#microsoft.graph.aadUserConversationMember",
-          "user@odata.bind": `https://graph.microsoft.com/v1.0/users('${accounts[0].localAccountId}')`
+          "roles": ["owner"],
+          "user@odata.bind": `https://graph.microsoft.com/v1.0/users('${accounts[0].idTokenClaims?.oid}')`
         },
         {
           "@odata.type": "#microsoft.graph.aadUserConversationMember",
+          "roles": ["owner"],
           "user@odata.bind": `https://graph.microsoft.com/v1.0/users('${creator?.MicrosoftId}')`
         }]})});
     let js = await res.json();
