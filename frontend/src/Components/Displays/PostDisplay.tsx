@@ -137,7 +137,8 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
   const { t } = useTranslation();
 
   async function teamsChat() {
-    await post('/messages/react', {target: data.CreatorId, post: data.Title});
+    let reactres = await post('/messages/react', {target: data.CreatorId, post: data.Title});
+    if (reactres?.status !== 201) return;
     let restoken = await instance.acquireTokenSilent({scopes: ['Chat.Create'], account: accounts[0]});
     let res = await fetch('https://graph.microsoft.com/v1.0/chats', {
       method: 'POST',
