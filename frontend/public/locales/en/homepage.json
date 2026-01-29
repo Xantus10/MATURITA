@@ -8,7 +8,8 @@
       "state": "Book condition",
       "years": "Year/s",
       "price": "Price",
-      "photos": "Photos"
+      "photos": "Photos",
+      "send": "Post"
     },
     "err": {
       "title": "Enter title",

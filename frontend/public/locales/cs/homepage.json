@@ -8,7 +8,8 @@
       "state": "Stav učebnice",
       "years": "Ročník/y",
       "price": "Cena",
-      "photos": "Fotky"
+      "photos": "Fotky",
+      "send": "Odeslat"
     },
     "err": {
       "title": "Vložte titulek",

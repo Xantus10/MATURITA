@@ -74,11 +74,11 @@ export default function AddPost({ subjects }: {subjects?: string[]} = { subjects
     <MultiSelect label={t('form.title.subjects')} data={(subjects) ? subjects : csubjects} key={postForm.key('subjects')} {...postForm.getInputProps('subjects')} />
     <NativeSelect label={t('form.title.state')} data={STATES} key={postForm.key('state')} {...postForm.getInputProps('state')} />
     <MultiSelect label={t('form.title.years')} data={['1', '2', '3', '4']} key={postForm.key('years')} {...postForm.getInputProps('years')} />
-    <NumberInput label={`${(priceRange) ? 'Min. ' : ''}${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMin')} {...postForm.getInputProps('priceMin')} />
+    <NumberInput label={`${(priceRange) ? 'Min. ' : ''}${t('form.title.price')} [Kč]`} suffix=" Kč" min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMin')} {...postForm.getInputProps('priceMin')} />
     <Checkbox m="md" label={t('checkbox')} checked={priceRange} onChange={(e) => {setPriceRange(e.currentTarget.checked)}} />
-    <NumberInput label={`Max. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMax')} {...postForm.getInputProps('priceMax')} disabled={!priceRange} display={(!priceRange) ? "none" : "initial"} />
+    <NumberInput label={`Max. ${t('form.title.price')} [Kč]`} suffix=" Kč" min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMax')} {...postForm.getInputProps('priceMax')} disabled={!priceRange} display={(!priceRange) ? "none" : "initial"} />
     <FileInput label={t('form.title.photos')} description={t('form.desc.photos')} key={postForm.key('pictures')} {...postForm.getInputProps('pictures')} multiple />
-    <Button m="md" onClick={createPost}>Post!</Button>
+    <Button m="md" onClick={createPost}>{t('form.title.send')}</Button>
   </Drawer>
   </>);
 }
