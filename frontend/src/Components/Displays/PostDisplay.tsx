@@ -11,7 +11,7 @@ import PopupAsk from "../Overlays/PopupAsk";
 import SocialsPopup from "../Overlays/SocialsPopup";
 import { useTranslation } from "react-i18next";
 import { post, deletef } from "../../Util/http";
-import { autoHttpResponseNotification } from "../../Util/notifications";
+import { autoHttpResponseNotification, showNotification } from "../../Util/notifications";
 
 import classes from '../../styles/default.module.css'
 
@@ -139,7 +139,15 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
   async function teamsChat() {
     let reactres = await post('/messages/react', {target: data.CreatorId, post: data.Title});
     if (reactres?.status !== 201) return;
-    let restoken = await instance.acquireTokenSilent({scopes: ['Chat.Create'], account: accounts[0]});
+    let restoken;
+    try {
+      restoken = await instance.acquireTokenSilent({scopes: ['Chat.Create'], account: accounts[0]});
+    } catch (e) {
+      restoken = await instance.acquireTokenPopup({scopes: ['Chat.Create']});
+    }
+    if (!restoken) {
+      showNotification({ title: "Graph token acquisition failed, contact administrator", message: "", icon: 'ERR' })
+    }
     let res = await fetch('https://graph.microsoft.com/v1.0/chats', {
       method: 'POST',
       headers: {Authorization: `Bearer ${restoken.accessToken}`,
