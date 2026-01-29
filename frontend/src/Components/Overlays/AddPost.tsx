@@ -4,7 +4,7 @@ import { useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
-import { PRICE_MIN, PRICE_MAX, STATES } from "../Displays/PostDisplay";
+import { PRICE_MIN, PRICE_MAX, STATES, mapStateToLangKey } from "../Displays/PostDisplay";
 import { postFormV } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
 
@@ -26,6 +26,7 @@ export default function AddPost({ subjects }: {subjects?: string[]} = { subjects
   }
 
   const { t } = useTranslation('homepage');
+  const comT = useTranslation();
 
   const [addbtn, addbtncontroller] = useDisclosure(false);
   const [priceRange, setPriceRange] = useState(false);
@@ -72,7 +73,7 @@ export default function AddPost({ subjects }: {subjects?: string[]} = { subjects
     <TextInput label={t('form.title.title')} key={postForm.key('title')} {...postForm.getInputProps('title')} />
     <NumberInput label={t('form.title.remove')} key={postForm.key('remove')} min={1} max={90} {...postForm.getInputProps('remove')} />
     <MultiSelect label={t('form.title.subjects')} data={(subjects) ? subjects : csubjects} key={postForm.key('subjects')} {...postForm.getInputProps('subjects')} />
-    <NativeSelect label={t('form.title.state')} data={STATES} key={postForm.key('state')} {...postForm.getInputProps('state')} />
+    <NativeSelect label={t('form.title.state')} data={STATES.map((val) => {return {label: comT.t(mapStateToLangKey(val as any) as any), value: val}})} key={postForm.key('state')} {...postForm.getInputProps('state')} />
     <MultiSelect label={t('form.title.years')} data={['1', '2', '3', '4']} key={postForm.key('years')} {...postForm.getInputProps('years')} />
     <NumberInput label={`${(priceRange) ? 'Min. ' : ''}${t('form.title.price')} [Kč]`} suffix=" Kč" min={PRICE_MIN} max={PRICE_MAX} key={postForm.key('priceMin')} {...postForm.getInputProps('priceMin')} />
     <Checkbox m="md" label={t('checkbox')} checked={priceRange} onChange={(e) => {setPriceRange(e.currentTarget.checked)}} />

@@ -14,7 +14,12 @@
     "react": "Reach out",
     "reacttooltip": "Notify the user and chat through teams",
     "addinfo": "Add info",
-    "addinfolong": "Add additional info/notes to post"
+    "addinfolong": "Add additional info/notes to post",
+    "state": {
+      "likenew": "Like new",
+      "good": "Good",
+      "worn": "Worn"
+    }
   },
   "userDisplay": {
     "delete": "Delete",

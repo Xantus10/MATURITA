@@ -90,6 +90,11 @@ export interface PostData {
 export const STATES = ['Like new', 'Good', 'Worn'];
 
 
+export function mapStateToLangKey(state: PostData['State']) {
+  return `postdisplay.state.${state.toLowerCase().replace(/\s+/g, '')}`;
+}
+
+
 /**
  * Lowest possible price
  */
@@ -284,7 +289,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
           <Box onClick={modalDiscController.open} flex={5}>
             <Group gap='xl' justify="space-between" p={"md"} >
               <ManTitle order={2}>{Title}</ManTitle>
-              <Code>{State}</Code>
+              <Code>{t(mapStateToLangKey(State) as any)}</Code>
               <Text>{(Price.Min === Price.Max) ? Price.Min : `${Price.Min} - ${Price.Max}`} Kč</Text>
             </Group>
           </Box>
@@ -300,7 +305,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
         </Group>
         <Table data={{
           body: [
-            [t('postdisplay.State'), State],
+            [t('postdisplay.State'), t(mapStateToLangKey(State) as any)],
             [t('postdisplay.Subjects'), Subjects.map((sub) => {return <><Code>{sub}</Code>&nbsp;</>})],
             [t('postdisplay.Years'), Years.map((sub) => {return <><Code>{sub}.</Code>&nbsp;</>})]
           ]
