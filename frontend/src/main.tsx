@@ -13,6 +13,7 @@ import '@mantine/core/styles.css'
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
 
+import classes from './styles/defPropsStyles.module.css'
 import './main.css'
 
 import App from './App.tsx'
@@ -26,6 +27,13 @@ const themeOverride = createTheme({
   fontFamily: 'system-ui, Avenir, Helvetica, Arial, sans-serif',
   autoContrast: true,
   cursorType: 'pointer',
+  components: {
+    Button: {
+      defaultProps: {
+        classNames: {root: classes.button}
+      }
+    }
+  }
 });
 
 

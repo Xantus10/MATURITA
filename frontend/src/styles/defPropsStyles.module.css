@@ -1,0 +1,8 @@
+.button {
+  transition: border-color;
+  border: 1px grey solid;
+}
+
+.button:hover {
+  border-color: cyan;
+}
