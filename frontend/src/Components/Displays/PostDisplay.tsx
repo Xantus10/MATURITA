@@ -137,11 +137,14 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
   const [modalDisc, modalDiscController] = useDisclosure(false);
   const { instance, accounts } = useMsal();
 
+  const canReact = (accounts[0].idTokenClaims?.oid !== CreatorId);
+
   const [creator, setCreator] = useState<PublicUserData>();
 
   const { t } = useTranslation();
 
   async function teamsChat() {
+    if (!canReact) return;
     let reactres = await post('/messages/react', {target: data.CreatorId, post: data.Title});
     if (reactres?.status !== 201) return;
     let restoken;
@@ -320,7 +323,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
           <SocialsPopup contacts={creator?.Socials} />
         </Group>
         <Tooltip label={t('postdisplay.reacttooltip')}>
-          <Button ml="auto" onClick={teamsChat}>{t('postdisplay.react')}</Button>
+          <Button ml="auto" onClick={teamsChat} disabled={!canReact}>{t('postdisplay.react')}</Button>
         </Tooltip>
       </Stack>
     </Modal>
