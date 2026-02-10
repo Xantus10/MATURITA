@@ -25,7 +25,7 @@ function Logout({ onClick = 'handle' }: {onClick?: 'handle' | (() => void)}) {
 
   return (
     <>
-    <Button fullWidth color='red.7' onClick={(onClick === 'handle') ? (() => {LogoutFunc(instance)}) : (onClick)} leftSection={<MdLogout />}>Log out</Button>
+    <Button fullWidth variant="filled" color='red.7' onClick={(onClick === 'handle') ? (() => {LogoutFunc(instance)}) : (onClick)} leftSection={<MdLogout />}>Log out</Button>
     </>
   );
 }
