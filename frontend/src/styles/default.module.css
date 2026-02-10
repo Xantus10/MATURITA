@@ -14,11 +14,12 @@
 
 .title1 {
   padding: 25px;
-  background: #4300FF;
+  background: #b35020;
+  color: whitesmoke;
   box-shadow:
-    #0065F8 6px 3px,
-    #00CAFF 12px 6px,
-    #00FFDE 18px 9px
+    #dd5500 6px 3px,
+    #ee8800 12px 6px,
+    #eeee66 18px 9px
 }
 
 .header {
@@ -29,7 +30,13 @@
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-radius: 20px;
-  box-shadow: 
-    rgba(0, 0, 0, 0.16) 0px 3px 6px,
-    rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border-color: #444444;
+  box-shadow:
+    rgba(255, 128, 0, 0.4) 5px 4px 12px,
+    rgba(0, 0, 0, 0.2) 5px 7px 7px;
+  transition: border-color 0.3s ease;
+}
+
+.outline:hover {
+  border-color: rgb(255, 128, 0);
 }

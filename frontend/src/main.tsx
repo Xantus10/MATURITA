@@ -30,7 +30,9 @@ const themeOverride = createTheme({
   components: {
     Button: {
       defaultProps: {
-        classNames: {root: classes.button}
+        classNames: {root: classes.button},
+        variant: "gradient",
+        gradient: {from: 'rgba(145,145,145,1)', to: 'rgba(66,66,66,1)'}
       }
     }
   }
