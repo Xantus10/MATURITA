@@ -1,6 +1,7 @@
 import { useMsal } from '@azure/msal-react'
 
 import { Center, Text, Title, Button, Stack } from '@mantine/core'
+import { FaMicrosoft } from "react-icons/fa";
 import classes from '../styles/default.module.css';
 
 import { useTranslation } from 'react-i18next';
@@ -21,7 +22,7 @@ export default function LoginPage() {
           <Stack>
             <Title order={2} className={classes.title1}>{t('welcome')}</Title>
             <Text>{t('log_in')}</Text>
-            <Button onClick={() => {instance.loginRedirect();}} w='200px'>{t('btn')}</Button>
+            <Button onClick={() => {instance.loginRedirect();}} w='200px' leftSection={<FaMicrosoft />}>{t('btn')}</Button>
           </Stack>
       </Center>
     </Stack>
