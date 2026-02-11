@@ -35,6 +35,9 @@ const themeOverride = createTheme({
         gradient: {from: 'rgba(145,145,145,1)', to: 'rgba(66,66,66,1)'}
       }
     }
+  },
+  other: {
+    bodyoverride: 'rgb(192, 192, 192)'
   }
 });
 
@@ -55,7 +58,7 @@ const pca = new PublicClientApplication(configuration);
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MsalProvider instance={pca}>
-      <MantineProvider theme={themeOverride} defaultColorScheme='dark'>
+      <MantineProvider theme={themeOverride} cssVariablesResolver={(theme) => ({variables: {}, light: {'--mantine-color-body': theme.other.bodyoverride}, dark: {}})} defaultColorScheme='dark'>
         <BrowserRouter>
           <App />
           <Notifications position='bottom-right' />
