@@ -85,10 +85,10 @@ function MessageDisplay({data}: MessageDisplayProps) {
   return (
     <>
       <Paper p={"lg"} className={classes.outline} maw={"500px"}>
-        <Text>{t('messagedisplay.from')}: {`${sender?.Name.First} ${sender?.Name.Last}`}</Text>
-        <Text>{t('messagedisplay.to')}: {(data.TargetUser) ? t('messagedisplay.you') : t('messagedisplay.group', {group: data.TargetGroup})}</Text>
+        <Text size='sm'>{t('messagedisplay.from')}: {`${sender?.Name.First} ${sender?.Name.Last}`}</Text>
+        <Text size='sm'>{t('messagedisplay.to')}: {(data.TargetUser) ? t('messagedisplay.you') : t('messagedisplay.group', {group: data.TargetGroup})}</Text>
         <Text fw={700}>{tit}</Text>
-        <Text>{con}</Text>
+        <Text style={{whiteSpace: 'pre-line'}}>{con}</Text>
         <Text size='xs'>{new Date(data.SentAt).toLocaleString()}</Text>
       </Paper>
     </>
