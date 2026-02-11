@@ -5,6 +5,8 @@ import { post } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
 import { SocialsKeys, type Socials } from "../../Util/cache";
 
+import classes from '../../styles/default.module.css'
+
 
 export interface SocialsDisplayEditProps {
   /**
@@ -53,7 +55,7 @@ function SocialsDisplayEdit({ data }: SocialsDisplayEditProps) {
               <Text>
                 {(localData[val as keyof Socials]) ? localData[val as keyof Socials] : "-"}
               </Text>
-              <Center onClick={() => setDisc(val as keyof Socials, true)} p="7px" w="fit-content" bdrs="10%" bg="blue" style={{aspectRatio: "1/1", cursor: 'pointer'}} ><FaEdit size="1rem" /></Center>
+              <Center onClick={() => setDisc(val as keyof Socials, true)} p="7px" w="fit-content" bdrs="10%" className={classes.seeThroughBtn} style={{aspectRatio: "1/1", cursor: 'pointer'}} ><FaEdit size="1rem" /></Center>
             </Group>
           </Table.Td>
         </Table.Tr>
