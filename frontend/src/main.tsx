@@ -37,7 +37,7 @@ const themeOverride = createTheme({
     }
   },
   other: {
-    bodyoverride: 'rgb(192, 192, 192)'
+    bodyoverride: 'rgba(242, 222, 202, 0.8)'
   }
 });
 
@@ -58,7 +58,7 @@ const pca = new PublicClientApplication(configuration);
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MsalProvider instance={pca}>
-      <MantineProvider theme={themeOverride} cssVariablesResolver={(theme) => ({variables: {}, light: {'--mantine-color-body': theme.other.bodyoverride}, dark: {}})} defaultColorScheme='dark'>
+      <MantineProvider theme={themeOverride} cssVariablesResolver={(theme) => ({variables: {}, light: {'--mantine-color-body': theme.other.bodyoverride, '--input-bg': theme.other.bodyoverride}, dark: {}})} defaultColorScheme='dark'>
         <BrowserRouter>
           <App />
           <Notifications position='bottom-right' />
