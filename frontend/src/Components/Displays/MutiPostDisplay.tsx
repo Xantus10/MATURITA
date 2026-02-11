@@ -2,7 +2,7 @@ import { Stack, MultiSelect, NativeSelect, Button, NumberInput, type StackProps 
 import { useForm } from "@mantine/form";
 import { useState, useEffect } from "react";
 
-import PostDisplay, { PRICE_MIN, PRICE_MAX, STATES, type PostData, type PostDisplayProps } from "./PostDisplay";
+import PostDisplay, { PRICE_MIN, PRICE_MAX, STATES, mapStateToLangKey, type PostData, type PostDisplayProps } from "./PostDisplay";
 import type { SubjectData } from "./SubjectDisplay";
 import { get } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
@@ -53,6 +53,7 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
   }
 
   const { t } = useTranslation('homepage');
+  const comT = useTranslation();
 
   const [posts, setPosts] = useState<PostData[]>([]);
   const [orderBy, setOrderBy] = useState('date');
@@ -96,7 +97,7 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
     FilterForm: (<>
       <Stack {...filterFormProps}>
         <MultiSelect label={t('form.title.subjects')} data={subjects} key={filterForm.key('subjects')} {...filterForm.getInputProps('subjects')} />
-        <MultiSelect label={t('form.title.state')} data={STATES} key={filterForm.key('state')} {...filterForm.getInputProps('state')} />
+        <MultiSelect label={t('form.title.state')} data={STATES.map((val) => {return {label: comT.t(mapStateToLangKey(val as any) as any), value: val}})} key={filterForm.key('state')} {...filterForm.getInputProps('state')} />
         <MultiSelect label={t('form.title.years')} data={['1', '2', '3', '4']} key={filterForm.key('years')} {...filterForm.getInputProps('years')} />
         <NumberInput label={`Min. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={filterForm.key('priceMin')} {...filterForm.getInputProps('priceMin')} />
         <NumberInput label={`Max. ${t('form.title.price')}`} min={PRICE_MIN} max={PRICE_MAX} key={filterForm.key('priceMax')} {...filterForm.getInputProps('priceMax')} />
