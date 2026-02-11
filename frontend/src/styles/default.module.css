@@ -38,5 +38,15 @@
 }
 
 .outline:hover {
-  border-color: rgb(255, 128, 0);
+  border-color: var(--my-orange);
+}
+
+.seeThroughBtn {
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid var(--my-orange);
+  transition: background-color 0.3s ease;
+}
+
+.seeThroughBtn:hover {
+  background-color: rgba(255, 128, 0, 0.75);
 }
