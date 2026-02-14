@@ -134,6 +134,11 @@ export interface PostDisplayProps {
 function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
   const [localData, setLocalData] = useState(data);
   const {_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos} = localData;
+
+  useEffect(() => {
+    setLocalData(data)
+  }, [data])
+
   const [modalDisc, modalDiscController] = useDisclosure(false);
   const { instance, accounts } = useMsal();
 
