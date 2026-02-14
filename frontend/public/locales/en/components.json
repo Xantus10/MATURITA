@@ -50,9 +50,11 @@
     "addsub": "Add subject"
   },
   "messagedisplay": {
-    "c:react": {
-      "title": "Somebody reacted to your post!",
-      "content": "{{fn}} {{ln}} reacted to your {{post}} post!"
+    "c": {
+      "react": {
+        "title": "Somebody reacted to your post!",
+        "content": "{{fn}} {{ln}} reacted to your {{post}} post!"
+      }
     },
     "from": "From",
     "to": "To",

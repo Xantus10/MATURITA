@@ -50,9 +50,11 @@
     "addsub": "Přidat předmět"
   },
   "messagedisplay": {
-    "c:react": {
+    "c": {
+      "react": {
       "title": "Někdo zareagoval na váš příspěvek!",
       "content": "{{fn}} {{ln}} zareagoval na příspěvek {{post}}!"
+      }
     },
     "from": "Od",
     "to": "Pro",

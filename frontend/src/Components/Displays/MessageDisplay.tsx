@@ -76,9 +76,9 @@ function MessageDisplay({data}: MessageDisplayProps) {
 
   if (tit.startsWith("CODE:")) {
     if (tit.endsWith("REACT")) {
-      tit = t('messagedisplay.c:react.title')
+      tit = t('messagedisplay.c.react.title')
       let [ fn, ln, post ] = con.split('§');
-      con = t('messagedisplay.c:react.content', {fn: fn, ln: ln, post: post});
+      con = t('messagedisplay.c.react.content', {fn: fn, ln: ln, post: post});
     }
   }
 
