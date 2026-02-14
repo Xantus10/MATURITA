@@ -18,7 +18,7 @@ export default function ABlacklistPage() {
     let res = await get('/blacklist');
     if (res) {
       autoHttpResponseNotification(res);
-      if (res.status === 200) setBlacklists(typedates((await res.json()).blists));
+      if (res.status === 200) setBlacklists(typedates((await res.json()).blists, ['CreatedAt']));
     }
   }
 

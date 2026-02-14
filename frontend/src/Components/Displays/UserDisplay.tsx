@@ -151,7 +151,7 @@ function UserDisplay({data, removeSelf}: UserDisplayProps) {
   }
 
   const inverseRole = (Role==='admin') ? 'user' : 'admin';
-  const BansT = typedates(Bans);
+  const BansT = typedates(Bans, ['CreatedAt', 'Until']);
   const userBanned = isBanned(BansT);
   const LabeledBans = labelBans(BansT);
 

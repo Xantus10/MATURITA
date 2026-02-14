@@ -19,7 +19,7 @@ function MyPostsPage() {
     let res = await get('/posts/user');
     if (res) autoHttpResponseNotification(res);
     let js = await res?.json();
-    setPosts(typedates(js.posts));
+    setPosts(typedates(js.posts, ['CreatedAt', 'RemoveAt']));
   }
 
   const { t } = useTranslation('userpages');

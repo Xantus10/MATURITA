@@ -48,7 +48,7 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
     let res = await get('/posts', {begin: begin, orderBy: orderBy, filterState: values.state, filterYears: values.years, filterSubjects: values.subjects, priceMin: values.priceMin, priceMax: values.priceMax});
     if (res) {
       autoHttpResponseNotification(res);
-      setPosts(typedates((overwrite) ? ((await res.json()).posts) : (posts.concat((await res.json()).posts))));
+      setPosts(typedates((overwrite) ? ((await res.json()).posts) : (posts.concat((await res.json()).posts)), ['CreatedAt', 'RemoveAt']));
     }
   }
 
