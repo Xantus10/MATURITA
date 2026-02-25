@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Burza učebnic</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: rgba(242, 222, 202);
+      font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    }
+
+    .content {
+      margin: auto;
+      width: 70%;
+      background-color: whitesmoke;
+      border: transparent 1px;
+      border-radius: 30px;
+      padding: 20px;
+    }
+
+    h1 {
+      padding: 25px;
+      background: #b35020;
+      color: whitesmoke;
+      box-shadow:
+        #dd5500 6px 3px,
+        #ee8800 12px 6px,
+        #eeee66 18px 9px
+    }
+
+    h2 {
+      padding: 15px;
+      width: fit-content;
+      background: #b35020;
+      color: whitesmoke;
+      box-shadow:
+        #ee8800 6px 3px,
+        #eeee66 12px 6px
+    }
+
+    h3 {
+      padding: 8px;
+      width: fit-content;
+      background: #b35020;
+      color: whitesmoke;
+      box-shadow:
+        #ee8800 6px 3px
+    }
+
+    img {
+      display: block;
+      max-width: 90%;
+      margin: auto;
+    }
+
+    img.i {
+      float: right;
+      width: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>Burza učebnic</h1>
+    <h2>Jazyk / Language</h2>
+    <ul>
+      <li><a href="#cz">CZ</a></li>
+      <li><a href="#en">EN</a></li>
+    </ul>
+    <h2 id="cz">Vítejte na burze učebnic!</h2>
+    <p>Tato stránka slouží jako uživatelská nápověda a návod jak používat tuto aplikaci.</p>
+    <h3>Přihlašování</h3>
+    <p>Do navigace se hlásí s pomocí Microsoft Office 365 účtu (vašim školním účtem). Bude pravděpodobně z domény <b>eskola.eu</b>. Heslo pro účet je také stejné.</p>
+    <img src="img/loginpage.png" alt="Poloha tlačítka na přihlašovací stránce" class="i">
+    <p>Níže jsou přesné kroky pro přihlášení:</p>
+    <ol>
+      <li>Na přihlašovací stránce aplikace klikněte na <b>"Přihlásit"</b>. Budete přesměrováni na stránky Microsoft.</li>
+      <li>Zde se přihlašte jako do jakékoli jiné aplikace (např. MS Teams). Při prvním přihlášení možná bude třeba dát aplikaci jistá oprávnění.</li>
+      <li>Po přihlášení a odsouhlasení budete přesměrováni zpět do aplikace. Aplikaci může pár sekund trvat, než ověří vaše přihlášení</li>
+    </ol>
+    <h3>Hlavní stránka</h3>
+    <p>Po přihlášení jste přesunuti na hlavní stránku aplikace. Zde máte přístup k několika funkcionalitám:</p>
+    <img src="img/homepage.png" alt="Pozice prvků na domovské stránce">
+    <ol>
+      <li>Přepínání jazyka</li>
+      <li>Přepínání mezi světlým a tmavým režimem</li>
+      <li>Zobrazení okna příchozích zpráv</li>
+      <li>Uživatelské menu (další funkcionality)</li>
+      <li>Filtr zobrazených příspěvků</li>
+      <li>Styl řazení příspěvků</li>
+      <li>Tlačítko pro načítání dalších příspěvků</li>
+      <li>Tlačítko pro přidání nového příspěvku</li>
+    </ol>
+    <h3>Přispěvky</h3>
+    <p>Příspěvky slouží jako inzeráty oznamující o prodeji použité učebnice. Součástí takového příspěvku je:</p>
+    <ul>
+      <li>Titulek - Výstižný</li>
+      <li>Doba trvání - Jak dlouho bude inzerát na stránce</li>
+      <li>Předměty - Výběr předmětů, pro které je učebnice určena</li>
+      <li>Stav učebnice - V jaké je učebnice přibližné kvalitě</li>
+      <li>Ročníky - V jakých ročnících se učebnice používá</li>
+      <li>Cena - Buď stacionární cena, nebo rozsah</li>
+      <li>Fotky - Ilustrační obrázky vaší učebnice</li>
+      <li>Kontakt - U příspěvku je jméno tvůrce a možnost ho kontaktovat
+        <ul>
+          <li>Buď přes chat v MS Teams (Tlačítko Kontaktovat)</li>
+          <li>Nebo přes jiné kanály (Tlačítko tři tečky)</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
