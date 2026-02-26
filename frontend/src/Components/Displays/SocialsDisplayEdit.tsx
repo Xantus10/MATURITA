@@ -61,7 +61,7 @@ function SocialsDisplayEdit({ data }: SocialsDisplayEditProps) {
         </Table.Tr>
         <Modal opened={discs[val as keyof Socials]} onClose={() => setDisc(val as keyof Socials, false)}>
           <TextInput label={val} value={tempEdit} onChange={(e) => {setTempEdit(e.currentTarget.value)}} />
-          <Button onClick={() => editSocial(val as keyof Socials)} >OK</Button>
+          <Button onClick={() => editSocial(val as keyof Socials)} mt={20} >OK</Button>
         </Modal>
       </>);})
     }
