@@ -133,7 +133,7 @@ export interface PostDisplayProps {
  */
 function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
   const [localData, setLocalData] = useState(data);
-  const {_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos} = localData;
+  const {_id, Title, CreatorId, CreatedAt, RemoveAt, Subjects, State, Years, Price, Photos, AddInfo} = localData;
 
   useEffect(() => {
     setLocalData(data)
@@ -321,6 +321,17 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
         <Group>
           {Photos.map((uri: string) => {return (<ClickableImage mah={"200px"} fit="contain" src={`/images/${uri}`} />);})}
         </Group>
+        {
+          (AddInfo && AddInfo.length > 0) ?
+          <>
+            <Text td='underline'>Additional info</Text>
+            {
+              AddInfo.map((val) => (<Text>{val}</Text>))
+            }
+          </>
+          :
+          <></>
+        }
         <Text size="xs">{t('postdisplay.created')}: {CreatedAt.toLocaleString()}</Text>
         <Text size="xs">{t('postdisplay.until')}: {RemoveAt.toLocaleString()}</Text>
         <Group ml="auto">
