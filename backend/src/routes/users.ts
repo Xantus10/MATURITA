@@ -53,6 +53,7 @@ usersrouter.post('/role', checkRole('admin'), async (req: Request, res: Response
   let userId = new Types.ObjectId(req.body.userId as string);
   if (!req.body.role) return res.status(400).send({msg: "'role' is missing"});
   let role = req.body.role;
+  if (req.session.data?.objId.equals(userId)) return res.status(403).send({msg: "You cannot change your own role!"});
   await User.setRole(userId, role);
   return res.status(200).send({msg: 'Role changed to '+role});
 });
