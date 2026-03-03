@@ -7,6 +7,7 @@ import LangSwitch from "./LangSwitch";
 import Logout from "./Logout";
 import BackToHomeButton from "./BackToHomeButton";
 import ThemeSwitch from "./ThemeSwitch";
+import Help from "./Help";
 import Messages from "../Overlays/Messages";
 
 import classes from '../../styles/default.module.css';
@@ -88,6 +89,7 @@ function Header({ title, view }: HeaderProps) {
           <Title order={1} className={classes.title1}>{title}</Title>
           <LangSwitch />
           <Group>
+            <Help />
             <ThemeSwitch />
             <Messages />
             {menuComp}

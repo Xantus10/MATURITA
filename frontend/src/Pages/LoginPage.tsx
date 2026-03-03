@@ -1,11 +1,12 @@
 import { useMsal } from '@azure/msal-react'
 
-import { Center, Text, Title, Button, Stack } from '@mantine/core'
+import { Center, Text, Title, Button, Stack, Group } from '@mantine/core'
 import { FaMicrosoft } from "react-icons/fa";
 import classes from '../styles/default.module.css';
 
 import { useTranslation } from 'react-i18next';
 import LangSwitch from '../Components/Clickables/LangSwitch';
+import Help from '../Components/Clickables/Help';
 
 /**
  * Login page
@@ -17,7 +18,10 @@ export default function LoginPage() {
   return (
     <>
     <Stack className={classes.container}>
-      <LangSwitch />
+      <Group w='50%' m='auto'>
+        <LangSwitch />
+        <Help />
+      </Group>
       <Center p={"md"} h={"100%"} flex={1}>
           <Stack>
             <Title order={2} className={classes.title1}>{t('welcome')}</Title>
