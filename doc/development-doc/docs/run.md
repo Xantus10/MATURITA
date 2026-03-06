@@ -43,4 +43,13 @@ Prerequesities: Have docker installed on your production device
 
 1. Make `.env` file from `.env.example`, be sure to replace security related info like secrets and passwords
 2. Add cerificates to `nginx/ssl` (filenames specified in dockerfile)
-3. Run docker compose up
+3. Run `docker compose up -d`
+
+### Rebuilding the app
+
+After you make some changes and you want to deploy these changes to production, follow these steps:
+
+1. Pull the changes with `git pull`
+2. Shut down the app with `docker compose down`
+3. Rebuild with `docker compose up -d --build`
+
