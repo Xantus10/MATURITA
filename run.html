@@ -66,6 +66,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#running-the-app_1">Running the app</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rebuilding-the-app">Rebuilding the app</a>
+    </li>
         </ul>
     </li>
     </ul>
@@ -145,7 +147,14 @@
 <ol>
 <li>Make <code>.env</code> file from <code>.env.example</code>, be sure to replace security related info like secrets and passwords</li>
 <li>Add cerificates to <code>nginx/ssl</code> (filenames specified in dockerfile)</li>
-<li>Run docker compose up</li>
+<li>Run <code>docker compose up -d</code></li>
+</ol>
+<h3 id="rebuilding-the-app">Rebuilding the app</h3>
+<p>After you make some changes and you want to deploy these changes to production, follow these steps:</p>
+<ol>
+<li>Pull the changes with <code>git pull</code></li>
+<li>Shut down the app with <code>docker compose down</code></li>
+<li>Rebuild with <code>docker compose up -d --build</code></li>
 </ol>
               
             </div>
