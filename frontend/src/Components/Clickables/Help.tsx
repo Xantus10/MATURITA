@@ -11,7 +11,7 @@ function Help() {
   return (
     <>
       <Tooltip label={t('help')}>
-        <a href="guide.html" target="_blank">
+        <a href="/guide/guide.html" target="_blank">
           <Center p="7px" w="fit-content" bdrs="100%" className={classes.seeThroughBtn} style={{aspectRatio: "1/1", cursor: 'pointer'}} ><FaRegQuestionCircle size="1.5rem" /></Center>
         </a>
       </Tooltip>

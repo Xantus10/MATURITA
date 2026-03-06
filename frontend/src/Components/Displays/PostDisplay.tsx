@@ -326,7 +326,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
           <>
             <Text td='underline'>Additional info</Text>
             {
-              AddInfo.map((val) => (<Text>{val}</Text>))
+              AddInfo.map((val) => (<Text ta='center'>{val}</Text>))
             }
           </>
           :
