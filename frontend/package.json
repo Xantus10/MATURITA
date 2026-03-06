@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "serve -s dist"
+    "start": "serve -c serve.json -s dist"
   },
   "dependencies": {
     "@azure/msal-browser": "^4.21.0",
