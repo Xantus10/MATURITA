@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Directory structure - School book market</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Directory structure";
+        var mkdocs_page_input_path = "dir.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="index.html" class="icon icon-home"> School book market
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="tech.html">Technologies</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="flow.html">Flow overview</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Directory structure</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#root-directory">Root directory</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-sub-structures">The sub structures</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#db">Db</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#doc">Doc</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#frontend">Frontend</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="run.html">Running the app</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="add.html">Adding features</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="security.html">Security</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">School book market</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html" class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Directory structure</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Xantus10/MATURITA/edit/master/doc/development-doc/docs/dir.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="directory-structure-of-the-app">Directory structure of the app</h1>
+<h2 id="root-directory">Root directory</h2>
+<pre><code>/backend      -- Express backend files
+/db           -- Production mongodb init script
+/doc          -- All the documentation
+/frontend     -- React frontend files
+/nginx        -- Nginx files
+compose.yaml  -- Docker compose file to dockerize the whole app
+README.md     -- Basic project readme (Czech version included)
+</code></pre>
+<h2 id="the-sub-structures">The sub structures</h2>
+<h3 id="backend">Backend</h3>
+<pre><code>/dist         -- The build directory
+/images       -- The uploaded images storage
+/node_modules -- Standard npm libraries
+/src          -- Source files
+  | /config       -- Files for overall app configuration (env)
+  | /db           -- Database interaction (Mongoose)
+      | /interfaces   -- Basic interface structure of collections
+      | /models       -- Conversion of IFs into usable models
+      | conn.ts       -- Databse connection script
+  | /middlewares  -- Custom Express.js middlewares
+  | /oauth        -- Anything concerning OAuth 2.0 validation
+  | /routes       -- API routes featured in the app
+  | /util         -- Utility scripts
+  | custom.d.ts   -- Retyping imported types to add fields
+  | index.ts      -- Main app file
+Dockerfile    -- Dockerfile for dockerizing backend
+package.json  -- External packages + npm scripts
+tsconfig.json -- TS configuration
+</code></pre>
+<h3 id="db">Db</h3>
+<pre><code>Dockerfile    -- Dockerfile for dockerizing mongodb
+init.sh       -- Mongo docker init script (create user+call `create.js`)
+create.js     -- Create all collections, indexes and such
+</code></pre>
+<h3 id="doc">Doc</h3>
+<pre><code>/development-doc    -- This documentation
+BE-API.html         -- Redoc built API documentation
+BE-API.yaml         -- OpenAPI documentation source file
+mongodb-schema.mml  -- Mongo graphical model
+mongodb-schema.txt  -- Main mongo model documentation
+</code></pre>
+<h3 id="frontend">Frontend</h3>
+<pre><code>/dist         -- The build directory
+/node_modules -- Standard npm libraries
+/public       -- React static files
+  | /locales      -- Localization json files
+      | /cs           -- Czech localization
+      | /en           -- English localization
+/src          -- Source code
+  | /Components   -- Custom reusable components for the app
+      | /Clickables   -- Components whose primary purpose is to be clicked
+      | /Displays     -- Components whose primary purpose is to display (json) data
+      | /Overlays     -- Components whose primary focus is on displaying an overlay
+  | /Pages        -- App pages to render
+      | /Admin        -- Admin pages
+  | /styles       -- Postcss style files
+  | /Util         -- Utility scripts
+  | App.tsx       -- Main application (Pages router)
+  | i18n.ts       -- Init of localization system + plugins
+  | i18next.d.ts  -- Type definitions for localization
+  | main.css      -- App wide css
+  | main.tsx      -- Topmost application config + initialization
+  | vite-env.d.ts -- Environment variables loading
+Dockerfile    -- Dockerfile for dockerizing frontend
+index.html    -- Index file for react
+package.json  -- External packages + npm scripts
+postcss.config.cjs  -- Postcss plugins
+serve.json    -- Configuration for serve (Our production frontend serving server)
+tsconfig.json -- TS configuration
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="flow.html" class="btn btn-neutral float-left" title="Flow overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="run.html" class="btn btn-neutral float-right" title="Running the app">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Xantus10/MATURITA" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="flow.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="run.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

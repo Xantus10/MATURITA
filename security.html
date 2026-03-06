@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Security - School book market</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Security";
+        var mkdocs_page_input_path = "security.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="index.html" class="icon icon-home"> School book market
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="tech.html">Technologies</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="flow.html">Flow overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="dir.html">Directory structure</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="run.html">Running the app</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="add.html">Adding features</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Security</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#authentication">Authentication</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#oauth">OAuth</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#session">Session</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#server-side">Server side</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-cookie">Session cookie</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#csrf-protection">CSRF protection</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">School book market</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html" class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Security</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Xantus10/MATURITA/edit/master/doc/development-doc/docs/security.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="security">Security</h1>
+<p>Security is important for all apps, it is an exhaustive topic with a lot to cover and this page reflects that.</p>
+<h2 id="authentication">Authentication</h2>
+<h3 id="oauth">OAuth</h3>
+<p>The only critical thing is the ID token provided, the tokens are stored in sessionStorage, which is NOT a safe location, so we need to minimize their exposure. Right after authenticating to our BE, the ID token should be DELETED.</p>
+<h3 id="session">Session</h3>
+<p>Our approach uses stateful session based authentication, meaning the server holds an in-memory db of all the active sessions and who they correspond to. This approach is further secured by a few security mechanisms.</p>
+<h4 id="server-side">Server side</h4>
+<p>The session expires server-side, meaning that the session is always time limited.
+The ssid is generated using a combination of random token (providing 32 bytes of entropy) and an uuidv4 (ensuring the ssid will be unique for all eternity)</p>
+<h4 id="session-cookie">Session cookie</h4>
+<p>The session cookie has the following attributes</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MaxAge</td>
+<td>The cookie will automatically expire after a certain durartion</td>
+</tr>
+<tr>
+<td>HttpOnly</td>
+<td>The ssid cookie cannot be accessed by client side js, resulting in protection from leaking it through XSS</td>
+</tr>
+<tr>
+<td>SameSite</td>
+<td>The SameSite is set to 'strict', securing it against CSRF attacks (There are a few exceptions however)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="csrf-protection">CSRF protection</h4>
+<p>The <code>SameSite</code> attribute already handles much, but it has certain very specific exceptions, which I am not going to risk. We use signed CSRF tokens stored in sessionStorage, submitted in headers.</p>
+<p>The CSRF token CANNOT be stored in cookie, it wouldn't serve its purpose then.</p>
+<p>The CSRF token is generated from a random string with 32 bytes of entropy. It is also tied to an ssid, meaning it cannot be reused. Finally it is signed with a server side secret key, using HMAC(sha256), meaning it cannot be manipulated or artificially crafted.</p>
+<p>Note: The sessionStorage is not a safe storage, but we don't necessarily mind exposing CSRF tokens, because they can only be used for a single ssid (the attacker doesn't know which one though + the ssid cannot be exposed in the same way the CSRF token can). In summary the amount of vulnerabilities, which would have to arise for this to be exploitable is unlikely.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="add.html" class="btn btn-neutral float-left" title="Adding features"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Xantus10/MATURITA" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="add.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
