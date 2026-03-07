@@ -1,4 +1,4 @@
 FROM nginx
 COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY ./ssl/cert.pem /etc/nginx/localhost.crt
-COPY ./ssl/key.pem /etc/nginx/localhost.key
+
+CMD ["/bin/sh", "-c", "while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"]
