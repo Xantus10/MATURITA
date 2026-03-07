@@ -153,6 +153,15 @@ class Session_Agent {
   public sessionRemove(ssid: string) {
     delete this.sessions[ssid];
   }
+
+  /**
+   * For session invalidation purposes
+   * 
+   * @param objId User._id to look for in session data
+   */
+  public invalidateSessionForUser(objId: SessionData['objId']) {
+    this.removeByObjId(objId);
+  }
 };
 
 /**

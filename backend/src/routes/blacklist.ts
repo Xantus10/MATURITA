@@ -8,6 +8,7 @@ import { checkRole, loggedin } from "../middlewares/session.js";
 import User from "../db/models/user.js";
 import Blacklist from "../db/models/blacklist.js";
 import Post from "../db/models/post.js";
+import { Session } from "../middlewares/session.js";
 
 const blackrouter = Router();
 
@@ -36,6 +37,7 @@ blackrouter.post('/', async (req: Request, res: Response) => {
   await Post.removeByCreatorId(usr._id);
   await User.findByIdAndDelete(usr._id);
   await Blacklist.create({ MicrosoftId: microsoftId, Reason: reason });
+  Session.invalidateSessionForUser(usr._id);
   return res.status(201).send({msg: `Microsoft id ${microsoftId} blacklisted`});
 });
 

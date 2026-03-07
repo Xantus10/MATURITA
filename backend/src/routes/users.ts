@@ -4,11 +4,11 @@
  */
 
 import { Router, type Request, type Response } from "express";
-import { loggedin, checkRole } from "../middlewares/session.js";
+import { loggedin, checkRole, Session } from "../middlewares/session.js";
 import { Types } from "mongoose";
 import User from "../db/models/user.js";
 import Post from "../db/models/post.js";
-import { SocialsKeys, type Socials } from "../db/interfaces/user.js";
+import { SocialsKeys } from "../db/interfaces/user.js";
 
 const usersrouter = Router();
 
@@ -55,6 +55,7 @@ usersrouter.post('/role', checkRole('admin'), async (req: Request, res: Response
   let role = req.body.role;
   if (req.session.data?.objId.equals(userId)) return res.status(403).send({msg: "You cannot change your own role!"});
   await User.setRole(userId, role);
+  Session.invalidateSessionForUser(userId);
   return res.status(200).send({msg: 'Role changed to '+role});
 });
 
@@ -70,6 +71,7 @@ usersrouter.post('/ban', checkRole('admin'), async (req: Request, res: Response)
   let days = parseInt(req.body.days);
   let objId = (req.session.data?.objId) ? req.session.data?.objId : new Types.ObjectId();
   await User.ban(userId, objId, days, reason);
+  Session.invalidateSessionForUser(userId);
   return res.status(200).send({msg: `User has been banned for ${days} days`});
 });
 
