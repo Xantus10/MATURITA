@@ -15,5 +15,5 @@ db.users.createIndex({LastLogin: 1}, {expireAfterSeconds: 38880000});
 db.posts.createIndex({RemoveAt: 1}, {expireAfterSeconds: 1});
 db.subjects.createIndex({Subject: 1}, {unique: true});
 db.blacklists.createIndex({MicrosoftId: 1}, {unique: true});
-db.messages.createIndex({SentAt: 1}, {expireAfterSeconds: 7776000});
+db.messages.createIndex({SentAt: 1}, {expireAfterSeconds: 1209600});
 
