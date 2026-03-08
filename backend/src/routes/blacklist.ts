@@ -34,6 +34,7 @@ blackrouter.post('/', async (req: Request, res: Response) => {
   let reason = req.body.reason;
   let usr = await User.findOne({ MicrosoftId: microsoftId });
   if (!usr) return res.status(404).send({msg: "User not found"});
+  if (req.session.data?.objId.equals(usr._id)) return res.status(403).send({msg: "You cannot blacklist yourself!"});
   await Post.removeByCreatorId(usr._id);
   await User.findByIdAndDelete(usr._id);
   await Blacklist.create({ MicrosoftId: microsoftId, Reason: reason });

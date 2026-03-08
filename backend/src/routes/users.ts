@@ -112,6 +112,7 @@ usersrouter.delete('/:id', checkRole('admin'), async (req: Request, res: Respons
   if (!id) return res.status(404).send({msg: 'The user does not exist'});
   if (!(/[0-9a-fA-F]{24}/.test(id))) return res.status(400).send({msg: 'The id is not valid mongodb id'});
   let oid = new Types.ObjectId(id);
+  if (req.session.data?.objId.equals(oid)) return res.status(403).send({msg: "You cannot delete yourself!"});
   await Post.removeByCreatorId(oid);
   await User.findByIdAndDelete(oid);
   return res.status(200).send({msg: 'User deleted'});
