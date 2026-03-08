@@ -15,6 +15,7 @@
     "reacttooltip": "Notify the user and chat through teams",
     "addinfo": "Add info",
     "addinfolong": "Add additional info/notes to post",
+    "addinfodisplay": "Additional info",
     "state": {
       "likenew": "Like new",
       "good": "Good",

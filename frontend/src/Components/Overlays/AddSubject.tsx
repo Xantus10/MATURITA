@@ -9,7 +9,7 @@ import { showNotification } from "../../Util/notifications";
 
 import { useTranslation } from "react-i18next";
 
-export default function AddSubject() {
+export default function AddSubject({refreshSubjectsFunction}: {refreshSubjectsFunction: ()=>void}) {
   const { t } = useTranslation('components')
   const [addBtnDisc, addBtnDiscController] = useDisclosure(false);
   const [inp, setInp] = useState("");
@@ -21,6 +21,7 @@ export default function AddSubject() {
         autoHttpResponseNotification(res);
         if (res.status === 201) {
           addBtnDiscController.close();
+          refreshSubjectsFunction();
         }
       }
     } else {

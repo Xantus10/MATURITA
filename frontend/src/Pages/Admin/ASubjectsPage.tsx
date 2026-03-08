@@ -43,7 +43,7 @@ function ASubjectsPage() {
         <Stack p={"md"}>
           {subjects.map((v) => <SubjectDisplay data={v} removeSelf={() => UIremoveSubject(v._id)} />)}
         </Stack>
-        <AddSubject />
+        <AddSubject refreshSubjectsFunction={getSubjects} />
       </Stack>
     </>
   );

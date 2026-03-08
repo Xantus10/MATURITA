@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 
 
 
-export default function AddPost({ subjects }: {subjects?: string[]} = { subjects: undefined }) {
+export default function AddPost({ subjects, refreshPostsFunction }: {subjects: string[], refreshPostsFunction: ()=>void}) {
   async function createPost() {
     let values = postForm.getValues();
     if (values.priceMax < values.priceMin || !priceRange) values.priceMax = values.priceMin;
@@ -21,6 +21,7 @@ export default function AddPost({ subjects }: {subjects?: string[]} = { subjects
       autoHttpResponseNotification(res);
       if (res.status === 201) {
         addbtncontroller.close();
+        refreshPostsFunction();
       }
     }
   }
@@ -35,12 +36,7 @@ export default function AddPost({ subjects }: {subjects?: string[]} = { subjects
   const [csubjects, setSubjects] = useState<string[]>([]);
 
   useEffect(() => {
-    if (subjects) {
-      setSubjects(subjects);
-    } else {
-      // Fetch subjects on your own
-      setSubjects(['ANJ', 'CJK', 'PSI']);
-    }
+    setSubjects(subjects);
   }, [])
 
   const postForm = useForm({

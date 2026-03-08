@@ -10,6 +10,7 @@
     "send": "Send",
     "group": "Send to group",
     "labeltitle": "Title",
-    "labelcont": "Message"
+    "labelcont": "Message",
+    "duration": "Message stays in app for 14 days"
   }
 }

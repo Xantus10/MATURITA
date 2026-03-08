@@ -15,10 +15,11 @@
     "reacttooltip": "Kontaktovat uživatele a vytvořit chat v teams",
     "addinfo": "Přidat info",
     "addinfolong": "Přidat další info/poznámky k příspěvku",
+    "addinfodisplay": "Další poznámky",
     "state": {
       "likenew": "Jako nová",
       "good": "Dobrá",
-      "worn": "Obnošená"
+      "worn": "Poškozená"
     }
   },
   "userDisplay": {

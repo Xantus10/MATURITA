@@ -10,6 +10,7 @@
     "send": "Odeslat",
     "group": "Skupina příjemců",
     "labeltitle": "Titulek",
-    "labelcont": "Zpráva"
+    "labelcont": "Zpráva",
+    "duration": "Message stays in app for 14 days"
   }
 }

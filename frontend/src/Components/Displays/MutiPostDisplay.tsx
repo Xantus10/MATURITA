@@ -3,6 +3,7 @@ import { useForm } from "@mantine/form";
 import { useState, useEffect } from "react";
 
 import PostDisplay, { PRICE_MIN, PRICE_MAX, STATES, mapStateToLangKey, type PostData, type PostDisplayProps } from "./PostDisplay";
+import AddPost from "../Overlays/AddPost";
 import type { SubjectData } from "./SubjectDisplay";
 import { get } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
@@ -19,13 +20,13 @@ import { useTranslation } from "react-i18next";
  * @returns 
  * FilterForm: Component of filter form  
  * MultiPostDisplay: Component of multi post display  
- * Subjects: State variable of all subjects  
+ * AddPost: Component to add posts  
  */
 export default function useMultiPostDisplay(filterFormProps: StackProps, multiPostDisplayProps: StackProps, postDisplayType: PostDisplayProps['view'])
   : {
   FilterForm: React.ReactNode;
   MultiPostDisplay: React.ReactNode;
-  Subjects: string[];
+  AddPost: React.ReactNode;
   }
   {
 
@@ -113,6 +114,6 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
       </Stack>
     </>),
 
-    Subjects: subjects
+    AddPost: <AddPost subjects={subjects} refreshPostsFunction={() => getPosts(0, true)} />
   };
 }

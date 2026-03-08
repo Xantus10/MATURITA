@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import Header from '../Components/Clickables/Header';
 import useMultiPostDisplay from '../Components/Displays/MutiPostDisplay';
-import AddPost from '../Components/Overlays/AddPost';
 
 import classes from '../styles/homepage.module.css';
 import defclasses from '../styles/default.module.css';
@@ -15,7 +14,7 @@ import defclasses from '../styles/default.module.css';
 export default function HomePage() {
   const { t } = useTranslation('homepage');
 
-  const { FilterForm, MultiPostDisplay, Subjects } = useMultiPostDisplay({className: classes.filters}, {className: classes.main}, 'normal');
+  const { FilterForm, MultiPostDisplay, AddPost } = useMultiPostDisplay({className: classes.filters}, {className: classes.main}, 'normal');
 
   return (
     <>
@@ -25,7 +24,7 @@ export default function HomePage() {
           {FilterForm}
           {MultiPostDisplay}
           <Stack className={classes.new} justify="end" align='center'>
-            <AddPost subjects={Subjects} />
+            {AddPost}
           </Stack>
         </Group>
       </Stack>
