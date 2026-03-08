@@ -11,7 +11,7 @@ import { post } from "../../Util/http";
 export async function LogoutFunc(msalInstance?: IMsalContext['instance']) {
   await post('/auth/logout');
   if (msalInstance) {
-    msalInstance.logoutPopup({mainWindowRedirectUri: "/"});
+    msalInstance.logout();
   }
 }
 
