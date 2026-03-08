@@ -14,6 +14,9 @@ import { useTranslation } from "react-i18next";
 
 export default function AddPost({ subjects, refreshPostsFunction }: {subjects: string[], refreshPostsFunction: ()=>void}) {
   async function createPost() {
+    if (postForm.validate().hasErrors) {
+      return
+    }
     let values = postForm.getValues();
     if (values.priceMax < values.priceMin || !priceRange) values.priceMax = values.priceMin;
     let res = await postFormV('/posts', values);
