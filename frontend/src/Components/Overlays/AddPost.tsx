@@ -58,7 +58,7 @@ export default function AddPost({ subjects, refreshPostsFunction }: {subjects: s
       title: (v) => ( (v.length > 0) ? null : t('form.err.title') ),
       remove: (v) => ( (v > 0) ? null : t('form.err.remove') ),
       subjects: (v) => ( (v.length > 0) ? null : t('form.err.subjects') ),
-      state: (v) => ( (v in STATES) ? null : t('form.err.state') ),
+      state: (v) => ( (STATES.includes(v)) ? null : t('form.err.state') ),
       years: (v) => ( (v.length > 0) ? null : t('form.err.years') ),
       priceMin: (v) => ( (v >= PRICE_MIN && v <= PRICE_MAX) ? null : t('form.err.price', { PRICE_MIN: PRICE_MIN, PRICE_MAX: PRICE_MAX }) ),
       priceMax: (v) => ( (v >= PRICE_MIN && v <= PRICE_MAX) ? null : t('form.err.price', { PRICE_MIN: PRICE_MIN, PRICE_MAX: PRICE_MAX }) ),
