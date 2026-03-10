@@ -117,7 +117,7 @@ class OAuth_Agent {
     let k = await this.getKey(kid);
     if (k === undefined) return {oid: '', family_name: '', given_name: ''};
     try {
-      let ver = jsonwebtoken.verify(idToken, k, {issuer: env.MICROSOFT_ISSUER_URL, clockTimestamp: Math.floor(new Date().getTime() / 1000), audience: env.MICROSOFT_APP_ID});
+      let ver = jsonwebtoken.verify(idToken, k, {issuer: env.MICROSOFT_ISSUER_URL, clockTimestamp: Math.floor(new Date().getTime() / 1000), audience: env.MICROSOFT_APP_ID, algorithms: ["RS256"]});
       return (ver as IdTokenPayload);
     } catch {
       return {oid: '', family_name: '', given_name: ''};
