@@ -19,7 +19,7 @@ services:
     build: ./backend
     container_name: backend
     volumes:
-      - image_data:/app/images
+      - /burza/images:/app/images
     environment:
       - DBURI=${DBURI}
       - MICROSOFT_ISSUER_URL=${MICROSOFT_ISSUER_URL}
@@ -67,4 +67,3 @@ networks:
 volumes:
   mongo_data:
   mongo_config:
-  image_data:
