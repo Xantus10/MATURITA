@@ -9,5 +9,6 @@
     "until": "Do",
     "blacklisted": "Byli jste permanentně přidáni na blacklist",
     "blacklistnotice": "Pokud si myslíte, že se jedná o chybu, prosím kontaktujte administrátora"
-  }
+  },
+  "logout": "Odhlásit"
 }
