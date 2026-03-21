@@ -59,6 +59,6 @@ _id		ObjectId
 Sender		ObjectId -> users._id			// Sender of the message
 TargetUser	ObjectId -> users._id	nullable	// Reciever user (mutually exclusive targets)
 TargetGroup	'admin' | 'all'		nullable	// Reciever group (mutually exclusive targets)
-SentAt		Date			TTL index	// When was the message sent (delete after 3 mon)
+SentAt		Date			TTL index	// When was the message sent (delete after 14 days)
 Title		string					// Title of the message
 Content		string					// Content of the message
