@@ -42,7 +42,7 @@ const themeOverride = createTheme({
     }
   },
   other: {
-    bodyoverride: 'rgba(242, 222, 202, 0.8)'
+    bodyoverride: 'rgb(242, 222, 202)'
   }
 });
 

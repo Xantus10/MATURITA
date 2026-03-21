@@ -9,5 +9,6 @@
     "until": "Until",
     "blacklisted": "You have been permanently blacklisted",
     "blacklistnotice": "If you think this is a mistake, please contact the administrator"
-  }
+  },
+  "logout": "Log out"
 }

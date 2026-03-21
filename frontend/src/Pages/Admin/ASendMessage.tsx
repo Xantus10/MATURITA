@@ -31,7 +31,7 @@ export default function ASendMessage() {
       <Stack className={classes.container}>
         <Header title={t('sendMsgPage.title')} view="admin" />
         <Stack p={"md"}>
-          <Text size='sm' mt="lg" mb="lg">{t('sendMsgPage.duration')}</Text>
+          <Text size='sm' mt="lg" mb="lg" td="underline">{t('sendMsgPage.duration')}</Text>
           <NativeSelect label={t('sendMsgPage.group')} data={GROUPS} value={groupInp} onChange={(e) => setGroupInp(e.currentTarget.value as MessageData['TargetGroup'])} />
           <TextInput label={t('sendMsgPage.labeltitle')} value={titleInp} onChange={(e) => setTitleInp(e.currentTarget.value)} />
           <Textarea label={t('sendMsgPage.labelcont')} value={contInp} onChange={(e) => setContInp(e.currentTarget.value)} />

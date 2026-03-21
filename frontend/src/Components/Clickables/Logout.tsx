@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
 import { useMsal, type IMsalContext } from "@azure/msal-react";
 import { MdLogout } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 import { post } from "../../Util/http";
 
 /**
@@ -23,10 +24,11 @@ export async function LogoutFunc(msalInstance?: IMsalContext['instance']) {
  */
 function Logout({ onClick = 'handle' }: {onClick?: 'handle' | (() => void)}) {
   const {instance} = useMsal();
+  const {t} = useTranslation("loginpage");
 
   return (
     <>
-    <Button fullWidth variant="filled" color='red.7' onClick={(onClick === 'handle') ? (() => {LogoutFunc(instance)}) : (onClick)} leftSection={<MdLogout />}>Log out</Button>
+    <Button fullWidth variant="filled" color='red.7' onClick={(onClick === 'handle') ? (() => {LogoutFunc(instance)}) : (onClick)} leftSection={<MdLogout />}>{t('logout')}</Button>
     </>
   );
 }
