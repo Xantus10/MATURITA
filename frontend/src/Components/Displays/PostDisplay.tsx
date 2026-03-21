@@ -235,7 +235,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
               <Button fullWidth>{t('postdisplay.addinfo')}</Button>
             </Menu.Item>
             <Menu.Item onClick={deleteDiscController.open}>
-              <Button fullWidth color="red" leftSection={<FaTrashAlt />}>{t('postdisplay.delete')}</Button>
+              <Button fullWidth color="red" variant="filled" leftSection={<FaTrashAlt />}>{t('postdisplay.delete')}</Button>
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
