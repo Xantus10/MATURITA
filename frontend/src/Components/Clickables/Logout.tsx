@@ -9,12 +9,10 @@ import { post } from "../../Util/http";
  * 
  * @param msalInstance Instance of msal from useMsal
  */
-export async function LogoutFunc(msalInstance?: IMsalContext['instance']) {
+export async function LogoutFunc(msalInstance: IMsalContext['instance']) {
   await post('/auth/logout');
-  if (msalInstance) {
-    msalInstance.clearCache();
-    window.location.href = "/";
-  }
+  msalInstance.clearCache();
+  window.location.href = "/";
 }
 
 /**

@@ -1,6 +1,7 @@
 import { Text, Stack, Paper, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
+import { useMsal } from "@azure/msal-react";
 import { FaTrashAlt } from "react-icons/fa";
 import Header from "../Components/Clickables/Header";
 import Popup from "../Components/Overlays/Popup";
@@ -27,11 +28,13 @@ function UserDisplayPage() {
     }
   }
 
+  const { instance } = useMsal();
+
   
 
   async function deleteAcc() {
     await deletef('/users/me');
-    await LogoutFunc();
+    await LogoutFunc(instance);
   }
 
   const { t } = useTranslation('userpages');
