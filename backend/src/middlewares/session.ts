@@ -65,7 +65,7 @@ class Session_Agent {
    * Security options to set for the session id holding cookie  
    * (NOT for user role cookie)
    */
-  public COOKIE_OPTS = {httpOnly: true, sameSite: true, maxAge: 86400000, secure: false};
+  public COOKIE_OPTS = {httpOnly: true, sameSite: true, maxAge: 86400000, secure: true};
 
   /**
    * Internal session data storage
