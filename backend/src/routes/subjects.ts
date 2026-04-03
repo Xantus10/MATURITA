@@ -25,27 +25,27 @@ subjectsrouter.get('/', async (req: Request, res: Response) => {
  * Add a new subject
  */
 subjectsrouter.post('/', checkRole('admin'), async (req: Request, res: Response) => {
-  if (!req.body.subject) return res.status(400).send({msg: "'subject' is missing"});
+  if (!req.body.subject) return res.status(400).send({msg: "subj.4.0"});
   let subject = req.body.subject;
   let exists = await Subject.findOne({ Subject: subject });
   if (!exists) {
     await Subject.insertOne({ Subject: subject });
   }
-  return res.status(201).send({msg: `Subject ${subject} added!`});
+  return res.status(201).send({msg: 'subj.2.0'});
 });
 
 /**
  * Remove a subject
  */
 subjectsrouter.delete('/', checkRole('admin'), async (req: Request, res: Response) => {
-  if (!req.body.subjectid) return res.status(400).send({msg: "'subjectid' is missing"});
+  if (!req.body.subjectid) return res.status(400).send({msg: "std.4.0"});
   let subjectid = new Types.ObjectId(req.body.subjectid as string);
   let exists = await Subject.findById(subjectid);
   if (exists) {
     let rmsub = await Subject.findByIdAndDelete(subjectid);
-    return res.status(200).send({msg: `Subject ${rmsub?.Subject} removed!`});
+    return res.status(200).send({msg: 'subj.2.1'});
   }
-  return res.status(404).send({msg: 'Subject does not exist!'});
+  return res.status(404).send({msg: 'subj.4.1'});
 });
 
 

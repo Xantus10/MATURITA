@@ -28,18 +28,18 @@ blackrouter.get('/', async (req: Request, res: Response) => {
  * Create a new blacklist record
  */
 blackrouter.post('/', async (req: Request, res: Response) => {
-  if (!req.body.microsoftId) return res.status(400).send({msg: "'microsoftId' is missing"});
+  if (!req.body.microsoftId) return res.status(400).send({msg: "bl.4.0"});
   let microsoftId = req.body.microsoftId;
-  if (!req.body.reason) return res.status(400).send({msg: "'reason' is missing"});
+  if (!req.body.reason) return res.status(400).send({msg: "bl.4.1"});
   let reason = req.body.reason;
   let usr = await User.findOne({ MicrosoftId: microsoftId });
-  if (!usr) return res.status(404).send({msg: "User not found"});
-  if (req.session.data?.objId.equals(usr._id)) return res.status(403).send({msg: "You cannot blacklist yourself!"});
+  if (!usr) return res.status(404).send({msg: "bl.4.2"});
+  if (req.session.data?.objId.equals(usr._id)) return res.status(403).send({msg: "bl.4.3"});
   await Post.removeByCreatorId(usr._id);
   await User.findByIdAndDelete(usr._id);
   await Blacklist.create({ MicrosoftId: microsoftId, Reason: reason });
   Session.invalidateSessionForUser(usr._id);
-  return res.status(201).send({msg: `Microsoft id ${microsoftId} blacklisted`});
+  return res.status(201).send({msg: 'bl.2.0'});
 });
 
 export default blackrouter;

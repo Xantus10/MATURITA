@@ -176,7 +176,7 @@ export function loggedin(req: Request, res: Response, next: NextFunction) {
   if (req.session.state !== 'valid' || !req.csrf.valid) {
     res.clearCookie(Session.COOKIE_NAME);
     res.clearCookie(Session.CONTROL_COOKIE_NAME);
-    return res.status(401).send({msg: 'Not logged in!'});
+    return res.status(401).send({msg: 'std.4.1'});
   }
   next();
 }
@@ -190,7 +190,7 @@ export function loggedin(req: Request, res: Response, next: NextFunction) {
 export function checkRole(role:  UserIF['Role']) {
   return (req: Request, res: Response, next: NextFunction) => {
     if (req.session.data?.role !== role) {
-      return res.status(403).send({msg: `You need to be ${role} to perform this operation!`});
+      return res.status(403).send({msg: 'std.4.3'});
     }
     next();
   }

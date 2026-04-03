@@ -34,26 +34,26 @@ messagesrouter.post('/react', async (req: Request, res: Response) => {
 
   let target = req.body.target as string;
   if (!target) {
-    return res.status(400).send({msg: 'A required field is missing \'target\''})
+    return res.status(400).send({msg: 'msg.4.0'})
   }
   let targetId = new Types.ObjectId(target);
 
   let post = req.body.post as string;
   if (!post) {
-    return res.status(400).send({msg: 'A required field is missing \'post\''})
+    return res.status(400).send({msg: 'msg.4.1'})
   }
 
   let senderId = new Types.ObjectId(req.session.data?.objId);
 
   if (senderId.equals(targetId)) {
-    return res.status(403).send({msg: 'Cannot react to own posts!'})
+    return res.status(403).send({msg: 'msg.4.2'})
   }
 
   let name = await User.findById(senderId);
 
   await Message.create({ Sender: senderId, TargetUser: targetId, Title: 'CODE:REACT', Content: `${name?.Name.First}§${name?.Name.Last}§${post}` });
 
-  return res.status(201).send({msg: 'User has been notified!'});
+  return res.status(201).send({msg: 'msg.2.0'});
 });
 
 /**
@@ -63,22 +63,22 @@ messagesrouter.post('/group', checkRole('admin'), async (req: Request, res: Resp
 
   let target = req.body.target as string;
   if (!target) {
-    return res.status(400).send({msg: 'A required field is missing \'target\''})
+    return res.status(400).send({msg: 'msg.4.0'})
   }
   let title = req.body.title as string;
   if (!title) {
-    return res.status(400).send({msg: 'A required field is missing \'title\''})
+    return res.status(400).send({msg: 'msg.4.3'})
   }
   let cont = req.body.content as string;
   if (!cont) {
-    return res.status(400).send({msg: 'A required field is missing \'content\''})
+    return res.status(400).send({msg: 'msg.4.4'})
   }
 
   let senderId = new Types.ObjectId(req.session.data?.objId);
 
   await Message.create({ Sender: senderId, TargetGroup: target, Title: title, Content: cont });
 
-  return res.status(201).send({msg: 'Message sent!'});
+  return res.status(201).send({msg: 'msg.2.1'});
 });
 
 

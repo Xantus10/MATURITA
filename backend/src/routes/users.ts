@@ -42,37 +42,37 @@ usersrouter.delete('/me', async (req: Request, res: Response) => {
   let id = new Types.ObjectId(req.session.data?.objId);
   await Post.removeByCreatorId(id);
   await User.findByIdAndDelete(id);
-  return res.status(200).send({msg: 'OK'});
+  return res.status(200).send({msg: 'std.2.0'});
 });
 
 /**
  * Change a users role
  */
 usersrouter.post('/role', checkRole('admin'), async (req: Request, res: Response) => {
-  if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
+  if (!req.body.userId) return res.status(400).send({msg: "user.4.0"});
   let userId = new Types.ObjectId(req.body.userId as string);
-  if (!req.body.role) return res.status(400).send({msg: "'role' is missing"});
+  if (!req.body.role) return res.status(400).send({msg: "user.4.1"});
   let role = req.body.role;
-  if (req.session.data?.objId.equals(userId)) return res.status(403).send({msg: "You cannot change your own role!"});
+  if (req.session.data?.objId.equals(userId)) return res.status(403).send({msg: "user.4.2"});
   await User.setRole(userId, role);
   Session.invalidateSessionForUser(userId);
-  return res.status(200).send({msg: 'Role changed to '+role});
+  return res.status(200).send({msg: 'user.2.0'});
 });
 
 /**
  * Ban a user
  */
 usersrouter.post('/ban', checkRole('admin'), async (req: Request, res: Response) => {
-  if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
+  if (!req.body.userId) return res.status(400).send({msg: "user.4.0"});
   let userId = new Types.ObjectId(req.body.userId as string);
-  if (!req.body.reason) return res.status(400).send({msg: "'reason' is missing"});
+  if (!req.body.reason) return res.status(400).send({msg: "std.4.0"});
   let reason = req.body.reason;
-  if (!req.body.days) return res.status(400).send({msg: "'days' is missing"});
+  if (!req.body.days) return res.status(400).send({msg: "std.4.0"});
   let days = parseInt(req.body.days);
   let objId = (req.session.data?.objId) ? req.session.data?.objId : new Types.ObjectId();
   await User.ban(userId, objId, days, reason);
   Session.invalidateSessionForUser(userId);
-  return res.status(200).send({msg: `User has been banned for ${days} days`});
+  return res.status(200).send({msg: 'user.2.1'});
 });
 
 /**
@@ -85,7 +85,7 @@ usersrouter.post('/socials', async (req: Request, res: Response) => {
   });
   let id = new Types.ObjectId(req.session.data?.objId);
   await User.findByIdAndUpdate(id, {$set: socials});
-  return res.status(200).send({msg: 'Updated'});
+  return res.status(200).send({msg: 'user.2.2'});
 })
 
 
@@ -97,10 +97,10 @@ usersrouter.post('/socials', async (req: Request, res: Response) => {
  */
 usersrouter.get('/:id', async (req: Request, res: Response) => {
   let id = req.params.id;
-  if (!id) return res.status(404).send({msg: 'The user does not exist'});
-  if (!(/[0-9a-fA-F]{24}/.test(id))) return res.status(400).send({msg: 'The id is not valid mongodb id'});
+  if (!id) return res.status(404).send({msg: 'user.4.3'});
+  if (!(/[0-9a-fA-F]{24}/.test(id))) return res.status(400).send({msg: 'user.4.4'});
   let doc = await User.getUserData(new Types.ObjectId(id));
-  if (!doc) return res.status(404).send({msg: 'The user does not exist'});
+  if (!doc) return res.status(404).send({msg: 'user.4.3'});
   return res.status(200).send(doc);
 });
 
@@ -109,13 +109,13 @@ usersrouter.get('/:id', async (req: Request, res: Response) => {
  */
 usersrouter.delete('/:id', checkRole('admin'), async (req: Request, res: Response) => {
   let id = req.params.id;
-  if (!id) return res.status(404).send({msg: 'The user does not exist'});
-  if (!(/[0-9a-fA-F]{24}/.test(id))) return res.status(400).send({msg: 'The id is not valid mongodb id'});
+  if (!id) return res.status(404).send({msg: 'user.4.3'});
+  if (!(/[0-9a-fA-F]{24}/.test(id))) return res.status(400).send({msg: 'user.4.4'});
   let oid = new Types.ObjectId(id);
-  if (req.session.data?.objId.equals(oid)) return res.status(403).send({msg: "You cannot delete yourself!"});
+  if (req.session.data?.objId.equals(oid)) return res.status(403).send({msg: "user.4.5"});
   await Post.removeByCreatorId(oid);
   await User.findByIdAndDelete(oid);
-  return res.status(200).send({msg: 'User deleted'});
+  return res.status(200).send({msg: 'user.2.3'});
 });
 
 export default usersrouter;

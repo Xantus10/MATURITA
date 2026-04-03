@@ -21,7 +21,7 @@ authrouter.post('/idtoken', async (req: Request, res: Response) => {
   // Validate Id token
   let idtoken = await OAuth.validateIdToken(req.body.idtoken);
   if (idtoken.oid === '') {
-    return res.status(401).send({msg: "Invalid Id Token!"});
+    return res.status(401).send({msg: "auth.4.1"});
   }
 
   // Check blacklist
@@ -51,7 +51,7 @@ authrouter.post('/idtoken', async (req: Request, res: Response) => {
   }
   let ssid = Session.sessionCreate({objId: objId, role: role});
   let csrf = generateCsrf(ssid);
-  return res.header(CSRF_SET_HEADER_NAME, csrf).cookie(Session.COOKIE_NAME, ssid, Session.COOKIE_OPTS).cookie(Session.CONTROL_COOKIE_NAME, role, {maxAge: Session.COOKIE_OPTS.maxAge}).status(200).send({msg: "Done!"});
+  return res.header(CSRF_SET_HEADER_NAME, csrf).cookie(Session.COOKIE_NAME, ssid, Session.COOKIE_OPTS).cookie(Session.CONTROL_COOKIE_NAME, role, {maxAge: Session.COOKIE_OPTS.maxAge}).status(200).send({msg: "std.2.0"});
 });
 
 /**
@@ -61,7 +61,7 @@ authrouter.post('/logout', async (req: Request, res: Response) => {
   if (req.session.id) Session.sessionRemove(req.session.id);
   res.clearCookie(Session.COOKIE_NAME);
   res.clearCookie(Session.CONTROL_COOKIE_NAME);
-  return res.status(200).send({msg: "Logged out"});
+  return res.status(200).send({msg: "auth.2.4"});
 });
 
 

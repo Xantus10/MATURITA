@@ -23,15 +23,15 @@ postsrouter.use(loggedin);
  */
 postsrouter.get('/', async (req: Request, res: Response) => {
   if (!req.query.begin) {
-    return res.status(400).send({msg: "'begin' parameter missing"});
+    return res.status(400).send({msg: "post.4.1"});
   }
   if (!req.query.orderBy) {
-    return res.status(400).send({msg: "'orderBy' parameter missing"});
+    return res.status(400).send({msg: "post.4.2"});
   }
   let begin = parseInt(req.query.begin as string);
   let {orderBy, filterSubjects, filterYears, filterState, priceMin, priceMax} = req.query;
   if (!(filterState && filterSubjects && filterYears)) {
-    return res.status(400).send({msg: "'filter*' parameter/s missing"});
+    return res.status(400).send({msg: "post.4.6"});
   }
 
   let dbyears = parseArray<Number>(filterYears as string[], parseInt);
@@ -88,14 +88,14 @@ const multerMiddleware = multer({
 postsrouter.post('/', checkRole('user'), multerMiddleware.array('pictures', 3), async (req: Request, res: Response) => {
   let {title, remove, subjects, state, years, priceMin, priceMax} = req.body;
   if (!(title && remove && subjects && state && years && priceMin)) {
-    return res.status(400).send({msg: "Required parameter/s missing"});
+    return res.status(400).send({msg: "std.4.0"});
   }
   let min = parseInt(priceMin);
   let max = (priceMax) ? parseInt(priceMax) : min;
   let yearsArr = parseArray(years as string[], parseInt);
   let photos = (req.files) ? (req.files as Express.Multer.File[]).map(file => file.filename) : [];
   await Post.create({ CreatorId: req.session.data?.objId, Title: title, RemoveAt: parseInt(remove), Subjects: subjects, State: state, Years: yearsArr, Price: { Min: min, Max: max }, Photos: photos });
-  return res.status(201).send({msg: "Post created"});
+  return res.status(201).send({msg: "post.2.0"});
 });
 
 /**
@@ -103,18 +103,18 @@ postsrouter.post('/', checkRole('user'), multerMiddleware.array('pictures', 3), 
  */
 postsrouter.delete('/', async (req: Request, res: Response) => {
   if (!req.body.postId) {
-    return res.status(400).send({msg: "'postId' parameter/s missing"});
+    return res.status(400).send({msg: "post.4.2"});
   }
   let postId = new Types.ObjectId(req.body.postId as string);
   let post = await Post.findById(postId);
   if (!post) {
-    return res.status(404).send({msg: "Post does not exist!"});
+    return res.status(404).send({msg: "post.4.4"});
   }
   if (!(req.session.data?.role === 'admin' || req.session.data?.objId.equals(post.CreatorId))) {
-    return res.status(403).send({msg: "Unauthorized (not admin nor creator)!"});
+    return res.status(403).send({msg: "std.4.7"});
   }
   await post.deleteOne();
-  return res.status(200).send({msg: 'Post deleted'});
+  return res.status(200).send({msg: 'post.2.1'});
 });
 
 /**
@@ -122,25 +122,25 @@ postsrouter.delete('/', async (req: Request, res: Response) => {
  */
 postsrouter.post('/extend', checkRole('user'), async (req: Request, res: Response) => {
   if (!req.body.postId) {
-    return res.status(400).send({msg: "'postId' parameter/s missing"});
+    return res.status(400).send({msg: "post.4.2"});
   }
   if (!req.body.days) {
-    return res.status(400).send({msg: "'days' parameter/s missing"});
+    return res.status(400).send({msg: "post.4.3"});
   }
   let postId = new Types.ObjectId(req.body.postId as string);
   let days = parseInt(req.body.days);
   if (days > 30) {
-    return res.status(400).send({msg: "You cannot extend more than 30 days"});
+    return res.status(400).send({msg: "post.4.5"});
   }
   let post = await Post.findById(postId);
   if (!post) {
-    return res.status(404).send({msg: "Post does not exist!"});
+    return res.status(404).send({msg: "post.4.4"});
   }
   if (!(post.CreatorId.equals(req.session.data?.objId))) {
-    return res.status(403).send({msg: "Unauthorized (not creator)!"});
+    return res.status(403).send({msg: "std.4.6"});
   }
   await Post.extendRemoveAt(postId, new Date(post.RemoveAt.getTime() + days*1000*86400));
-  return res.status(200).send({msg: `Posts lifetime has been extended by ${days} days`});
+  return res.status(200).send({msg: 'post.2.3'});
 });
 
 /**
@@ -148,7 +148,7 @@ postsrouter.post('/extend', checkRole('user'), async (req: Request, res: Respons
  */
 postsrouter.get('/user', async (req: Request, res: Response) => {
   if (req.query.userId && req.session.data?.role !== "admin") {
-    return res.status(403).send({msg: "Unauthorized (not admin)!"});
+    return res.status(403).send({msg: "std.4.5"});
   }
   let userId = (req.query.userId) ? new Types.ObjectId(req.query.userId as string) : req.session.data?.objId;
   let posts = await Post.find({ CreatorId: userId });
@@ -159,18 +159,18 @@ postsrouter.get('/user', async (req: Request, res: Response) => {
  * Delete all posts for a user
  */
 postsrouter.delete('/user', checkRole('admin'), async (req: Request, res: Response) => {
-  if (!req.body.userId) return res.status(400).send({msg: "'userId' is missing"});
+  if (!req.body.userId) return res.status(400).send({msg: "std.4.0"});
   let userId = new Types.ObjectId(req.body.userId as string);
   await Post.removeByCreatorId(userId);
-  return res.status(200).send({msg: "Posts deleted"});
+  return res.status(200).send({msg: "post.2.1"});
 });
 
 /**
  * Add additional info to post
  */
 postsrouter.post('/addinfo', async (req: Request, res: Response) => {
-  if (!req.body.postId) return res.status(400).send({msg: "'postId' is missing"});
-  if (!req.body.msg) return res.status(400).send({msg: "'msg' is missing"});
+  if (!req.body.postId) return res.status(400).send({msg: "post.4.2"});
+  if (!req.body.msg) return res.status(400).send({msg: "std.4.0"});
 
   let postId = new Types.ObjectId(req.body.postId as string);
   let msg = req.body.msg;
@@ -178,15 +178,15 @@ postsrouter.post('/addinfo', async (req: Request, res: Response) => {
   let post = await Post.findById(postId);
 
   if (!post) {
-    return res.status(404).send({msg: "Post does not exist!"});
+    return res.status(404).send({msg: "post.4.4"});
   }
   if (!(post.CreatorId.equals(req.session.data?.objId))) {
-    return res.status(403).send({msg: "Unauthorized (not creator)!"});
+    return res.status(403).send({msg: "std.4.6"});
   }
 
   await Post.addInfo(postId, msg);
 
-  return res.status(201).send({msg: "OK"});
+  return res.status(201).send({msg: "std.2.0"});
 });
 
 export default postsrouter;
