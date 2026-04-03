@@ -33,7 +33,8 @@
       "2": "'postId' parameter/s missing",
       "3": "'days' parameter/s missing",
       "4": "Post does not exist",
-      "5": "You cannot extend more than 30 days"
+      "5": "You cannot extend more than 30 days",
+      "6": "'filter*' parameter/s missing"
     }
   },
   "user": {
