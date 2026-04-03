@@ -5,10 +5,6 @@ Security is important for all apps, it is an exhaustive topic with a lot to cove
 
 ## Authentication
 
-### OAuth
-
-The only critical thing is the ID token provided, the tokens are stored in sessionStorage, which is NOT a safe location, so we need to minimize their exposure. Right after authenticating to our BE, the ID token should be DELETED.
-
 ### Session
 
 Our approach uses stateful session based authentication, meaning the server holds an in-memory db of all the active sessions and who they correspond to. This approach is further secured by a few security mechanisms.
