@@ -91,12 +91,13 @@ function UserDisplay({data, removeSelf}: UserDisplayProps) {
   const [banHistory, banHistoryController] = useDisclosure(false);
   const [changeRoleDisc, changeRoleDiscController] = useDisclosure(false);
 
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation('components');
 
   async function DeleteUser() {
     let res = await deletef(`/users/${_id}`);
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
       if (res.status === 200) {
         removeSelf();
       }
@@ -105,13 +106,13 @@ function UserDisplay({data, removeSelf}: UserDisplayProps) {
 
   async function DeleteUserPosts() {
     let res = await deletef('/posts/user', {userId: _id});
-    if (res) autoHttpResponseNotification(res, true);
+    if (res) autoHttpResponseNotification(res, true, responsecodeTranslation.t);
   }
 
   async function ChangeUserRole(role: 'admin' | 'user') {
     let res = await post('/users/role', {userId: _id, role: role});
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
       if (res.status === 200) {
         setLocalData((prevLocalData) => ({...prevLocalData, Role: inverseRole}));
       }
@@ -133,7 +134,7 @@ function UserDisplay({data, removeSelf}: UserDisplayProps) {
   async function BanUser({days, reason}: BanUserArg) {
     let res = await post('/users/ban', {userId: _id, days: days, reason: reason});
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
       if (res.status === 200) {
         setLocalData((prevLocalData) => ({...prevLocalData, Bans: [...prevLocalData.Bans, {CreatedAt: new Date(), Until: new Date(Date.now() + days*1000*86400), Reason: reason, IssuedBy: ""}]}));
       }
@@ -143,7 +144,7 @@ function UserDisplay({data, removeSelf}: UserDisplayProps) {
   async function BlacklistUser(reason: string) {
     let res = await post('/blacklist', {microsoftId: MicrosoftId, reason: reason});
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
       if (res.status === 201) {
         removeSelf();
       }

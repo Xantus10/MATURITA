@@ -146,6 +146,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
 
   const [creator, setCreator] = useState<PublicUserData>();
 
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation();
 
   async function teamsChat() {
@@ -192,7 +193,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
     async function ExtendPostLifespan(days: number) {
       let res = await post('/posts/extend', {postId: _id, days: days});
       if (res) {
-        autoHttpResponseNotification(res, true);
+        autoHttpResponseNotification(res, true, responsecodeTranslation.t);
         if (res.status === 200) {
           setLocalData((prevLocalData) => ({...prevLocalData, RemoveAt: new Date(prevLocalData.RemoveAt.getTime() + days*1000*86400)}))
         }
@@ -202,7 +203,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
     async function DeletePost() {
       let res = await deletef('/posts', {postId: _id});
       if (res) {
-        autoHttpResponseNotification(res, true);
+        autoHttpResponseNotification(res, true, responsecodeTranslation.t);
         if (res.status === 200) {
           removeSelf();
         }
@@ -212,7 +213,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
     async function AddInfo(msg: string) {
       let res = await post('/posts/addinfo', {postId: _id, msg: msg});
       if (res) {
-        autoHttpResponseNotification(res, true);
+        autoHttpResponseNotification(res, true, responsecodeTranslation.t);
         if (res.status === 201) {
           setLocalData((prevLocalData) => ({...prevLocalData, AddInfo: [...prevLocalData.AddInfo, msg]}));
         }
@@ -254,7 +255,7 @@ function PostDisplay({data, view, removeSelf}: PostDisplayProps) {
     async function DeletePost() {
       let res = await deletef('/posts', {postId: _id});
       if (res) {
-        autoHttpResponseNotification(res, true);
+        autoHttpResponseNotification(res, true, responsecodeTranslation.t);
         if (res.status === 200) {
           removeSelf();
         }

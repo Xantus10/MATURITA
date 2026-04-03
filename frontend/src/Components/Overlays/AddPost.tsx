@@ -21,7 +21,7 @@ export default function AddPost({ subjects, refreshPostsFunction }: {subjects: s
     if (values.priceMax < values.priceMin || !priceRange) values.priceMax = values.priceMin;
     let res = await postFormV('/posts', values);
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
       if (res.status === 201) {
         addbtncontroller.close();
         refreshPostsFunction();
@@ -29,6 +29,7 @@ export default function AddPost({ subjects, refreshPostsFunction }: {subjects: s
     }
   }
 
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation('homepage');
   const comT = useTranslation();
 

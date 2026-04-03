@@ -16,10 +16,11 @@ export default function ASendMessage() {
   async function sendMessage() {
     let res = await post('/messages/group', {target: groupInp, title: titleInp, content: contInp});
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
     }
   }
 
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation('admin');
 
   const [groupInp, setGroupInp] = useState<MessageData['TargetGroup']>('all');

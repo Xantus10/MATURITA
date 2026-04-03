@@ -10,6 +10,7 @@ import { showNotification } from "../../Util/notifications";
 import { useTranslation } from "react-i18next";
 
 export default function AddSubject({refreshSubjectsFunction}: {refreshSubjectsFunction: ()=>void}) {
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation('components')
   const [addBtnDisc, addBtnDiscController] = useDisclosure(false);
   const [inp, setInp] = useState("");
@@ -18,7 +19,7 @@ export default function AddSubject({refreshSubjectsFunction}: {refreshSubjectsFu
     if (inp.length === 3) {
       let res = await post('/subjects', {subject: inp});
       if (res) {
-        autoHttpResponseNotification(res);
+        autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
         if (res.status === 201) {
           addBtnDiscController.close();
           refreshSubjectsFunction();

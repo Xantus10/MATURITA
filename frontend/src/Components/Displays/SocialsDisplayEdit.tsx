@@ -4,6 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { post } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
 import { SocialsKeys, type Socials } from "../../Util/cache";
+import { useTranslation } from "react-i18next";
 
 import classes from '../../styles/default.module.css'
 
@@ -21,6 +22,7 @@ function SocialsDisplayEdit({ data }: SocialsDisplayEditProps) {
   const [tempEdit, setTempEdit] = useState<string>("");
   const [localData, setLocalData] = useState(data);
   const [discs, setDiscs] = useState<{[K in keyof Socials]: boolean}>(Object.fromEntries(SocialsKeys.map((val) => {return [val, false]})) as {[K in keyof Socials]: boolean});
+  const responsecodeTranslation = useTranslation('responsecodes')
 
   function setDisc(at: keyof Socials, val: boolean) {
     setDiscs(prevDiscs => ({...prevDiscs, [at]: val}))
@@ -32,7 +34,7 @@ function SocialsDisplayEdit({ data }: SocialsDisplayEditProps) {
   async function editSocial(which: keyof Socials) {
     let res = await post('/users/socials', { [which]: tempEdit });
     if (res) {
-      autoHttpResponseNotification(res, true);
+      autoHttpResponseNotification(res, true, responsecodeTranslation.t);
       if (res.status === 200) {
         setLocalData((prevLocalData) => ({...prevLocalData, [which]: tempEdit}))
         setDisc(which, false);

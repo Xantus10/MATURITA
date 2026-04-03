@@ -1,5 +1,6 @@
 import { notifications } from "@mantine/notifications";
 import { FaExclamationTriangle, FaInfoCircle, FaCheckCircle } from "react-icons/fa";
+import type { TFunction } from "i18next";
 
 /**
  * Props for showing notification
@@ -42,8 +43,9 @@ export function showNotification({ title, message="", icon='OK' }: showNotificat
  * 
  * @param res Fetch Response
  * @param with200 Generate a notification for 200 response?
+ * @param t i18next translate function with namespace of 'responsecodes'
  */
-export async function autoHttpResponseNotification(res: Response, with200: boolean=false) {
+export async function autoHttpResponseNotification(res: Response, with200: boolean=false, t: TFunction<'responsecodes'>) {
   let status
   let msg;
   if (res.status) {
@@ -56,6 +58,6 @@ export async function autoHttpResponseNotification(res: Response, with200: boole
   }
   if (status === 200 && !with200) return;
   console.log(status);
-  let props: showNotificationProps = {title: msg, icon: ([200, 201].includes(status)) ? 'OK' : 'ERR'};
+  let props: showNotificationProps = {title: t(msg), icon: ([200, 201].includes(status)) ? 'OK' : 'ERR'};
   showNotification(props);
 }

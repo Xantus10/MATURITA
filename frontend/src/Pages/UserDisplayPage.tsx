@@ -23,7 +23,7 @@ function UserDisplayPage() {
   async function getUserData() {
     let res = await get('/users/me');
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
       if (res.status === 200) setUserData(await res.json());
     }
   }
@@ -37,6 +37,7 @@ function UserDisplayPage() {
     await LogoutFunc(instance);
   }
 
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation('userpages');
 
   const [userData, setUserData] = useState<PublicUserData>();

@@ -42,13 +42,14 @@ export interface SubjectDisplayProps {
 };
 
 function SubjectDisplay({data, removeSelf}: SubjectDisplayProps) {
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation('components');
   const [deleteDisc, deleteDiscController] = useDisclosure(false);
 
   async function deleteSubject() {
     let res = await deletef('/subjects', {subjectid: data._id});
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
       if (res.status === 200) {
         removeSelf();
       }

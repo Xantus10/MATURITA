@@ -1,0 +1,89 @@
+{
+  "std": {
+    "2": {
+      "0": "OK"
+    },
+    "4": {
+      "0": "Chybí povinné pole!",
+      "1": "Nejste přihlášen!",
+      "3": "Neautorizováno!",
+      "4": "Nenalezeno!",
+      "5": "Neautorizováno (nejste admin)!",
+      "6": "Neautorizováno (nejste autor)!",
+      "7": "Neautorizováno (nejste admin ani autor)!"
+    }
+  },
+  "auth": {
+    "2": {
+      "4": "Odhlášeno"
+    },
+    "4": {
+      "1": "Neplatný Id Token!"
+    }
+  },
+  "post": {
+    "2": {
+      "0": "Příspěvek vytvořen",
+      "1": "Příspěvek smazán",
+      "3": "Trvanlivost příspěvku byla prodloužena"
+    },
+    "4": {
+      "0": "'begin' parametr chybí",
+      "1": "'orderBy' parametr chybí",
+      "2": "'postId' parametr/y chybí",
+      "3": "'days' parametr/y chybí",
+      "4": "Příspěvek neexistuje",
+      "5": "Nelze prodloužit o více než 30 dní"
+    }
+  },
+  "user": {
+    "2": {
+      "0": "Role změněna",
+      "1": "Uživatel zakázán",
+      "2": "Aktualizováno",
+      "3": "Uživatel smazán"
+    },
+    "4": {
+      "0": "'userId' parametr chybí",
+      "1": "'role' parametr chybí",
+      "2": "Nemůžete změnit svou vlastní roli",
+      "3": "Uživatel neexistuje",
+      "4": "Id není platný formát mongodb",
+      "5": "Nemůžete smazat sami sebe"
+    }
+  },
+  "bl": {
+    "2": {
+      "0": "MicrosoftId přidán na blacklist"
+    },
+    "4": {
+      "0": "'microsoftId' parametr chybí",
+      "1": "'reason' parametr chybí",
+      "2": "Uživatel nenalezen",
+      "3": "Nemůžete dát na blacklist sami sebe"
+    }
+  },
+  "subj": {
+    "2": {
+      "0": "Předmět přidán!",
+      "1": "Předmět odebrán!"
+    },
+    "4": {
+      "0": "'subject' parametr chybí",
+      "1": "Předmět neexistuje"
+    }
+  },
+  "msg": {
+    "2": {
+      "0": "Uživatel byl upozorněn!",
+      "1": "Zpráva odeslána!"
+    },
+    "4": {
+      "0": "'target' parametr chybí",
+      "1": "'post' parametr chybí",
+      "2": "Nelze reagovat na vlastní příspěvky",
+      "3": "'title' parametr chybí",
+      "4": "'content' parametr chybí"
+    }
+  }
+}

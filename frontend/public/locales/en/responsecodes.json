@@ -1,0 +1,89 @@
+{
+  "std": {
+    "2": {
+      "0": "OK"
+    },
+    "4": {
+      "0": "Required field is missing!",
+      "1": "Not logged in!",
+      "3": "Unauthorized!",
+      "4": "Not Found!",
+      "5": "Unauthorized (not admin)!",
+      "6": "Unauthorized (not creator)!",
+      "7": "Unauthorized (not admin or creator)!"
+    }
+  },
+  "auth": {
+    "2": {
+      "4": "Logged out"
+    },
+    "4": {
+      "1": "Invalid Id Token!"
+    }
+  },
+  "post": {
+    "2": {
+      "0": "Post created",
+      "1": "Post deleted",
+      "3": "Post's lifetime has been extended"
+    },
+    "4": {
+      "0": "'begin' parameter missing",
+      "1": "'orderBy' parameter missing",
+      "2": "'postId' parameter/s missing",
+      "3": "'days' parameter/s missing",
+      "4": "Post does not exist",
+      "5": "You cannot extend more than 30 days"
+    }
+  },
+  "user": {
+    "2": {
+      "0": "Role changed",
+      "1": "User banned",
+      "2": "Updated",
+      "3": "User deleted"
+    },
+    "4": {
+      "0": "'userId' parameter missing",
+      "1": "'role' parameter missing",
+      "2": "You cannot change your own role",
+      "3": "The user does not exist",
+      "4": "The id is not valid mongodb format",
+      "5": "You cannot delete yourself"
+    }
+  },
+  "bl": {
+    "2": {
+      "0": "MicrosoftId blacklisted"
+    },
+    "4": {
+      "0": "'microsoftId' parameter missing",
+      "1": "'reason' parameter missing",
+      "2": "User not found",
+      "3": "You cannot blacklist yourself"
+    }
+  },
+  "subj": {
+    "2": {
+      "0": "Subject added!",
+      "1": "Subject removed!"
+    },
+    "4": {
+      "0": "'subject' parameter missing",
+      "1": "Subject does not exist"
+    }
+  },
+  "msg": {
+    "2": {
+      "0": "User has been notified!",
+      "1": "Message sent!"
+    },
+    "4": {
+      "0": "'target' parameter missing",
+      "1": "'post' parameter missing",
+      "2": "Cannot react to own posts",
+      "3": "'title' parameter missing",
+      "4": "'content' parameter missing"
+    }
+  }
+}

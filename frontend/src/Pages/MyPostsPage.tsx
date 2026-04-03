@@ -17,11 +17,12 @@ import { useTranslation } from 'react-i18next';
 function MyPostsPage() {
   async function getUserPosts() {
     let res = await get('/posts/user');
-    if (res) autoHttpResponseNotification(res);
+    if (res) autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
     let js = await res?.json();
     setPosts(typedates(js.posts, ['CreatedAt', 'RemoveAt']));
   }
 
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation('userpages');
 
   const [posts, setPosts] = useState<PostData[]>([]);

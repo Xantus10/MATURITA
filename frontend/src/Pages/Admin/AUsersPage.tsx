@@ -16,11 +16,12 @@ export default function AUsersPage() {
   async function getUserList(afirst: string, alast: string, alimit: number) {
     let res = await get('/users/list', {first: afirst, last: alast, limit: alimit});
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
       setUsers((await res.json()).users);
     }
   }
 
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation('admin');
 
   const [users, setUsers] = useState<UserData[]>([]);

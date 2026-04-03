@@ -17,11 +17,12 @@ export default function ABlacklistPage() {
   async function getBlacklists() {
     let res = await get('/blacklist');
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
       if (res.status === 200) setBlacklists(typedates((await res.json()).blists, ['CreatedAt']));
     }
   }
 
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation();
 
   const [blacklists, setBlacklists] = useState<BlacklistData[]>([]);

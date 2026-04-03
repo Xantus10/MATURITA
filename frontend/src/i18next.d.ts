@@ -10,6 +10,7 @@ import homepage from "../public/locales/en/homepage.json"
 import loginpage from "../public/locales/en/loginpage.json"
 import userpages from "../public/locales/en/userpages.json"
 import admin from "../public/locales/en/admin.json"
+import responsecodes from "../public/locales/en/responsecodes.json"
 
 declare module "i18next" {
   interface CustomTypeOptions {
@@ -21,6 +22,7 @@ declare module "i18next" {
       loginpage: typeof loginpage;
       userpages: typeof userpages;
       admin: typeof admin;
+      responsecodes: typeof responsecodes;
     };
   }
 }

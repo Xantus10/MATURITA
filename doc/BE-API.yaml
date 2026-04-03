@@ -1386,8 +1386,8 @@ components:
       type: object
       properties:
         msg:
-          type: string
-          description: A message (Error message for 4xx codes, info for 2xx codes)
+          type: integer
+          description: A message code to display through i18next
     bannedmsg:
       type: object
       properties:

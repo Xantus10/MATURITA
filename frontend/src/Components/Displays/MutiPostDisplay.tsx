@@ -48,11 +48,12 @@ export default function useMultiPostDisplay(filterFormProps: StackProps, multiPo
     if (values.priceMax < values.priceMin) values.priceMax = values.priceMin;
     let res = await get('/posts', {begin: begin, orderBy: orderBy, filterState: values.state, filterYears: values.years, filterSubjects: values.subjects, priceMin: values.priceMin, priceMax: values.priceMax});
     if (res) {
-      autoHttpResponseNotification(res);
+      autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
       setPosts(typedates((overwrite) ? ((await res.json()).posts) : (posts.concat((await res.json()).posts)), ['CreatedAt', 'RemoveAt']));
     }
   }
 
+  const responsecodeTranslation = useTranslation('responsecodes')
   const { t } = useTranslation('homepage');
   const comT = useTranslation();
 
