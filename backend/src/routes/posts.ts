@@ -92,7 +92,7 @@ const multerErrHandling = (req: Request, res: Response, next: NextFunction) => {
 /**
  * Create a new post
  */
-postsrouter.post('/', checkRole('user'), multerMiddleware.array('pictures', 3), async (req: Request, res: Response) => {
+postsrouter.post('/', checkRole('user'), multerErrHandling, async (req: Request, res: Response) => {
   let {title, remove, subjects, state, years, priceMin, priceMax} = req.body;
   if (!(title && remove && subjects && state && years && priceMin)) {
     return res.status(400).send({msg: "std.4.0"});
