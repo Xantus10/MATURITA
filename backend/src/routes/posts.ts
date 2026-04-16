@@ -82,8 +82,8 @@ const multerMiddleware = multer({
   limits: { fileSize: 10 * 1024 * 1024 }
 });
 
-const multerErrHandling = (req: Request, res: Response, next: NextFunction) => {
-  multerMiddleware.array('pictures', 3)(req, res, (err) => {
+const multerErrHandling = async (req: Request, res: Response, next: NextFunction) => {
+  await multerMiddleware.array('pictures', 3)(req, res, (err) => {
     if (err) return res.status(400).send({msg: "post.4.7"});
     next();
   });
