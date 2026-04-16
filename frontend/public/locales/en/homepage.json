@@ -22,7 +22,7 @@
       "states": "Enter at least 1 state"
     },
     "desc": {
-      "photos": "Not necessary, but encouraged, max. 3"
+      "photos": "Not necessary, but encouraged, max. 3 photos, 10 MB"
     }
   },
   "checkbox": "Use price range instead of price",

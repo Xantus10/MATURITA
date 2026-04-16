@@ -3,7 +3,7 @@
  * Purpose: Any posts related routes
  */
 
-import { Router, type Request, type Response } from "express";
+import { Router, type NextFunction, type Request, type Response } from "express";
 import { checkRole, loggedin } from "../middlewares/session.js";
 import { Types } from "mongoose";
 import Post, { MIN_RANGE, MAX_RANGE } from "../db/models/post.js";
@@ -79,8 +79,15 @@ const multerMiddleware = multer({
     }
   },
 
-  limits: { fileSize: 5 * 1024 * 1024 }
+  limits: { fileSize: 10 * 1024 * 1024 }
 });
+
+const multerErrHandling = (req: Request, res: Response, next: NextFunction) => {
+  multerMiddleware.array('pictures', 3)(req, res, (err) => {
+    if (err) return res.status(400).send({msg: "post.4.7"});
+    next();
+  });
+};
 
 /**
  * Create a new post

@@ -34,7 +34,8 @@
       "3": "'days' parameter/s missing",
       "4": "Post does not exist",
       "5": "You cannot extend more than 30 days",
-      "6": "'filter*' parameter/s missing"
+      "6": "'filter*' parameter/s missing",
+      "7": "There are some issues with your images"
     }
   },
   "user": {
