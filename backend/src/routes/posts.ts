@@ -100,6 +100,7 @@ postsrouter.post('/', checkRole('user'), multerErrHandling, async (req: Request,
   let min = parseInt(priceMin);
   let max = (priceMax) ? parseInt(priceMax) : min;
   let yearsArr = parseArray(years as string[], parseInt);
+  yearsArr.sort();
   let photos = (req.files) ? (req.files as Express.Multer.File[]).map(file => file.filename) : [];
   await Post.create({ CreatorId: req.session.data?.objId, Title: title, RemoveAt: parseInt(remove), Subjects: subjects, State: state, Years: yearsArr, Price: { Min: min, Max: max }, Photos: photos });
   return res.status(201).send({msg: "post.2.0"});
