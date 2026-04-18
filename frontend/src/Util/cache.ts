@@ -129,7 +129,7 @@ class UserCacheClass {
   private async fetchUserData(id: string) {
     this.fetching.push(id);
     let res = await get(`/users/${id}`);
-    this.fetching.filter((val) => {return val !== id});
+    this.fetching = this.fetching.filter((val) => {return val !== id});
     let js = await res?.json();
     if (res?.status === 200) {
       this.cache[id] = js;
