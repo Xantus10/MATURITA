@@ -1,5 +1,5 @@
 import { Table, TextInput, Text, Group, Center, Modal, Button } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { post } from "../../Util/http";
 import { autoHttpResponseNotification } from "../../Util/notifications";
@@ -22,7 +22,11 @@ function SocialsDisplayEdit({ data }: SocialsDisplayEditProps) {
   const [tempEdit, setTempEdit] = useState<string>("");
   const [localData, setLocalData] = useState(data);
   const [discs, setDiscs] = useState<{[K in keyof Socials]: boolean}>(Object.fromEntries(SocialsKeys.map((val) => {return [val, false]})) as {[K in keyof Socials]: boolean});
-  const responsecodeTranslation = useTranslation('responsecodes')
+  const responsecodeTranslation = useTranslation('responsecodes');
+
+  useEffect(() => {
+    setLocalData(data);
+  }, [data])
 
   function setDisc(at: keyof Socials, val: boolean) {
     setDiscs(prevDiscs => ({...prevDiscs, [at]: val}))
