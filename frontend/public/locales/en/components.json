@@ -46,7 +46,7 @@
     "delete": "Delete subject?"
   },
   "addsubject": {
-    "err3let": "A subject code has to be 3 letters!",
+    "err3let": "A subject code has to be between 3 - 20 letters!",
     "subcode": "Subject code",
     "addsub": "Add subject"
   },

@@ -16,7 +16,7 @@ export default function AddSubject({refreshSubjectsFunction}: {refreshSubjectsFu
   const [inp, setInp] = useState("");
 
   async function addSubject() {
-    if (inp.length === 3) {
+    if (inp.length >= 3 && inp.length <= 20) {
       let res = await post('/subjects', {subject: inp});
       if (res) {
         autoHttpResponseNotification(res, undefined, responsecodeTranslation.t);
