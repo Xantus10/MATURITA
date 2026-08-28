@@ -74,6 +74,35 @@ db.createCollection('users', {
   validationAction: 'error'
 });
 
+db.createCollection('users', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      required: [
+        'MicrosoftId',
+        'Name'
+      ],
+      properties: {
+        MicrosoftId: {
+          bsonType: 'string',
+          description: 'must be a string and is required'
+        },
+
+        Name: {
+          bsonType: 'object',
+          required: ['First', 'Last'],
+          properties: {
+            First: { bsonType: 'string' },
+            Last: { bsonType: 'string' }
+          }
+        }
+      }
+    }
+  },
+  validationLevel: 'strict',
+  validationAction: 'error'
+});
+
 
 db.createCollection('posts', {
   validator: {
