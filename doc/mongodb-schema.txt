@@ -24,6 +24,15 @@ Socials {						// Optional contact info for user
  Discord	string		NotReq			// Discord username
 }
 
+# collection adminbackups // Collection of admin account backups, READ ONLY
+_id ObjectId
+MicrosoftId	string			unique		// Microsoft Entra Id
+Name {
+ First		string
+ Last		string
+}
+SavedId ObjectId					// The original _id of the account
+
 
 # collection posts
 _id		ObjectId
