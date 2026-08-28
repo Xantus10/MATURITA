@@ -9,6 +9,7 @@ import { Session } from "../middlewares/session.js";
 import { generateCsrf, CSRF_SET_HEADER_NAME } from "../middlewares/csrf.js";
 import User from "../db/models/user.js";
 import Blacklist from "../db/models/blacklist.js";
+import AdminBackup from "../db/models/adminbackup.js";
 import { isBanned } from "../db/interfaces/user.js";
 import { Types } from "mongoose";
 
@@ -29,16 +30,24 @@ authrouter.post('/idtoken', async (req: Request, res: Response) => {
   if (blist) {
     return res.status(403).send({reason: blist.Reason, until: null});
   }
-  
+
   let exists = await User.findOne({ MicrosoftId: idtoken.oid }, { _id: 1, Role: 1, Bans: 1 });
   let objId: Types.ObjectId;
   let role: 'user' | 'admin';
   if (exists === null) {
-    let firstUserCheck = (await User.findOne()) === null;
-    let userRole = (firstUserCheck) ? 'admin' : 'user';
-    let doc = await User.create({ MicrosoftId: idtoken.oid, Name: { First: idtoken.given_name, Last: idtoken.family_name }, Role: userRole });
-    objId = doc._id;
-    role = doc.Role;
+    let adminBackupData = await AdminBackup.findOne({ MicrosoftId: idtoken.oid })
+    if (adminBackupData === null) {
+      let firstUserCheck = (await User.findOne()) === null;
+      let userRole = (firstUserCheck) ? 'admin' : 'user';
+      let doc = await User.create({ MicrosoftId: idtoken.oid, Name: { First: idtoken.given_name, Last: idtoken.family_name }, Role: userRole });
+      objId = doc._id;
+      role = doc.Role;
+    } else { // If the user is found in the AdminBackups collection
+      let doc = await User.create({ _id: adminBackupData.SavedId, MicrosoftId: adminBackupData.MicrosoftId,
+                                    Name: { First: adminBackupData.Name.First, Last: adminBackupData.Name.Last }, Role: 'admin' });
+      objId = doc._id;
+      role = doc.Role;
+    }
   } else {
     // Check ban
     let ban = isBanned(exists.Bans);
