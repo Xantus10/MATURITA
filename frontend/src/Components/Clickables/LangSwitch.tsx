@@ -10,7 +10,7 @@ export const SUPPORTED_LANGUAGES = ['cs', 'en'];
 function LangSwitch() {
   return (
     <>
-      <NativeSelect w={"100px"} data={SUPPORTED_LANGUAGES} value={i18next.language} onChange={(e) => i18next.changeLanguage(e.currentTarget.value)} />
+      <NativeSelect w={"100px"} data={SUPPORTED_LANGUAGES} value={i18next.language.split('-')[0]} onChange={(e) => i18next.changeLanguage(e.currentTarget.value)} />
     </>
   );
 }
